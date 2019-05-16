@@ -1,0 +1,110 @@
+#
+# Application configuration
+# This is production first application configuration; Override specific parts of this configuration in appropriate profile sections down below.
+#
+spring:
+  port: 8080
+
+  profiles:
+    active: @activeProfile@
+
+  flyway:
+    locations:
+      "classpath:database/migrations"
+
+  jpa:
+    database-platform: "org.hibernate.dialect.PostgreSQL9Dialect"
+    open-in-view: false
+    properties:
+      hibernate.temp.use_jdbc_metadata_defaults: false
+
+  session:
+    store-type: "jdbc"
+    jdbc.initialize-schema: "always"
+
+  # Disable default resource mapping; Disable templates
+  resources.add-mappings: false
+  thymeleaf:
+    enabled: false
+    checkTemplateLocation: false
+
+  # Mail configuration
+  mail:
+    properties.mail.smtp:
+      connectiontimeout: 5000
+      timeout: 3000
+      writetimeout: 5000
+
+# App related config
+app:
+  mail:
+    links:
+      host: "http://example.com"
+      user-activation-link: "${host}/user/activation?token=${token}&user=${user}"
+      reset-password-link: "${host}/user/passwords/reset?token=${token}"
+
+  users:
+    reset-password:
+      expiration-time: 1800
+
+
+
+---
+#
+# Develop profile
+#
+spring:
+  profiles: develop
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+
+# App related config
+app:
+  users:
+    activation:
+      secret: "c2VjcmV0"
+    reset-password:
+      secret: "c2VjcmV0"
+
+---
+#
+# Integration profile
+#
+spring:
+  profiles: integration
+
+  datasource:
+    embedded-pg:
+      host: localhost
+      port: 31116
+      name: starter-app-db
+
+# App related config
+app:
+  users:
+    activation:
+      secret: "c2VjcmV0"
+    reset-password:
+      secret: "c2VjcmV0"
+
+
+---
+# Production profile
+spring:
+  profiles: production
+
+  # Amazon SES Service
+  mail:
+    host: email-smtp.us-west-2.amazonaws.com
+    username: username # Move this to secrets.properties
+    password: password # Move this to secrets.properties
+    properties.mail:
+      transport.protocol: smtp
+      smtp.port: 25
+      smtp.auth: true
+      smtp.starttls:
+        enable: true
+        required: true

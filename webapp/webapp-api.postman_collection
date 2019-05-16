@@ -1,0 +1,128 @@
+{
+	"variables": [],
+	"info": {
+		"name": "abh-restaurants API",
+		"_postman_id": "368b679e-2d9c-c15c-234d-5e0cd41300b2",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"url": "{{HOST}}/api/v1/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"admin\",\n\t\"password\": \"admin\"\n}"
+				},
+				"description": "Logs in to app"
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"url": "{{HOST}}/api/v1/logout",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"admin\",\n\t\"password\": \"admin\"\n}"
+				},
+				"description": "Logs in to app"
+			},
+			"response": []
+		},
+		{
+			"name": "Bootstrap",
+			"request": {
+				"url": "{{HOST}}/api/v1/bootstrap",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{JWT_AUTH_TOKEN}}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create new user",
+			"request": {
+				"url": "{{HOST}}/api/v1/users",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\": \"Kenan\",\n\t\"lastName\": \"Klisura\",\n\t\"username\": \"kklisura\",\n\t\"email\": \"kenan@atlantbh.com\",\n\t\"password\": \"123456\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Update user basic info",
+			"request": {
+				"url": "{{HOST}}/api/v1/users/1/info",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\": \"Kenan\",\n\t\"lastName\": \"Klisura\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Update user security info",
+			"request": {
+				"url": "{{HOST}}/api/v1/users/1/security",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"oldPassword\": \"admin\",\n\t\"email\": \"admin1@example.com\",\n\t\"password\": \"admin1\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
