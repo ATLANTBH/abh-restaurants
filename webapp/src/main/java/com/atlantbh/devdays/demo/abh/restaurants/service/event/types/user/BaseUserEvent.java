@@ -1,7 +1,7 @@
 package com.atlantbh.devdays.demo.abh.restaurants.service.event.types.user;
 
 import com.atlantbh.devdays.demo.abh.restaurants.service.event.types.BaseEvent;
-import com.atlantbh.devdays.demo.abh.restaurants.domain.users.User;
+import com.atlantbh.devdays.demo.abh.restaurants.domain.User;
 
 /**
  * Base event for user related events.

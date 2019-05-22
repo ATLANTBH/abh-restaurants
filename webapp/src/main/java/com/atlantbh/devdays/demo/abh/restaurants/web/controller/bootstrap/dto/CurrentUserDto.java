@@ -1,6 +1,6 @@
 package com.atlantbh.devdays.demo.abh.restaurants.web.controller.bootstrap.dto;
 
-import com.atlantbh.devdays.demo.abh.restaurants.domain.users.User;
+import com.atlantbh.devdays.demo.abh.restaurants.domain.User;
 
 /**
  * Current user DTO.

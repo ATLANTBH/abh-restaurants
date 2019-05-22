@@ -1,6 +1,6 @@
 package com.atlantbh.devdays.demo.abh.restaurants.service.users;
 
-import com.atlantbh.devdays.demo.abh.restaurants.domain.users.User;
+import com.atlantbh.devdays.demo.abh.restaurants.domain.User;
 import com.atlantbh.devdays.demo.abh.restaurants.repository.users.UserRepository;
 import com.atlantbh.devdays.demo.abh.restaurants.service.BaseCrudService;
 import com.atlantbh.devdays.demo.abh.restaurants.service.event.EventBus;
@@ -229,12 +229,12 @@ public class UsersService extends BaseCrudService<User, Long, UserRepository>
   public void activateUser(Long id, String activationToken) throws EntityNotFoundServiceException {
     User user = get(id);
 
-    //    if (!user.isActivated() && verifyActivationToken(user, activationToken)) {
-    //      user.setActivated(true);
-    //      user.setActivationToken(null);
-    //
-    //      updateUser(user);
-    //    }
+//        if (!user.isActivated() && verifyActivationToken(user, activationToken)) {
+//          user.setActivated(true);
+//          user.setActivationToken(null);
+//
+//          updateUser(user);
+//        }
   }
 
   /**

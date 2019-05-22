@@ -1,4 +1,4 @@
-package com.atlantbh.devdays.demo.abh.restaurants.domain.users;
+package com.atlantbh.devdays.demo.abh.restaurants.domain;
 
 import com.atlantbh.devdays.demo.abh.restaurants.utils.persistence.Constraint;
 import com.atlantbh.devdays.demo.abh.restaurants.utils.persistence.Constraints;

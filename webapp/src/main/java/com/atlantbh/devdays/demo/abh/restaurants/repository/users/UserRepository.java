@@ -1,6 +1,6 @@
 package com.atlantbh.devdays.demo.abh.restaurants.repository.users;
 
-import com.atlantbh.devdays.demo.abh.restaurants.domain.users.User;
+import com.atlantbh.devdays.demo.abh.restaurants.domain.User;
 import com.atlantbh.devdays.demo.abh.restaurants.repository.BaseCrudRepository;
 
 /**

@@ -1,8 +1,5 @@
 package com.atlantbh.devdays.demo.abh.restaurants.web.controller.users;
 
-import com.atlantbh.devdays.demo.abh.restaurants.web.controller.users.requests.ActivateUserRequest;
-import com.atlantbh.devdays.demo.abh.restaurants.web.controller.users.requests.PasswordResetRequest;
-import com.atlantbh.devdays.demo.abh.restaurants.web.controller.users.requests.ResetPasswordRequest;
 import com.atlantbh.devdays.demo.abh.restaurants.service.email.EmailService;
 import com.atlantbh.devdays.demo.abh.restaurants.service.exceptions.AccessDeniedServiceException;
 import com.atlantbh.devdays.demo.abh.restaurants.service.exceptions.EntityNotFoundServiceException;
@@ -15,6 +12,9 @@ import com.atlantbh.devdays.demo.abh.restaurants.service.users.requests.UserInfo
 import com.atlantbh.devdays.demo.abh.restaurants.service.users.requests.UserRequest;
 import com.atlantbh.devdays.demo.abh.restaurants.service.users.requests.UserSecurityInfoRequest;
 import com.atlantbh.devdays.demo.abh.restaurants.web.controller.response.Response;
+import com.atlantbh.devdays.demo.abh.restaurants.web.controller.users.requests.ActivateUserRequest;
+import com.atlantbh.devdays.demo.abh.restaurants.web.controller.users.requests.PasswordResetRequest;
+import com.atlantbh.devdays.demo.abh.restaurants.web.controller.users.requests.ResetPasswordRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -177,6 +177,8 @@ public class UserController {
 
   /**
    * Activate user account.
+   *
+   * // TODO(kklisura): Do we need activation?
    */
   @RequestMapping(value = "/activate", method = RequestMethod.POST)
   public Response passwordReset(
@@ -186,14 +188,8 @@ public class UserController {
     // Verify activation token is valid.
     VerificationResult result = passwordResetTokenService.verifyResetToken(request.getToken());
     if (result.isValid()) {
-      // Create update request
-      UserSecurityInfoRequest securityInfoRequest = new UserSecurityInfoRequest();
-      securityInfoRequest.setOldPassword(request.getOldPassword());
-      securityInfoRequest.setPassword(request.getNewPassword());
-
-      // Update user's security info
-      usersService.updateSecurityInfo(
-              result.getUserId(), securityInfoRequest, PasswordResetUser.INSTANCE);
+      // Activate user.
+      usersService.activateUser(result.getUserId(), request.getToken());
 
       return new Response(HttpStatus.OK, "Password successfully changed.", req.getServletPath());
     } else {

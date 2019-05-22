@@ -1,6 +1,6 @@
 package com.atlantbh.devdays.demo.abh.restaurants.service.users;
 
-import com.atlantbh.devdays.demo.abh.restaurants.domain.users.User;
+import com.atlantbh.devdays.demo.abh.restaurants.domain.User;
 import com.atlantbh.devdays.demo.abh.restaurants.repository.users.UserRepository;
 import com.atlantbh.devdays.demo.abh.restaurants.service.event.EventBus;
 import org.slf4j.Logger;

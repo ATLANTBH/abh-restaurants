@@ -1,6 +1,6 @@
 package com.atlantbh.devdays.demo.abh.restaurants.service.event.types.user;
 
-import com.atlantbh.devdays.demo.abh.restaurants.domain.users.User;
+import com.atlantbh.devdays.demo.abh.restaurants.domain.User;
 
 /**
  * User password changed event is raised when users' password is changed.

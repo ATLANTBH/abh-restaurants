@@ -1,7 +1,7 @@
 package com.atlantbh.devdays.demo.abh.restaurants.service.users;
 
 import com.atlantbh.devdays.demo.abh.restaurants.utils.data.ByteUtils;
-import com.atlantbh.devdays.demo.abh.restaurants.domain.users.User;
+import com.atlantbh.devdays.demo.abh.restaurants.domain.User;
 import com.atlantbh.devdays.demo.abh.restaurants.service.exceptions.EntityNotFoundServiceException;
 import com.atlantbh.devdays.demo.abh.restaurants.service.users.config.PasswordResetConfig;
 import io.jsonwebtoken.*;

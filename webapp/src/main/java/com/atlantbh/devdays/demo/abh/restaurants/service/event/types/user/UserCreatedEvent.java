@@ -1,6 +1,6 @@
 package com.atlantbh.devdays.demo.abh.restaurants.service.event.types.user;
 
-import com.atlantbh.devdays.demo.abh.restaurants.domain.users.User;
+import com.atlantbh.devdays.demo.abh.restaurants.domain.User;
 
 /**
  * User created event is an event that is raised when user is created.
