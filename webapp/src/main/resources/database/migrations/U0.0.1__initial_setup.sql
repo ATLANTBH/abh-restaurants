@@ -14,3 +14,8 @@ DROP TABLE IF EXISTS restaurant_review CASCADE;
 DROP TABLE IF EXISTS restaurant_table CASCADE;
 DROP TABLE IF EXISTS restaurant CASCADE;
 DROP TABLE IF EXISTS city CASCADE;
+
+-- Drop runtime created tables
+DROP TABLE IF EXISTS flyway_schema_history CASCADE;
+DROP TABLE IF EXISTS spring_session CASCADE;
+DROP TABLE IF EXISTS spring_session_attributes CASCADE;

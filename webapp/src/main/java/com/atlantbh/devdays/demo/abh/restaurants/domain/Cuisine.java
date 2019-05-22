@@ -1,6 +1,7 @@
 package com.atlantbh.devdays.demo.abh.restaurants.domain;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by Kenan Klisura on 2019-05-22.
@@ -18,6 +19,12 @@ public class Cuisine {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "created_at", updatable = false, insertable = false)
+    private Date createdAt;
+
+    @Column(name = "updated_at", updatable = false, insertable = false)
+    private Date updatedAt;
 
     /**
      * Instantiates a new Cuisine.
@@ -51,5 +58,13 @@ public class Cuisine {
      * @param name the name
      */
     public void setName(String name) { this.name = name; }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
 }
 

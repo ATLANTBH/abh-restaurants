@@ -1,7 +1,7 @@
 package com.atlantbh.devdays.demo.abh.restaurants.domain;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * Created by Kenan Klisura on 2019-05-22.
@@ -32,6 +32,12 @@ public class Reservation {
 
     @Column(name = "is_confirmed")
     private Boolean isConfirmed = false;
+
+    @Column(name = "created_at", updatable = false, insertable = false)
+    private java.util.Date createdAt;
+
+    @Column(name = "updated_at", updatable = false, insertable = false)
+    private java.util.Date updatedAt;
 
     // TODO(kklisura): DTO?
     @Transient
@@ -164,4 +170,12 @@ public class Reservation {
      * @param time the time
      */
     public void setTime(String time) { this.time = time; }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
 }

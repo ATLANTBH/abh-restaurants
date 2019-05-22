@@ -1,6 +1,7 @@
 package com.atlantbh.devdays.demo.abh.restaurants.domain;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by Kenan Klisura on 2019-05-22.
@@ -22,6 +23,13 @@ public class RestaurantTable {
 
     @Column(name = "number_of_chairs")
     private Integer numberOfChairs;
+
+    @Column(name = "created_at", updatable = false, insertable = false)
+    private Date createdAt;
+
+    @Column(name = "updated_at", updatable = false, insertable = false)
+    private Date updatedAt;
+
 
     /**
      * Instantiates a new Restaurant table.
@@ -69,5 +77,13 @@ public class RestaurantTable {
      * @param numberOfChairs the number of chairs
      */
     public void setNumberOfChairs(Integer numberOfChairs) { this.numberOfChairs = numberOfChairs; }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
 }
 

@@ -1,6 +1,7 @@
 package com.atlantbh.devdays.demo.abh.restaurants.domain;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by Kenan Klisura on 2019-05-22.
@@ -29,6 +30,13 @@ public class RestaurantReview {
 
     @Column(name = "review")
     private String review;
+
+    @Column(name = "created_at", updatable = false, insertable = false)
+    private Date createdAt;
+
+    @Column(name = "updated_at", updatable = false, insertable = false)
+    private Date updatedAt;
+
 
     /**
      * Instantiates a new Restaurant review.
@@ -121,4 +129,12 @@ public class RestaurantReview {
      * @param review the review
      */
     public void setReview(String review) { this.review = review; }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
 }

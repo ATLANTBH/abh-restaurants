@@ -70,6 +70,12 @@ public class Restaurant {
     @OneToMany(mappedBy = "restaurantId", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<RestaurantTable> tables;
 
+    @Column(name = "created_at", updatable = false, insertable = false)
+    private Date createdAt;
+
+    @Column(name = "updated_at", updatable = false, insertable = false)
+    private Date updatedAt;
+
     // TODO(kklisura): DTO?
     @Transient
     private Integer numberOfRatings = 0;
@@ -439,5 +445,13 @@ public class Restaurant {
      */
     public void setAverageRating(Double averageRating) {
         this.averageRating = averageRating;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 }

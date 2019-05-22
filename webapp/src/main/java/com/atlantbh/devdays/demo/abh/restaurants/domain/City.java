@@ -1,6 +1,7 @@
 package com.atlantbh.devdays.demo.abh.restaurants.domain;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by Kenan Klisura on 2019-05-22.
@@ -21,6 +22,12 @@ public class City {
     // TODO(kklisura): Why is this string?
     @Column(name = "bounds")
     private String bounds;
+
+    @Column(name = "created_at", updatable = false, insertable = false)
+    private Date createdAt;
+
+    @Column(name = "updated_at", updatable = false, insertable = false)
+    private Date updatedAt;
 
     /**
      * Instantiates a new City.
@@ -68,4 +75,12 @@ public class City {
      * @param bounds the bounds
      */
     public void setBounds(String bounds) { this.bounds = bounds; }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
 }

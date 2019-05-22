@@ -1,6 +1,7 @@
 package com.atlantbh.devdays.demo.abh.restaurants.domain;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by Kenan Klisura on 2019-05-22.
@@ -22,6 +23,13 @@ public class RestaurantPhoto {
 
     @Column(name = "photo_path")
     private String path;
+
+    @Column(name = "created_at", updatable = false, insertable = false)
+    private Date createdAt;
+
+    @Column(name = "updated_at", updatable = false, insertable = false)
+    private Date updatedAt;
+
 
     /**
      * Instantiates a new Restaurant photo.
@@ -69,4 +77,12 @@ public class RestaurantPhoto {
      * @param path the path
      */
     public void setPath(String path) { this.path = path; }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
 }

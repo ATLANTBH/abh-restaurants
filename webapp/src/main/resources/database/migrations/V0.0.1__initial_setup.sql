@@ -39,9 +39,19 @@ EXECUTE PROCEDURE update_table_timestamps();
 -- Create city table
 CREATE TABLE city (
   id BIGINT CONSTRAINT city_pk PRIMARY KEY,
+
   name VARCHAR(64) NOT NULL CONSTRAINT city_name_uq UNIQUE,
-  bounds TEXT
+  bounds TEXT,
+
+  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
+
+-- Create trigger on city table
+CREATE TRIGGER update_city_timestamp_trigger
+BEFORE UPDATE ON city
+FOR EACH ROW
+EXECUTE PROCEDURE update_table_timestamps();
 
 -- Create restaurant table
 CREATE TABLE restaurant (
@@ -66,8 +76,17 @@ CREATE TABLE restaurant (
   longitude REAL DEFAULT 0,
 
   open_time TIME WITHOUT TIME ZONE NOT NULL DEFAULT '09:00:00',
-  close_time TIME WITHOUT TIME ZONE NOT NULL DEFAULT '23:00:00'
+  close_time TIME WITHOUT TIME ZONE NOT NULL DEFAULT '23:00:00',
+
+  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
+
+-- Create trigger on restaurant table
+CREATE TRIGGER update_restaurant_timestamp_trigger
+BEFORE UPDATE ON restaurant
+FOR EACH ROW
+EXECUTE PROCEDURE update_table_timestamps();
 
 -- Create restaurant table table :)
 CREATE TABLE restaurant_table (
@@ -75,8 +94,17 @@ CREATE TABLE restaurant_table (
 
   restaurant_id BIGINT NOT NULL REFERENCES restaurant(id) ON UPDATE CASCADE ON DELETE RESTRICT,
 
-  number_of_chairs INTEGER NOT NULL
+  number_of_chairs INTEGER NOT NULL,
+
+  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
+
+-- Create trigger on restaurant table
+CREATE TRIGGER update_restaurant_table_timestamp_trigger
+BEFORE UPDATE ON restaurant_table
+FOR EACH ROW
+EXECUTE PROCEDURE update_table_timestamps();
 
 -- Create reservation table
 CREATE TABLE reservation (
@@ -88,23 +116,51 @@ CREATE TABLE reservation (
   start_time TIMESTAMP WITHOUT TIME ZONE NOT NULL,
   reserved_on TIMESTAMP WITHOUT TIME ZONE NOT NULL,
 
-  is_confirmed BOOLEAN DEFAULT FALSE
+  is_confirmed BOOLEAN DEFAULT FALSE,
+
+  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
+
+-- Create trigger on restaurant table
+CREATE TRIGGER update_reservation_table_timestamp_trigger
+BEFORE UPDATE ON reservation
+FOR EACH ROW
+EXECUTE PROCEDURE update_table_timestamps();
 
 -- Create cuisine table
 CREATE TABLE cuisine (
   id BIGINT CONSTRAINT cuisine_pk PRIMARY KEY,
 
-  name VARCHAR(64) NOT NULL
+  name VARCHAR(64) NOT NULL,
+
+  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
+
+-- Create trigger on cuisine table
+CREATE TRIGGER update_cuisine_table_timestamp_trigger
+BEFORE UPDATE ON cuisine
+FOR EACH ROW
+EXECUTE PROCEDURE update_table_timestamps();
+
 
 -- Create restaurant cuisine table
 CREATE TABLE restaurant_cuisine (
   id BIGINT CONSTRAINT restaurant_cuisine_pk PRIMARY KEY,
 
   restaurant_id BIGINT NOT NULL REFERENCES restaurant(id) ON UPDATE CASCADE ON DELETE RESTRICT,
-  cuisine_id BIGINT NOT NULL REFERENCES cuisine(id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE RESTRICT
+  cuisine_id BIGINT NOT NULL REFERENCES cuisine(id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE RESTRICT,
+
+  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
+
+-- Create trigger on restaurant_cuisine table
+CREATE TRIGGER update_restaurant_cuisine_timestamp_trigger
+BEFORE UPDATE ON restaurant_cuisine
+FOR EACH ROW
+EXECUTE PROCEDURE update_table_timestamps();
 
 -- Create restaurant_review table
 CREATE TABLE restaurant_review (
@@ -114,8 +170,17 @@ CREATE TABLE restaurant_review (
   user_id BIGINT NOT NULL REFERENCES users(id) ON UPDATE CASCADE ON DELETE RESTRICT,
 
   rating INTEGER NOT NULL,
-  review TEXT NOT NULL
+  review TEXT NOT NULL,
+
+  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
+
+-- Create trigger on restaurant_review table
+CREATE TRIGGER update_restaurant_review_timestamp_trigger
+BEFORE UPDATE ON restaurant_review
+FOR EACH ROW
+EXECUTE PROCEDURE update_table_timestamps();
 
 -- Create restaurant_photo table
 CREATE TABLE restaurant_photo (
@@ -123,5 +188,16 @@ CREATE TABLE restaurant_photo (
 
   restaurant_id BIGINT NOT NULL REFERENCES restaurant(id) ON UPDATE CASCADE ON DELETE RESTRICT,
 
-  photo_path VARCHAR(256) NOT NULL
+  photo_path VARCHAR(256) NOT NULL,
+
+  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
+
+
+-- Create trigger on restaurant_photo table
+CREATE TRIGGER update_restaurant_photo_timestamp_trigger
+BEFORE UPDATE ON restaurant_photo
+FOR EACH ROW
+EXECUTE PROCEDURE update_table_timestamps();
+
