@@ -4,7 +4,7 @@ CREATE SEQUENCE hibernate_sequence START 1;
 
 -- Create users table
 CREATE TABLE users (
-  id BIGINT CONSTRAINT users_pk PRIMARY KEY,
+  id BIGINT CONSTRAINT users_pk PRIMARY KEY DEFAULT nextval('hibernate_sequence'),
 
   first_name VARCHAR(255) NOT NULL,
   last_name VARCHAR(255) NOT NULL,
@@ -38,7 +38,7 @@ EXECUTE PROCEDURE update_table_timestamps();
 
 -- Create city table
 CREATE TABLE city (
-  id BIGINT CONSTRAINT city_pk PRIMARY KEY,
+  id BIGINT CONSTRAINT city_pk PRIMARY KEY DEFAULT nextval('hibernate_sequence'),
 
   name VARCHAR(64) NOT NULL CONSTRAINT city_name_uq UNIQUE,
   bounds TEXT,
@@ -55,7 +55,7 @@ EXECUTE PROCEDURE update_table_timestamps();
 
 -- Create restaurant table
 CREATE TABLE restaurant (
-  id BIGINT CONSTRAINT restaurant_pk PRIMARY KEY,
+  id BIGINT CONSTRAINT restaurant_pk PRIMARY KEY DEFAULT nextval('hibernate_sequence'),
 
   name VARCHAR(64) NOT NULL,
 
@@ -90,7 +90,7 @@ EXECUTE PROCEDURE update_table_timestamps();
 
 -- Create restaurant table table :)
 CREATE TABLE restaurant_table (
-  id BIGINT CONSTRAINT restaurant_table_pk PRIMARY KEY,
+  id BIGINT CONSTRAINT restaurant_table_pk PRIMARY KEY DEFAULT nextval('hibernate_sequence'),
 
   restaurant_id BIGINT NOT NULL REFERENCES restaurant(id) ON UPDATE CASCADE ON DELETE RESTRICT,
 
@@ -108,7 +108,7 @@ EXECUTE PROCEDURE update_table_timestamps();
 
 -- Create reservation table
 CREATE TABLE reservation (
-  id BIGINT CONSTRAINT reservation_pk PRIMARY KEY,
+  id BIGINT CONSTRAINT reservation_pk PRIMARY KEY DEFAULT nextval('hibernate_sequence'),
 
   table_id BIGINT NOT NULL REFERENCES restaurant_table(id) ON UPDATE CASCADE ON DELETE RESTRICT,
   user_id BIGINT REFERENCES users(id) ON UPDATE CASCADE ON DELETE RESTRICT,
@@ -130,7 +130,7 @@ EXECUTE PROCEDURE update_table_timestamps();
 
 -- Create cuisine table
 CREATE TABLE cuisine (
-  id BIGINT CONSTRAINT cuisine_pk PRIMARY KEY,
+  id BIGINT CONSTRAINT cuisine_pk PRIMARY KEY DEFAULT nextval('hibernate_sequence'),
 
   name VARCHAR(64) NOT NULL,
 
@@ -147,7 +147,7 @@ EXECUTE PROCEDURE update_table_timestamps();
 
 -- Create restaurant cuisine table
 CREATE TABLE restaurant_cuisine (
-  id BIGINT CONSTRAINT restaurant_cuisine_pk PRIMARY KEY,
+  id BIGINT CONSTRAINT restaurant_cuisine_pk PRIMARY KEY DEFAULT nextval('hibernate_sequence'),
 
   restaurant_id BIGINT NOT NULL REFERENCES restaurant(id) ON UPDATE CASCADE ON DELETE RESTRICT,
   cuisine_id BIGINT NOT NULL REFERENCES cuisine(id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE RESTRICT,
@@ -164,7 +164,7 @@ EXECUTE PROCEDURE update_table_timestamps();
 
 -- Create restaurant_review table
 CREATE TABLE restaurant_review (
-  id BIGINT CONSTRAINT restaurant_review_pk PRIMARY KEY,
+  id BIGINT CONSTRAINT restaurant_review_pk PRIMARY KEY DEFAULT nextval('hibernate_sequence'),
 
   restaurant_id BIGINT NOT NULL REFERENCES restaurant(id) ON UPDATE CASCADE ON DELETE RESTRICT,
   user_id BIGINT NOT NULL REFERENCES users(id) ON UPDATE CASCADE ON DELETE RESTRICT,
@@ -184,7 +184,7 @@ EXECUTE PROCEDURE update_table_timestamps();
 
 -- Create restaurant_photo table
 CREATE TABLE restaurant_photo (
-  id BIGINT CONSTRAINT restaurant_photo_pk PRIMARY KEY,
+  id BIGINT CONSTRAINT restaurant_photo_pk PRIMARY KEY DEFAULT nextval('hibernate_sequence'),
 
   restaurant_id BIGINT NOT NULL REFERENCES restaurant(id) ON UPDATE CASCADE ON DELETE RESTRICT,
 

@@ -3,9 +3,6 @@
 --
 DROP TABLE IF EXISTS users CASCADE;
 
-DROP SEQUENCE IF EXISTS hibernate_sequence;
-DROP FUNCTION IF EXISTS update_table_timestamps CASCADE;
-
 DROP TABLE IF EXISTS restaurant_photo CASCADE;
 DROP TABLE IF EXISTS restaurant_cuisine CASCADE;
 DROP TABLE IF EXISTS cuisine CASCADE;
@@ -19,3 +16,7 @@ DROP TABLE IF EXISTS city CASCADE;
 DROP TABLE IF EXISTS flyway_schema_history CASCADE;
 DROP TABLE IF EXISTS spring_session CASCADE;
 DROP TABLE IF EXISTS spring_session_attributes CASCADE;
+
+-- Drop functions and sequences
+DROP SEQUENCE IF EXISTS hibernate_sequence;
+DROP FUNCTION IF EXISTS update_table_timestamps CASCADE;

@@ -1,7 +1,7 @@
 package com.atlantbh.devdays.demo.abh.restaurants.service.users;
 
 import com.atlantbh.devdays.demo.abh.restaurants.domain.User;
-import com.atlantbh.devdays.demo.abh.restaurants.repository.users.UserRepository;
+import com.atlantbh.devdays.demo.abh.restaurants.repository.UserRepository;
 import com.atlantbh.devdays.demo.abh.restaurants.service.BaseCrudService;
 import com.atlantbh.devdays.demo.abh.restaurants.service.event.EventBus;
 import com.atlantbh.devdays.demo.abh.restaurants.service.event.types.user.UserCreatedEvent;
