@@ -1,8 +1,9 @@
 package com.atlantbh.devdays.demo.abh.restaurants.service;
 
+import com.atlantbh.devdays.demo.abh.restaurants.repository.BaseCrudRepository;
 import com.atlantbh.devdays.demo.abh.restaurants.service.event.EventBus;
 import com.atlantbh.devdays.demo.abh.restaurants.service.exceptions.EntityNotFoundServiceException;
-import com.atlantbh.devdays.demo.abh.restaurants.repository.BaseCrudRepository;
+import org.springframework.data.domain.Sort;
 
 import java.util.Optional;
 
@@ -15,6 +16,8 @@ import java.util.Optional;
  * @author Kenan Klisura
  */
 public abstract class BaseCrudService<T, ID, R extends BaseCrudRepository<T, ID>> {
+  private static final String DEFAULT_SORT_PROPERTY = "id";
+
   /** The Repository. */
   protected R repository;
 
@@ -29,6 +32,36 @@ public abstract class BaseCrudService<T, ID, R extends BaseCrudRepository<T, ID>
   public BaseCrudService(R repository, EventBus eventBus) {
     this.repository = repository;
     this.eventBus = eventBus;
+  }
+
+  /**
+   * Returns all models sorted by {@link #DEFAULT_SORT_PROPERTY}.
+   *
+   * @return All models sorted by {@link #DEFAULT_SORT_PROPERTY}.
+   */
+  public Iterable<T> findAll() {
+    return findAll(DEFAULT_SORT_PROPERTY, Sort.Direction.DESC);
+  }
+
+  /**
+   * Returns all models sorted by sortProperty and sortDirection.
+   *
+   * @param sortProperty Sort property.
+   * @param sortDirection Sort direction.
+   * @return All models sorted.
+   */
+  public Iterable<T> findAll(String sortProperty, Sort.Direction sortDirection) {
+    return findAll(Sort.by(sortDirection, sortProperty));
+  }
+
+  /**
+   * Returns all models sorted by sort.
+   *
+   * @param sort Sort to sort by. :)
+   * @return All models sorted.
+   */
+  public Iterable<T> findAll(Sort sort) {
+    return repository.findAll(null, sort);
   }
 
   /**
