@@ -19,11 +19,9 @@ cd webapp/deployment/local
 docker-compose up
 ```
 
-Import project in your favorite IDE.
+Import project in your favorite IDE and be sure to select `develop` maven profile.
 
-Start the web application by running `main` method in the `Application` class.
-
-If you want to run web application without importing into project, run following:
+Start the web application by running `main` method in the `Application` class. If you want to run web application without importing into project, run following:
 
 ```bash
 mvn clean spring-boot:run -f webapp/pom.xml -P develop 

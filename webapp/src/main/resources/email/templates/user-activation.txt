@@ -1,7 +1,0 @@
-Hi [(${user})],
-
-Thanks for signing up to!
-
-To get started, click the link below to activate your account.
-
-<a href="[(${link})]">Activate your account</a>

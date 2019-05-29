@@ -28,26 +28,7 @@ spring:
     enabled: false
     checkTemplateLocation: false
 
-  # Mail configuration
-  mail:
-    properties.mail.smtp:
-      connectiontimeout: 5000
-      timeout: 3000
-      writetimeout: 5000
-
 # App related config
-app:
-  mail:
-    links:
-      host: "http://example.com"
-      user-activation-link: "${host}/user/activation?token=${token}&user=${user}"
-      reset-password-link: "${host}/user/passwords/reset?token=${token}"
-
-  users:
-    reset-password:
-      expiration-time: 1800
-
-
 
 ---
 #
@@ -83,28 +64,8 @@ spring:
       name: starter-app-db
 
 # App related config
-app:
-  users:
-    activation:
-      secret: "c2VjcmV0"
-    reset-password:
-      secret: "c2VjcmV0"
-
 
 ---
 # Production profile
 spring:
   profiles: production
-
-  # Amazon SES Service
-  mail:
-    host: email-smtp.us-west-2.amazonaws.com
-    username: username # Move this to secrets.properties
-    password: password # Move this to secrets.properties
-    properties.mail:
-      transport.protocol: smtp
-      smtp.port: 25
-      smtp.auth: true
-      smtp.starttls:
-        enable: true
-        required: true

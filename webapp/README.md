@@ -1,5 +1,5 @@
 
-# abh-restaurants Webapp
+# abh-restaurants webapp
 
 ## Introduction
 
