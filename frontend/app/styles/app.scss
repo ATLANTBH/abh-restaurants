@@ -1,0 +1,10 @@
+@import "./bootstrap/bootstrap";
+
+@import "https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600";
+
+* {
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+@import "./components/navigation/page-navigation";
+@import "./components/footer/page-footer";

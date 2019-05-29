@@ -1,0 +1,50 @@
+.nav-container {
+  position: relative;
+  z-index: 5;
+}
+
+.navbar-default {
+  background-color: #fff;
+  border: none;
+  border-radius: 0;
+}
+
+.navbar-brand {
+  font-size: 20px;
+  height: 85px;
+}
+
+.nav-link-custom {
+}
+
+.container.white-text .navbar-brand {
+  color: #fff !important;
+}
+
+.container.white-text .nav-link-custom > a,
+.container.white-text .nav-link-custom > a:focus {
+  color: #fff;
+}
+
+.container.grey-text .navbar-brand {
+  color: #131d24 !important;
+}
+
+.container.grey-text .nav-link-custom > a {
+  color: #131d24;
+}
+
+.navbar-brand,
+.nav-link-custom > a {
+  font-weight: 600;
+  padding-top: 33px !important;
+  padding-bottom: 32px !important;
+}
+
+.nav-link-custom > a {
+  font-size: 16px;
+}
+
+.nav-link-custom:hover > a {
+  color: #fd6f60 !important;
+}

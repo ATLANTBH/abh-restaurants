@@ -1,0 +1,50 @@
+footer {
+  position: relative;
+  margin-top: -150px; /* negative value of footer height */
+  height: 150px;
+  clear: both;
+  padding-top: 40px;
+
+  width: 100%;
+  background-color: #131d24;
+}
+
+.footer-list {
+  position: relative;
+  display: block;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.footer-list:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+@media (min-width: 768px) {
+  .footer-list-right {
+    float: right;
+  }
+}
+
+.footer-list li {
+  float: left;
+  display: block;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 0 10px;
+}
+
+.footer-list-grey li {
+  opacity: 0.4;
+}
+
+.footer-copy {
+  font-size: 14px;
+  font-weight: 400;
+  color: #fff;
+  opacity: 0.4;
+  padding: 0 10px;
+}
