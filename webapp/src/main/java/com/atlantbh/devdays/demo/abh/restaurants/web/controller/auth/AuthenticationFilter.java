@@ -1,10 +1,10 @@
 package com.atlantbh.devdays.demo.abh.restaurants.web.controller.auth;
 
+import com.atlantbh.devdays.demo.abh.restaurants.service.exceptions.EntityNotFoundServiceException;
+import com.atlantbh.devdays.demo.abh.restaurants.service.users.UsersService;
 import com.atlantbh.devdays.demo.abh.restaurants.web.controller.auth.requests.AuthenticationRequest;
 import com.atlantbh.devdays.demo.abh.restaurants.web.controller.bootstrap.dto.CurrentUserDto;
 import com.atlantbh.devdays.demo.abh.restaurants.web.controller.response.Response;
-import com.atlantbh.devdays.demo.abh.restaurants.service.exceptions.EntityNotFoundServiceException;
-import com.atlantbh.devdays.demo.abh.restaurants.service.users.UsersService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.ArrayList;

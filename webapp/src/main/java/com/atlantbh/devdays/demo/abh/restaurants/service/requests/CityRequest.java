@@ -6,24 +6,23 @@ package com.atlantbh.devdays.demo.abh.restaurants.service.requests;
  * @author Kenan Klisura
  */
 public class CityRequest {
-    private String name;
+  private String name;
 
-    private String bounds;
+  private String bounds;
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public String getBounds() {
-        return bounds;
-    }
+  public String getBounds() {
+    return bounds;
+  }
 
-    public void setBounds(String bounds) {
-        this.bounds = bounds;
-    }
+  public void setBounds(String bounds) {
+    this.bounds = bounds;
+  }
 }
-

@@ -7,5 +7,4 @@ import com.atlantbh.devdays.demo.abh.restaurants.domain.City;
  *
  * @author Kenan Klisura
  */
-public interface CityRepository extends BaseCrudRepository<City, Long> {
-}
+public interface CityRepository extends BaseCrudRepository<City, Long> {}

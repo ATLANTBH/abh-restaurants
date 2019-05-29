@@ -1,7 +1,6 @@
 package com.atlantbh.devdays.demo.abh.restaurants.configuration.datasource;
 
 import com.atlantbh.devdays.demo.abh.restaurants.configuration.datasource.config.EmbeddedPgConfig;
-
 import java.io.IOException;
 import javax.sql.DataSource;
 import org.slf4j.Logger;

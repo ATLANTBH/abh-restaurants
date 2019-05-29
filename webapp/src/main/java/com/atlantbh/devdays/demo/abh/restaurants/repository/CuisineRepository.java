@@ -7,5 +7,4 @@ import com.atlantbh.devdays.demo.abh.restaurants.domain.Cuisine;
  *
  * @author Kenan Klisura
  */
-public interface CuisineRepository extends BaseCrudRepository<Cuisine, Long> {
-}
+public interface CuisineRepository extends BaseCrudRepository<Cuisine, Long> {}

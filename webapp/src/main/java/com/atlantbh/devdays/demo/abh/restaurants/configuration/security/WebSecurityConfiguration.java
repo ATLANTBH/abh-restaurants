@@ -1,12 +1,15 @@
 package com.atlantbh.devdays.demo.abh.restaurants.configuration.security;
 
+import com.atlantbh.devdays.demo.abh.restaurants.configuration.security.routes.AdminRoutes;
+import com.atlantbh.devdays.demo.abh.restaurants.configuration.security.routes.AllowedRoutes;
 import com.atlantbh.devdays.demo.abh.restaurants.service.users.UsersService;
 import com.atlantbh.devdays.demo.abh.restaurants.web.controller.auth.AuthenticationFilter;
 import com.atlantbh.devdays.demo.abh.restaurants.web.controller.auth.SimpleUserAuthorizationFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,12 +20,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.OrRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * Web security configuration.
@@ -38,23 +35,6 @@ import javax.servlet.http.HttpServletResponse;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
-  // These requests are publicly accessible and are not required to have session
-  private static final RequestMatcher LOGIN_REQUEST_MATCHER = post("/api/v1/login");
-  private static final RequestMatcher CREATE_USER_MATCHER = post("/api/v1/users");
-  private static final RequestMatcher PASSWORD_RESET_MATCHER = post("/api/v1/users/password-reset");
-  private static final RequestMatcher REQUEST_PASSWORD_RESET_MATCHER =
-      post("/api/v1/users/request-password-reset");
-
-  private static final String LOGOUT_PATH = "/api/v1/logout";
-
-  /** List of request that do not need auth. */
-  private static final RequestMatcher NON_AUTH_URLS_REQUEST_MATCHER =
-      new OrRequestMatcher(
-          CREATE_USER_MATCHER,
-          LOGIN_REQUEST_MATCHER,
-          REQUEST_PASSWORD_RESET_MATCHER,
-          PASSWORD_RESET_MATCHER);
-
   private UsersService usersService;
 
   private PasswordEncoder passwordEncoder;
@@ -88,14 +68,16 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     http.requestCache()
         .disable()
         .authorizeRequests()
-        .requestMatchers(NON_AUTH_URLS_REQUEST_MATCHER)
+        .requestMatchers(AllowedRoutes.ROUTES)
         .permitAll()
+        .requestMatchers(AdminRoutes.ROUTES)
+        .hasRole(Roles.ADMIN.name())
         .anyRequest()
         .authenticated()
         .and()
         .addFilterBefore(
             new AuthenticationFilter(
-                usersService, objectMapper, LOGIN_REQUEST_MATCHER, authenticationManager()),
+                usersService, objectMapper, AllowedRoutes.LOGIN_ROUTE, authenticationManager()),
             UsernamePasswordAuthenticationFilter.class)
         .addFilterAfter(authorizationFilter, UsernamePasswordAuthenticationFilter.class)
         .addFilter(logoutFilter())
@@ -112,21 +94,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     authBuilder.userDetailsService(usersService).passwordEncoder(passwordEncoder);
   }
 
-  /**
-   * Matches a post request on a given path.
-   *
-   * @param path Path
-   * @return POST request matcher.
-   */
-  private static RequestMatcher post(String path) {
-    return new AntPathRequestMatcher(path, HttpMethod.POST.name());
-  }
-
   private LogoutFilter logoutFilter() {
     LogoutSuccessHandler logoutSuccessHandler = new NullLogoutSuccessHandler();
     LogoutFilter logoutFilter =
         new LogoutFilter(logoutSuccessHandler, new SecurityContextLogoutHandler());
-    logoutFilter.setLogoutRequestMatcher(post(LOGOUT_PATH));
+    logoutFilter.setLogoutRequestMatcher(AllowedRoutes.LOGOUT_ROUTE);
     return logoutFilter;
   }
 

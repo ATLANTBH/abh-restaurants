@@ -1,11 +1,9 @@
 package com.atlantbh.devdays.demo.abh.restaurants.service;
 
 import com.atlantbh.devdays.demo.abh.restaurants.repository.BaseCrudRepository;
-import com.atlantbh.devdays.demo.abh.restaurants.service.event.EventBus;
 import com.atlantbh.devdays.demo.abh.restaurants.service.exceptions.EntityNotFoundServiceException;
-import org.springframework.data.domain.Sort;
-
 import java.util.Optional;
+import org.springframework.data.domain.Sort;
 
 /**
  * Base crud service.
@@ -21,17 +19,13 @@ public abstract class BaseCrudService<T, ID, R extends BaseCrudRepository<T, ID>
   /** The Repository. */
   protected R repository;
 
-  /** Event bus. */
-  protected EventBus eventBus;
-
   /**
    * Instantiates a new Base crud service.
    *
    * @param repository the repository
    */
-  public BaseCrudService(R repository, EventBus eventBus) {
+  public BaseCrudService(R repository) {
     this.repository = repository;
-    this.eventBus = eventBus;
   }
 
   /**

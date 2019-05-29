@@ -2,7 +2,6 @@ package com.atlantbh.devdays.demo.abh.restaurants.service.users;
 
 import com.atlantbh.devdays.demo.abh.restaurants.domain.User;
 import com.atlantbh.devdays.demo.abh.restaurants.repository.UserRepository;
-import com.atlantbh.devdays.demo.abh.restaurants.service.event.EventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,9 +21,8 @@ public class AdminUserService extends UsersService {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(AdminUserService.class);
 
-  public AdminUserService(
-      UserRepository repository, PasswordEncoder passwordEncoder, EventBus eventBus) {
-    super(repository, passwordEncoder, eventBus);
+  public AdminUserService(UserRepository repository, PasswordEncoder passwordEncoder) {
+    super(repository, passwordEncoder);
   }
 
   /** Creates default users. */
@@ -50,7 +48,7 @@ public class AdminUserService extends UsersService {
       String username, String email, String password, String firstName, String lastName) {
     User user = repository.findUserByUsername(username);
     if (user == null) {
-      LOGGER.info("Creating default {}:{} user...", username, password);
+      LOGGER.info("Creating default admin {}:{} user...", username, password);
 
       user = new User();
 
@@ -58,7 +56,7 @@ public class AdminUserService extends UsersService {
       user.setLastName(lastName);
       user.setEmail(email);
       user.setUsername(username);
-      user.setActivated(true);
+      user.setAdmin(true);
 
       user.setPassword(passwordEncoder.encode(password));
       repository.save(user);

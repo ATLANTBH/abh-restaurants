@@ -1,10 +1,8 @@
 package com.atlantbh.devdays.demo.abh.restaurants.web.controller.advice;
 
-import static com.atlantbh.devdays.demo.abh.restaurants.web.controller.utils.ResponseUtils.buildBadRequestResponseEntity;
-
+import com.atlantbh.devdays.demo.abh.restaurants.service.exceptions.ServiceException;
 import com.atlantbh.devdays.demo.abh.restaurants.utils.persistence.PersistenceUtils;
 import com.atlantbh.devdays.demo.abh.restaurants.web.controller.utils.ResponseUtils;
-import com.atlantbh.devdays.demo.abh.restaurants.service.exceptions.ServiceException;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
@@ -36,7 +34,8 @@ public class GlobalApplicationExceptionHandler extends ResponseEntityExceptionHa
   @ExceptionHandler(ServiceException.class)
   public ResponseEntity<Object> handleServiceException(
       ServiceException ex, HttpServletRequest request) {
-    return ResponseUtils.buildErrorResponseEntity(ResponseUtils.buildError(ex.getStatus(), ex.getMessage(), request));
+    return ResponseUtils.buildErrorResponseEntity(
+        ResponseUtils.buildError(ex.getStatus(), ex.getMessage(), request));
   }
 
   /**

@@ -1,25 +1,22 @@
 package com.atlantbh.devdays.demo.abh.restaurants.service.users;
 
+import com.atlantbh.devdays.demo.abh.restaurants.configuration.security.Roles;
 import com.atlantbh.devdays.demo.abh.restaurants.domain.User;
 import com.atlantbh.devdays.demo.abh.restaurants.repository.UserRepository;
 import com.atlantbh.devdays.demo.abh.restaurants.service.BaseCrudService;
-import com.atlantbh.devdays.demo.abh.restaurants.service.event.EventBus;
-import com.atlantbh.devdays.demo.abh.restaurants.service.event.types.user.UserCreatedEvent;
-import com.atlantbh.devdays.demo.abh.restaurants.service.event.types.user.UserPasswordChangedEvent;
 import com.atlantbh.devdays.demo.abh.restaurants.service.exceptions.AccessDeniedServiceException;
 import com.atlantbh.devdays.demo.abh.restaurants.service.exceptions.EntityNotFoundServiceException;
-import com.atlantbh.devdays.demo.abh.restaurants.service.support.users.PasswordResetUser;
 import com.atlantbh.devdays.demo.abh.restaurants.service.users.exception.PasswordMismatchServiceException;
 import com.atlantbh.devdays.demo.abh.restaurants.service.users.requests.UserInfoRequest;
 import com.atlantbh.devdays.demo.abh.restaurants.service.users.requests.UserRequest;
 import com.atlantbh.devdays.demo.abh.restaurants.service.users.requests.UserSecurityInfoRequest;
-import java.security.SecureRandom;
 import java.util.Collections;
-import java.util.Random;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Primary;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -40,10 +37,6 @@ public class UsersService extends BaseCrudService<User, Long, UserRepository>
     implements UserDetailsService {
   private static final Logger LOGGER = LoggerFactory.getLogger(UsersService.class);
 
-  private static final int MAX_ACTIVATION_TOKEN = 1_000_000;
-
-  private static final Random SECURE_RANDOM = new SecureRandom();
-
   PasswordEncoder passwordEncoder;
 
   /**
@@ -52,9 +45,8 @@ public class UsersService extends BaseCrudService<User, Long, UserRepository>
    * @param repository User service repository.
    * @param passwordEncoder Password encoder.
    */
-  public UsersService(
-      UserRepository repository, PasswordEncoder passwordEncoder, EventBus eventBus) {
-    super(repository, eventBus);
+  public UsersService(UserRepository repository, PasswordEncoder passwordEncoder) {
+    super(repository);
     this.passwordEncoder = passwordEncoder;
   }
 
@@ -87,22 +79,6 @@ public class UsersService extends BaseCrudService<User, Long, UserRepository>
   }
 
   /**
-   * Returns a user given its email.
-   *
-   * @param email User email.
-   * @return User.
-   * @throws EntityNotFoundServiceException If no user found.
-   */
-  public User getByEmail(String email) throws EntityNotFoundServiceException {
-    User user = repository.findUserByEmail(email);
-    if (user == null) {
-      throw new EntityNotFoundServiceException();
-    }
-
-    return user;
-  }
-
-  /**
    * Creates a new user and saves it to database.
    *
    * @param request User creation request.
@@ -115,12 +91,9 @@ public class UsersService extends BaseCrudService<User, Long, UserRepository>
     user.setLastName(request.getLastName());
     user.setEmail(request.getEmail());
     user.setUsername(request.getUsername());
-    user.setActivated(false);
-
-    user.setPassword(encodePassword(request.getPassword(), null));
+    user.setPassword(passwordEncoder.encode(request.getPassword()));
 
     repository.save(user);
-    eventBus.publishEvent(new UserCreatedEvent(user));
 
     return user;
   }
@@ -144,7 +117,7 @@ public class UsersService extends BaseCrudService<User, Long, UserRepository>
     user.setFirstName(request.getFirstName());
     user.setLastName(request.getLastName());
 
-    updateUser(user);
+    repository.save(user);
   }
 
   /**
@@ -170,10 +143,7 @@ public class UsersService extends BaseCrudService<User, Long, UserRepository>
 
     // Password change.
     if (StringUtils.isNotEmpty(request.getPassword())) {
-      user.setPassword(encodePassword(request.getPassword(), user.getPassword()));
-
-      // Notify user of password change
-      eventBus.publishEvent(new UserPasswordChangedEvent(user));
+      user.setPassword(passwordEncoder.encode(request.getPassword()));
     }
 
     // Email change
@@ -181,7 +151,7 @@ public class UsersService extends BaseCrudService<User, Long, UserRepository>
       user.setEmail(request.getEmail());
     }
 
-    updateUser(user);
+    repository.save(user);
   }
 
   /**
@@ -203,8 +173,11 @@ public class UsersService extends BaseCrudService<User, Long, UserRepository>
       throw new UsernameNotFoundException("User with given username/email not found!");
     }
 
+    final GrantedAuthority grantedAuthority =
+        new SimpleGrantedAuthority(user.isAdmin() ? Roles.ADMIN.name() : Roles.USER.name());
+
     return new org.springframework.security.core.userdetails.User(
-        user.getUsername(), user.getPassword(), Collections.emptyList());
+        user.getUsername(), user.getPassword(), Collections.singletonList(grantedAuthority));
   }
 
   /**
@@ -216,49 +189,6 @@ public class UsersService extends BaseCrudService<User, Long, UserRepository>
   @Transactional(readOnly = true)
   public boolean verifyUserExists(String username) {
     return repository.existsByUsername(username);
-  }
-
-  /**
-   * Activates the user given an activation token.
-   *
-   * @param id Id of a user.
-   * @param activationToken Activation token.
-   * @throws EntityNotFoundServiceException If no user is found.
-   */
-  @Transactional
-  public void activateUser(Long id, String activationToken) throws EntityNotFoundServiceException {
-    User user = get(id);
-
-//        if (!user.isActivated() && verifyActivationToken(user, activationToken)) {
-//          user.setActivated(true);
-//          user.setActivationToken(null);
-//
-//          updateUser(user);
-//        }
-  }
-
-  /**
-   * Updates a updatedAt date and saves the user.
-   *
-   * @param user User to update.
-   * @return Updated user.
-   */
-  public User updateUser(User user) {
-    return repository.save(user);
-  }
-
-  /**
-   * Encodes a password.
-   *
-   * @param password Password to encode.
-   * @param encodedOldPassword Old encoded password. Can be null when user is being created.
-   * @return Encoded password.
-   */
-  private String encodePassword(String password, String encodedOldPassword) {
-    // NOTE(kklisura): Additional password security checks can be done here. This includes checking
-    // if new password matches old password or new password does not meet minimum security (ie
-    // password is one of the common passwords).
-    return passwordEncoder.encode(password);
   }
 
   /**
@@ -284,10 +214,6 @@ public class UsersService extends BaseCrudService<User, Long, UserRepository>
    */
   private void assertUserAllowedToUpdateSecurityInfo(User user, UserDetails currentUser)
       throws AccessDeniedServiceException {
-    if (PasswordResetUser.INSTANCE.equals(currentUser)) {
-      return;
-    }
-
     boolean isOwnSecurityInfo = user.getUsername().equalsIgnoreCase(currentUser.getUsername());
     if (!isOwnSecurityInfo) {
       throw new AccessDeniedServiceException();
@@ -307,14 +233,5 @@ public class UsersService extends BaseCrudService<User, Long, UserRepository>
     if (!isOwnInfo) {
       throw new AccessDeniedServiceException();
     }
-  }
-
-  /**
-   * Generates an activation token. Activation token is a number up to MAX_ACTIVATION_TOKEN value.
-   *
-   * @return Activation token.
-   */
-  private static String generateActivationToken() {
-    return Integer.toString(SECURE_RANDOM.nextInt() % MAX_ACTIVATION_TOKEN);
   }
 }

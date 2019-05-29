@@ -14,7 +14,7 @@ CREATE TABLE users (
 
   password VARCHAR(255) NOT NULL,
 
-  is_activated BOOLEAN DEFAULT FALSE,
+  is_admin BOOLEAN DEFAULT FALSE,
 
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW()

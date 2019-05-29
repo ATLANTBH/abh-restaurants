@@ -50,14 +50,14 @@ public class User {
 
   @JsonIgnore private String password;
 
+  @Column(name = "is_admin")
+  private boolean admin = false;
+
   @Column(name = "created_at", updatable = false, insertable = false)
   private Date createdAt;
 
   @Column(name = "updated_at", updatable = false, insertable = false)
   private Date updatedAt;
-
-  @Column(name = "is_activated")
-  private boolean activated;
 
   /**
    * Gets id.
@@ -185,21 +185,11 @@ public class User {
     return updatedAt;
   }
 
-  /**
-   * Is activated boolean.
-   *
-   * @return the boolean
-   */
-  public boolean isActivated() {
-    return activated;
+  public boolean isAdmin() {
+    return admin;
   }
 
-  /**
-   * Sets activated.
-   *
-   * @param activated the activated
-   */
-  public void setActivated(boolean activated) {
-    this.activated = activated;
+  public void setAdmin(boolean admin) {
+    this.admin = admin;
   }
 }

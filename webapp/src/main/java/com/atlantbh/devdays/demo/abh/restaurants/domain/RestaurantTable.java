@@ -1,7 +1,8 @@
 package com.atlantbh.devdays.demo.abh.restaurants.domain;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
+import javax.persistence.*;
 
 /**
  * Created by Kenan Klisura on 2019-05-22.
@@ -12,78 +13,54 @@ import java.util.Date;
 @Table(name = "restaurant_table")
 public class RestaurantTable {
 
-    @Id
-    @GeneratedValue
-    @Column(name = "id")
-    private Long id;
+  @Id
+  @GeneratedValue
+  @Column(name = "id")
+  private Long id;
 
-    // TODO(kklisura): We need real entity here.
-    @Column(name = "restaurant_id")
-    private Long restaurantId;
+  @JsonIgnore
+  @ManyToOne
+  @JoinColumn(name = "restaurant_id")
+  private Restaurant restaurant;
 
-    @Column(name = "number_of_chairs")
-    private Integer numberOfChairs;
+  @Column(name = "number_of_chairs")
+  private int numberOfChairs;
 
-    @Column(name = "created_at", updatable = false, insertable = false)
-    private Date createdAt;
+  @Column(name = "created_at", updatable = false, insertable = false)
+  private Date createdAt;
 
-    @Column(name = "updated_at", updatable = false, insertable = false)
-    private Date updatedAt;
+  @Column(name = "updated_at", updatable = false, insertable = false)
+  private Date updatedAt;
 
+  public Long getId() {
+    return id;
+  }
 
-    /**
-     * Instantiates a new Restaurant table.
-     */
-    public RestaurantTable() { }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    /**
-     * Gets id.
-     *
-     * @return the id
-     */
-    public Long getId() { return id; }
+  public Restaurant getRestaurant() {
+    return restaurant;
+  }
 
-    /**
-     * Sets id.
-     *
-     * @param id the id
-     */
-    public void setId(Long id) { this.id = id; }
+  public void setRestaurant(Restaurant restaurant) {
+    this.restaurant = restaurant;
+  }
 
-    /**
-     * Gets restaurant id.
-     *
-     * @return the restaurant id
-     */
-    public Long getRestaurantId() {  return restaurantId; }
+  public int getNumberOfChairs() {
+    return numberOfChairs;
+  }
 
-    /**
-     * Sets restaurant id.
-     *
-     * @param restaurantId the restaurant id
-     */
-    public void setRestaurantId(Long restaurantId) { this.restaurantId = restaurantId; }
+  public void setNumberOfChairs(int numberOfChairs) {
+    this.numberOfChairs = numberOfChairs;
+  }
 
-    /**
-     * Gets number of chairs.
-     *
-     * @return the number of chairs
-     */
-    public Integer getNumberOfChairs() { return numberOfChairs; }
+  public Date getCreatedAt() {
+    return createdAt;
+  }
 
-    /**
-     * Sets number of chairs.
-     *
-     * @param numberOfChairs the number of chairs
-     */
-    public void setNumberOfChairs(Integer numberOfChairs) { this.numberOfChairs = numberOfChairs; }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
+  public Date getUpdatedAt() {
+    return updatedAt;
+  }
 }
-
