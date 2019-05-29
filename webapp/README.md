@@ -16,6 +16,11 @@ cd deployment/local
 docker-compose up
 ```
 
+TODO:
+
+ - Controllers - Add routes
+ - Test API
+
 ## Unit tests
 
 `mvn clean test`
