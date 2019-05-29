@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.atlantbh.devdays.demo</groupId>
+    <artifactId>abh-restaurants</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>abh-restaurants-frontend</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <properties>
+    <useIncrementalCompilation>false</useIncrementalCompilation>
+
+    <node.version>v9.9.0</node.version>
+    <npm.version>6.1.0</npm.version>
+
+    <frontend.maven.version>1.6</frontend.maven.version>
+  </properties>
+
+  <profiles>
+    <profile>
+      <id>production</id>
+
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.github.eirslett</groupId>
+            <artifactId>frontend-maven-plugin</artifactId>
+            <version>${frontend.maven.version}</version>
+            <executions>
+              <execution>
+                <id>install node and npm</id>
+                <goals>
+                  <goal>install-node-and-npm</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <nodeVersion>${node.version}</nodeVersion>
+              <npmVersion>${npm.version}</npmVersion>
+            </configuration>
+          </plugin>
+
+          <plugin>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.6.0</version>
+            <groupId>org.codehaus.mojo</groupId>
+            <executions>
+              <execution>
+                <id>npm-install</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <configuration>
+                  <executable>sh</executable>
+                  <commandlineArgs>npm-install.sh</commandlineArgs>
+                  <workingDirectory>scripts</workingDirectory>
+                </configuration>
+              </execution>
+              <execution>
+                <id>ember-build</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <configuration>
+                  <executable>sh</executable>
+                  <commandlineArgs>scripts/ember-build.sh</commandlineArgs>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.0.2</version>
+        <configuration>
+          <skipIfEmpty>true</skipIfEmpty>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
