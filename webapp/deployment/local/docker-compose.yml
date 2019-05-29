@@ -1,9 +1,10 @@
 version: '3'
 services:
   postgres:
-    image: "postgres:11.3"
+    build:
+      context: ./postgres
     volumes:
-      - ./postgres/:/postgres-init-data/
+      - ./postgres/docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/
     ports:
       - "5432:5432"
     environment:
