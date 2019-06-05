@@ -4,16 +4,13 @@ import com.atlantbh.devdays.demo.abh.restaurants.domain.Reservation;
 import com.atlantbh.devdays.demo.abh.restaurants.repository.ReservationRepository;
 import com.atlantbh.devdays.demo.abh.restaurants.service.ReservationService;
 import com.atlantbh.devdays.demo.abh.restaurants.service.exceptions.EntityNotFoundServiceException;
+import com.atlantbh.devdays.demo.abh.restaurants.service.responses.UserReservations;
 import com.atlantbh.devdays.demo.abh.restaurants.service.users.UsersService;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Reservation controller.
@@ -45,8 +42,8 @@ public class ReservationController
   }
 
   @Transactional(readOnly = true)
-  @PutMapping("/my")
-  public List<Reservation> myReservations(@AuthenticationPrincipal UserDetails userDetails)
+  @GetMapping("/my")
+  public UserReservations myReservations(@AuthenticationPrincipal UserDetails userDetails)
       throws EntityNotFoundServiceException {
     return service.findUserReservations(usersService.get(userDetails));
   }

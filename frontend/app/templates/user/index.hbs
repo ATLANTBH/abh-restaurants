@@ -1,0 +1,35 @@
+<div class="admin-form">
+  {{#if model.reservations.upcoming}}
+    <h1 class="admin-from-title">
+      Upcoming Reservations
+    </h1>
+    <div class="reservation-list">
+      {{#each model.reservations.upcoming as |reservation|}}
+        {{user-reservation-details
+          reservation=reservation
+          class="user-reservation"
+        }}
+      {{/each}}
+    </div>
+  {{/if}}
+  {{#if model.reservations.past}}
+    <h1 class="admin-from-title">
+      Past Reservations
+    </h1>
+    <div class="reservation-list">
+      {{#each model.reservations.past as |reservation|}}
+        {{user-reservation-details
+          reservation=reservation
+          class="user-reservation"
+        }}
+      {{/each}}
+    </div>
+  {{/if}}
+  {{#unless model.reservations.upcoming}}
+    {{#unless model.reservations.past}}
+      <p>
+        You don't have any reservations yet
+      </p>
+    {{/unless}}
+  {{/unless}}
+</div>

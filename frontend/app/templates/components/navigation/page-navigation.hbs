@@ -31,15 +31,15 @@
             Restaurants
           {{/link-to}}
         </li>
-        {{#if user.isLoggedIn}}
+        {{#if currentUser}}
           <li class="nav-link-custom">
-            {{#if user.object.isAdmin}}
+            {{#if currentUser.isAdmin}}
               {{#link-to "admin"}}
-                Admin{{!-- {{user.object.name}} --}}
+                Admin{
               {{/link-to}}
             {{else}}
               {{#link-to "user"}}
-                {{user.object.name}}
+                {{currentUser.firstName}}{{currentUser.lastName}}
               {{/link-to}}
             {{/if}}
           </li>

@@ -1,9 +1,8 @@
 <div id="wrap">
-  {{navigation/page-navigation user=model.user}}
+  {{navigation/page-navigation}}
   <div id="main">
     <div class="container">
       {{restaurants/filters}}
-
       <div class="row">
         {{#each model as |restaurant|}}
           <div class="col-xs-12 col-sm-6 col-md-4">

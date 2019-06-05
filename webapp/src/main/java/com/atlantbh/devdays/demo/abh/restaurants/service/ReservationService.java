@@ -1,7 +1,5 @@
 package com.atlantbh.devdays.demo.abh.restaurants.service;
 
-import static com.atlantbh.devdays.demo.abh.restaurants.utils.time.DateTimeUtils.*;
-
 import com.atlantbh.devdays.demo.abh.restaurants.domain.Reservation;
 import com.atlantbh.devdays.demo.abh.restaurants.domain.RestaurantTable;
 import com.atlantbh.devdays.demo.abh.restaurants.domain.User;
@@ -11,13 +9,17 @@ import com.atlantbh.devdays.demo.abh.restaurants.service.exceptions.EntityNotFou
 import com.atlantbh.devdays.demo.abh.restaurants.service.exceptions.NoTablesAvailableServiceException;
 import com.atlantbh.devdays.demo.abh.restaurants.service.requests.ReservationRequest;
 import com.atlantbh.devdays.demo.abh.restaurants.service.responses.ReservationInquiryResponse;
+import com.atlantbh.devdays.demo.abh.restaurants.service.responses.UserReservations;
 import com.atlantbh.devdays.demo.abh.restaurants.utils.java.PredicateUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+
+import static com.atlantbh.devdays.demo.abh.restaurants.utils.time.DateTimeUtils.*;
 
 /**
  * Reservation service manages restaurant reservations.
@@ -207,8 +209,8 @@ public class ReservationService extends BaseCrudService<Reservation, Long, Reser
    * @param user User.
    * @return List of reservations.
    */
-  public List<Reservation> findUserReservations(User user) {
-    return repository.findUserReservations(user);
+  public UserReservations findUserReservations(User user) {
+    return new UserReservations(repository.findUserReservations(user));
   }
 
   /**

@@ -56,7 +56,9 @@ public class BootstrapController {
       throws EntityNotFoundServiceException {
     BootstrapDto result = new BootstrapDto();
     result.setBuildInfo(new GitRepositoryInfoDto(gitRepositoryConfig));
-    result.setCurrentUser(new CurrentUserDto(usersService.get(userDetails)));
+    if (userDetails != null) {
+      result.setCurrentUser(new CurrentUserDto(usersService.get(userDetails)));
+    }
     return result;
   }
 }

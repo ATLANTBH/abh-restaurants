@@ -9,11 +9,8 @@ const Router = EmberRouter.extend({
 Router.map(function() {
   this.route("login");
   this.route("register");
-  this.route("restaurants", () => {});
-
-  this.route("user", function() {
-    this.route("settings");
-  });
+  this.route("restaurants", function() {});
+  this.route("user", function() {});
 
   this.route("restaurant", { path: "restaurant/:id" });
 

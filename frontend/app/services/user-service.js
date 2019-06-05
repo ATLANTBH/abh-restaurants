@@ -5,7 +5,15 @@ export default BaseService.extend({
     return this.post("/api/v1/login", { email, password });
   },
 
+  logout() {
+    return this.post("/api/v1/logout");
+  },
+
   register(request) {
     return this.post("/api/v1/users", request);
+  },
+
+  findMyReservations() {
+    return this.get("/api/v1/reservation/my");
   }
 });

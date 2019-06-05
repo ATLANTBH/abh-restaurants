@@ -14,7 +14,7 @@ export default Controller.extend({
     onLogin() {
       this.get("userService")
         .login(this.get("email"), this.get("password"))
-        .then(user => this.transitionToRoute(user.isAdmin ? "admin" : "index"))
+        .then(() => window.location.reload())
         .catch(error => {
           this.set("hasError", true);
           this.set("errorMessage", error.payload.message);
