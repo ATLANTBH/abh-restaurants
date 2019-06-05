@@ -13,12 +13,16 @@ import com.atlantbh.devdays.demo.abh.restaurants.service.requests.RestaurantRequ
 import com.atlantbh.devdays.demo.abh.restaurants.service.requests.ReviewRequest;
 import com.atlantbh.devdays.demo.abh.restaurants.service.responses.PopularLocation;
 import com.atlantbh.devdays.demo.abh.restaurants.service.responses.RestaurantImageResponse;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalDouble;
+import java.util.stream.Collectors;
 
 /**
  * Created by Kenan Klisura on 2019-05-23.
@@ -74,7 +78,8 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
    * @return Updated restaurant.
    * @throws EntityNotFoundServiceException If no restaurant or any other dependent entity found.
    */
-  public Restaurant update(Long id, RestaurantRequest request) throws EntityNotFoundServiceException {
+  public Restaurant update(Long id, RestaurantRequest request)
+      throws EntityNotFoundServiceException {
     Restaurant restaurant = get(id);
     updateRestaurant(restaurant, request);
     return repository.save(restaurant);
@@ -88,14 +93,30 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
     return restaurants;
   }
 
+  /**
+   * Fetches near-by restaurants with center specified by latitude and longitude.
+   *
+   * @return List of near-by restaurants.
+   */
   public List<Restaurant> findNearBy(float latitude, float longitude) {
-    return repository.findNearBy(latitude, longitude);
+    return populateRestaurantRatings(repository.findNearBy(latitude, longitude));
   }
 
+  /**
+   * Fetches popular restaurants.
+   *
+   * @return List of popular restaurants.
+   */
   public List<Restaurant> findPopular() {
-    return repository.findPopular();
+    return populateRestaurantRatings(repository.findPopular());
   }
 
+  /**
+   * Fetches the popular locations for all restaurants.
+   *
+   * @return List of popular locations.
+   * @throws EntityNotFoundServiceException If any entity is not found.
+   */
   public List<PopularLocation> findPopularLocations() throws EntityNotFoundServiceException {
     final List<PopularLocation> popularLocations = repository.findPopularLocations();
 
@@ -181,5 +202,32 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
     restaurant.setProfileImagePath(request.getProfileImagePath());
     restaurant.setCloseTime(request.getCloseTime());
     restaurant.setOpenTime(request.getOpenTime());
+  }
+
+  /**
+   * Populates a ratings on a list of restaurants.
+   *
+   * @param restaurants List of restaurants.
+   * @return List of restaurants with its ratings populated.
+   */
+  private List<Restaurant> populateRestaurantRatings(Collection<Restaurant> restaurants) {
+    return restaurants.stream().map(this::populateRestaurantRatings).collect(Collectors.toList());
+  }
+
+  /**
+   * Populates a ratings on a restaurant.
+   *
+   * @param restaurant Restaurant to populate its rating.
+   * @return A restaurant.
+   */
+  private Restaurant populateRestaurantRatings(Restaurant restaurant) {
+    final List<RestaurantReview> reviews = restaurantReviewRepository.findByRestaurant(restaurant);
+    if (CollectionUtils.isNotEmpty(reviews)) {
+      restaurant.setNumberOfRatings(reviews.size());
+      final OptionalDouble averageRating = reviews.stream().mapToInt(RestaurantReview::getRating).average();
+      restaurant.setAverageRating((float) averageRating.orElse(0d));
+    }
+
+    return restaurant;
   }
 }

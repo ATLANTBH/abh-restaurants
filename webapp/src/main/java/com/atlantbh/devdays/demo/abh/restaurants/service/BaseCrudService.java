@@ -2,9 +2,8 @@ package com.atlantbh.devdays.demo.abh.restaurants.service;
 
 import com.atlantbh.devdays.demo.abh.restaurants.repository.BaseCrudRepository;
 import com.atlantbh.devdays.demo.abh.restaurants.service.exceptions.EntityNotFoundServiceException;
-import org.springframework.data.domain.Sort;
-
 import java.util.Optional;
+import org.springframework.data.domain.Sort;
 
 /**
  * Base crud service.

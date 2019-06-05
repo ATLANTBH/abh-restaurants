@@ -12,42 +12,42 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Cuisine controller.
  *
- * TODO(kklisura): Errors when entity is not found.
- * TODO(kklisura): Protected APIs?
+ * <p>TODO(kklisura): Errors when entity is not found. TODO(kklisura): Protected APIs?
  *
  * @author Kenan Klisura
  */
 @RestController
 @RequestMapping(path = "/api/v1/cuisine")
 public class CuisineController extends BaseController<CuisineService, CuisineRepository, Cuisine> {
-    @Autowired
-    public CuisineController(CuisineService service) {
-        super(service);
-    }
+  @Autowired
+  public CuisineController(CuisineService service) {
+    super(service);
+  }
 
-    /**
-     * Creates a new cuisine.
-     *
-     * @param request Cuisine request.
-     * @return Newly created cuisine.
-     */
-    @Transactional
-    @PostMapping
-    public Cuisine create(@RequestBody CuisineRequest request) {
-        return service.create(request);
-    }
+  /**
+   * Creates a new cuisine.
+   *
+   * @param request Cuisine request.
+   * @return Newly created cuisine.
+   */
+  @Transactional
+  @PostMapping
+  public Cuisine create(@RequestBody CuisineRequest request) {
+    return service.create(request);
+  }
 
-    /**
-     * Updates an existing cuisine.
-     *
-     * @param id Id of a city.
-     * @param request Cuisine request.
-     * @return Updated cuisine.
-     * @throws EntityNotFoundServiceException If no city is found.
-     */
-    @Transactional
-    @PutMapping("{id}")
-    public Cuisine update(@PathVariable("id") Long id,  @RequestBody CuisineRequest request) throws EntityNotFoundServiceException {
-        return service.update(id, request);
-    }
+  /**
+   * Updates an existing cuisine.
+   *
+   * @param id Id of a city.
+   * @param request Cuisine request.
+   * @return Updated cuisine.
+   * @throws EntityNotFoundServiceException If no city is found.
+   */
+  @Transactional
+  @PutMapping("{id}")
+  public Cuisine update(@PathVariable("id") Long id, @RequestBody CuisineRequest request)
+      throws EntityNotFoundServiceException {
+    return service.update(id, request);
+  }
 }

@@ -9,10 +9,13 @@ import com.atlantbh.devdays.demo.abh.restaurants.service.exceptions.EntityNotFou
 import com.atlantbh.devdays.demo.abh.restaurants.service.exceptions.NoTablesAvailableServiceException;
 import com.atlantbh.devdays.demo.abh.restaurants.service.requests.ReservationRequest;
 import com.atlantbh.devdays.demo.abh.restaurants.service.requests.RestaurantRequest;
+import com.atlantbh.devdays.demo.abh.restaurants.service.responses.PopularLocation;
 import com.atlantbh.devdays.demo.abh.restaurants.service.responses.ReservationInquiryResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Restaurant controller.
@@ -21,36 +24,80 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping(path = "/api/v1/restaurant")
-public class RestaurantController extends BaseController<RestaurantService, RestaurantRepository, Restaurant> {
-    private ReservationService reservationService;
+public class RestaurantController
+    extends BaseController<RestaurantService, RestaurantRepository, Restaurant> {
+  private ReservationService reservationService;
 
-    @Autowired
-    public RestaurantController(RestaurantService service, ReservationService reservationService) {
-        super(service);
-        this.reservationService = reservationService;
-    }
+  @Autowired
+  public RestaurantController(RestaurantService service, ReservationService reservationService) {
+    super(service);
+    this.reservationService = reservationService;
+  }
 
-    @Transactional(readOnly = true)
-    @PostMapping("/{id}/reservation-inquiry")
-    public ReservationInquiryResponse reservationInquiry(@PathVariable("id") Long id, @RequestBody ReservationRequest request) {
-        return reservationService.reservationInquiry(id, request);
-    }
+  /**
+   * Fetches near-by restaurant specified by lat and lng.
+   *
+   * @param lat Latitude.
+   * @param lng Longitude.
+   * @return List of near-by restaurants.
+   */
+  @Transactional(readOnly = true)
+  @GetMapping("/near-by/{lat}/{lng}")
+  public List<Restaurant> findNearBy(
+      @PathVariable("lat") float lat, @PathVariable("lng") float lng) {
+    return service.findNearBy(lat, lng);
+  }
 
-    @Transactional
-    @PostMapping("/{id}/reservation")
-    public Reservation reservation(@PathVariable("id") Long id, @RequestBody ReservationRequest request) throws NoTablesAvailableServiceException {
-        return reservationService.create(id, request);
-    }
+  /**
+   * Fetches a popular restaurants.
+   *
+   * @return List of restaurants.
+   */
+  @Transactional(readOnly = true)
+  @GetMapping("/popular")
+  public List<Restaurant> findPopular() {
+    return service.findPopular();
+  }
 
-    @Transactional
-    @PostMapping
-    public Restaurant create(@RequestBody RestaurantRequest request) throws EntityNotFoundServiceException {
-        return service.create(request);
-    }
+  /**
+   * Fetches popular locations for all restaurants.
+   *
+   * @return List of popular locations.
+   * @throws EntityNotFoundServiceException If any entity is not found.
+   */
+  @Transactional(readOnly = true)
+  @GetMapping("/popular-locations")
+  public List<PopularLocation> findPopularLocations() throws EntityNotFoundServiceException {
+    return service.findPopularLocations();
+  }
 
-    @Transactional
-    @PutMapping("{id}")
-    public Restaurant update(@PathVariable("id") Long id, @RequestBody RestaurantRequest request) throws EntityNotFoundServiceException {
-        return service.update(id, request);
-    }
+
+  @Transactional(readOnly = true)
+  @PostMapping("/{id}/reservation-inquiry")
+  public ReservationInquiryResponse reservationInquiry(
+      @PathVariable("id") Long id, @RequestBody ReservationRequest request) {
+    return reservationService.reservationInquiry(id, request);
+  }
+
+  @Transactional
+  @PostMapping("/{id}/reservation")
+  public Reservation reservation(
+      @PathVariable("id") Long id, @RequestBody ReservationRequest request)
+      throws NoTablesAvailableServiceException {
+    return reservationService.create(id, request);
+  }
+
+  @Transactional
+  @PostMapping
+  public Restaurant create(@RequestBody RestaurantRequest request)
+      throws EntityNotFoundServiceException {
+    return service.create(request);
+  }
+
+  @Transactional
+  @PutMapping("{id}")
+  public Restaurant update(@PathVariable("id") Long id, @RequestBody RestaurantRequest request)
+      throws EntityNotFoundServiceException {
+    return service.update(id, request);
+  }
 }

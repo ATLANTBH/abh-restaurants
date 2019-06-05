@@ -30,6 +30,7 @@
     <commonsio.version>2.6</commonsio.version>
     <commons.collections.version>4.1</commons.collections.version>
     <commons.text.version>1.3</commons.text.version>
+    <commons-collections4.version>4.3</commons-collections4.version>
     <postgres.embedded.version>2.9</postgres.embedded.version>
     <hibernate.jpamodelgen.version>5.3.1.Final</hibernate.jpamodelgen.version>
     <jjwt.version>0.9.0</jjwt.version>
@@ -301,6 +302,11 @@
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-text</artifactId>
       <version>${commons.text.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-collections4</artifactId>
+      <version>${commons-collections4.version}</version>
     </dependency>
     <dependency>
       <groupId>commons-io</groupId>

@@ -1,0 +1,127 @@
+.restaurant-tile {
+  position: relative;
+  width: 100%;
+  min-height: 421px;
+  margin-bottom: 50px;
+}
+
+.restaurant-tile a:hover,
+.restaurant-tile a:focus {
+  text-decoration: none;
+}
+
+.restaurant-tile a:hover .restaurant-tile-name {
+  color: #fd6f60;
+}
+
+.restaurant-tile-image {
+  width: 100%;
+  height: 260px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.restaurant-tile-name {
+  margin-top: 15px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #131d24;
+}
+
+.restaurant-tile-rating {
+  font-size: 16px;
+  height: 19px;
+}
+
+.restaurant-tile-stars {
+  float: left;
+}
+
+.restaurant-tile-stars i.full {
+  color: #fd6f60;
+}
+
+.restaurant-tile-stars i.empty {
+  color: rgba(19, 29, 36, 0.2);
+}
+
+.restaurant-tile-stars i {
+  margin-right: 7px;
+}
+
+.restaurant-tile-ratecount {
+  opacity: 0.4;
+  color: #131d24;
+  padding: 0 6px;
+  float: left;
+}
+
+.restaurant-tile-pricernage {
+  font-size: 12px;
+  font-weight: 600;
+  color: #131d24;
+  float: left;
+  padding: 3px 0;
+  margin-left: 5px;
+}
+
+.restaurant-tile-pricernage .empty {
+  opacity: 0.4;
+}
+
+.restaurant-tile-separator {
+  border: none;
+  outline: none;
+  height: 1px;
+  width: 100%;
+  background-color: #e5e5e5;
+  margin-top: 14px;
+  margin-bottom: 5px;
+}
+
+.restaurant-tile-foodtypes {
+  color: #131d24;
+  opacity: 0.4;
+  font-size: 16px;
+  margin-bottom: 25px;
+}
+
+.restaurant-tile-foodtypes span {
+  position: relative;
+  display: inline-block;
+  padding: 0 10px;
+}
+
+.restaurant-tile-foodtypes span:after {
+  content: "|";
+  position: absolute;
+  right: -1px;
+}
+
+.restaurant-tile-foodtypes span:first-of-type {
+  padding-left: 0;
+}
+
+.restaurant-tile-foodtypes span:last-of-type:after {
+  display: none;
+}
+
+.reserve-now-button {
+  outline: none;
+  border-radius: 2px;
+  border: solid 1px #e5e5e5;
+  font-size: 18px;
+  font-weight: 600;
+  height: 36px;
+  width: 100%;
+  color: #131d24;
+}
+
+.white-button {
+  background-color: #fff;
+}
+
+.grey-button {
+  background-color: #f9f9f9;
+}

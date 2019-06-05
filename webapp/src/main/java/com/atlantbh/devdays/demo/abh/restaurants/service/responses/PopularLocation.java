@@ -2,13 +2,14 @@ package com.atlantbh.devdays.demo.abh.restaurants.service.responses;
 
 import com.atlantbh.devdays.demo.abh.restaurants.domain.City;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
 /**
- * Created by Kenan Klisura on 2019-05-27.
+ * Popular locations.
  *
  * @author Kenan Klisura
  */
@@ -19,7 +20,8 @@ public class PopularLocation {
   @JsonIgnore
   private Long cityId;
 
-  @Transient private City city;
+  @Transient
+  private City city;
 
   @Column(name = "restaurant_count")
   private int numberOfRestaurants;

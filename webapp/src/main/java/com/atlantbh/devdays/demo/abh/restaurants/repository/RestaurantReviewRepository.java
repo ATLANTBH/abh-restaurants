@@ -3,6 +3,7 @@ package com.atlantbh.devdays.demo.abh.restaurants.repository;
 import com.atlantbh.devdays.demo.abh.restaurants.domain.Restaurant;
 import com.atlantbh.devdays.demo.abh.restaurants.domain.RestaurantReview;
 import com.atlantbh.devdays.demo.abh.restaurants.domain.User;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 
@@ -12,6 +13,8 @@ import org.springframework.data.repository.CrudRepository;
  * @author Kenan Klisura
  */
 public interface RestaurantReviewRepository extends CrudRepository<RestaurantReview, Long> {
+
+  List<RestaurantReview> findByRestaurant(Restaurant restaurant);
 
   Optional<RestaurantReview> findByRestaurantAndUser(Restaurant restaurant, User user);
 }

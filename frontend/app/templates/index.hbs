@@ -1,7 +1,7 @@
 <div id="wrap" class="white-wrapeer">
   {{#navigation/home-navigation
     type="homepage"
-    coverImage="https://abhrestaurants.s3.amazonaws.com/placeholder-cover.jpg"
+    coverImage="/images/home-header.jpeg"
     user=model.user
   }}
     <h1>
@@ -79,42 +79,8 @@
     {{/if}}
   {{/navigation/home-navigation}}
   <div id="main">
-    {{#if geolocation}}
-      <div class="container popularRestaurants">
-        <div class="row">
-          <div class="col-xs-12">
-            <h1 class="section-title">
-              Restaurants Near You
-            </h1>
-          </div>
-        </div>
-        <div class="row">
-          {{#each nearbyRestaurants as |restaurant|}}
-            <div class="col-xs-12 col-sm-6 col-md-4">
-              {{restaurant-tile data=restaurant buttonStyle="grey"}}
-            </div>
-          {{/each}}
-        </div>
-      </div>
-    {{/if}}
-    {{#if hasPopularRestaurants}}
-      <div class="container popularRestaurants">
-        <div class="row">
-          <div class="col-xs-12">
-            <h1 class="section-title">
-              Popular Today
-            </h1>
-          </div>
-        </div>
-        <div class="row">
-          {{#each model.popularRestaurants as |restaurant|}}
-            <div class="col-xs-12 col-sm-6 col-md-4">
-              {{restaurant-tile data=restaurant buttonStyle="grey"}}
-            </div>
-          {{/each}}
-        </div>
-      </div>
-    {{/if}}
-    {{home-popular-locations locations=model.popularLocations}}
+    {{home-near-by-restaurants}}
+    {{home-popular-restaurants}}
+    {{home-popular-locations}}
   </div>
 </div>

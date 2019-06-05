@@ -102,11 +102,9 @@ public class Restaurant {
   @Column(name = "updated_at", updatable = false, insertable = false)
   private Date updatedAt;
 
-  // TODO(kklisura): DTO?
-  @Transient private Integer numberOfRatings = 0;
+  @Transient private int numberOfRatings = 0;
 
-  // TODO(kklisura): DTO?
-  @Transient private Double averageRating;
+  @Transient private float averageRating = 0f;
 
   /** Instantiates a new Restaurant. */
   public Restaurant() {}
@@ -389,14 +387,23 @@ public class Restaurant {
     this.tables = tables;
   }
 
-  /**
-   * Gets number of ratings.
-   *
-   * @return the number of ratings
-   */
-  public Integer getNumberOfRatings() {
-    return this.reviews.size();
+  public int getNumberOfRatings() {
+    return numberOfRatings;
   }
+
+  public void setNumberOfRatings(int numberOfRatings) {
+    this.numberOfRatings = numberOfRatings;
+  }
+
+  public float getAverageRating() {
+    return averageRating;
+  }
+
+  public void setAverageRating(float averageRating) {
+    this.averageRating = averageRating;
+  }
+
+
 
   // TODO(kklisura): Should this be in service?
   //    /**
@@ -444,15 +451,6 @@ public class Restaurant {
    */
   public void setLongitude(Float longitude) {
     this.longitude = longitude;
-  }
-
-  /**
-   * Sets average rating.
-   *
-   * @param averageRating the average rating
-   */
-  public void setAverageRating(Double averageRating) {
-    this.averageRating = averageRating;
   }
 
   public Date getCreatedAt() {

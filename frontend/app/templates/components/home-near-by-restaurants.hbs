@@ -1,0 +1,18 @@
+{{#if geolocation}}
+  <div class="container popularRestaurants">
+    <div class="row">
+      <div class="col-xs-12">
+        <h1 class="section-title">
+          Restaurants Near You
+        </h1>
+      </div>
+    </div>
+    <div class="row">
+      {{#each nearbyRestaurants as |restaurant|}}
+        <div class="col-xs-12 col-sm-6 col-md-4">
+          {{restaurants/restaurant-tile data=restaurant buttonStyle="grey"}}
+        </div>
+      {{/each}}
+    </div>
+  </div>
+{{/if}}

@@ -29,6 +29,9 @@ spring:
     checkTemplateLocation: false
 
 # App related config
+logging:
+  level:
+    root: TRACE
 
 ---
 #
@@ -38,17 +41,9 @@ spring:
   profiles: develop
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/abh-restaurants
+    url: jdbc:postgresql://localhost:5432/abh-restaurants?currentSchema=restaurants
     username: postgres
     password: postgres
-
-# App related config
-app:
-  users:
-    activation:
-      secret: "c2VjcmV0"
-    reset-password:
-      secret: "c2VjcmV0"
 
 ---
 #

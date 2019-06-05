@@ -1,0 +1,27 @@
+.location {
+  margin-bottom: 25px;
+}
+
+.location-link {
+  text-decoration: none;
+  color: #131d24;
+  cursor: pointer;
+}
+
+.location-link:hover,
+.location-link:active {
+  text-decoration: none;
+}
+
+.location-city-name {
+  font-size: 20px;
+  font-weight: 600;
+  color: #131d24;
+  margin-bottom: 0;
+}
+
+.location-restaurant-count {
+  font-size: 18px;
+  color: #131d24;
+  opacity: 0.4;
+}

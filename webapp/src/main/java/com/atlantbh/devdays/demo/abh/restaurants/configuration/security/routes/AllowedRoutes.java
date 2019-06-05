@@ -2,8 +2,7 @@ package com.atlantbh.devdays.demo.abh.restaurants.configuration.security.routes;
 
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
-import static com.atlantbh.devdays.demo.abh.restaurants.configuration.security.RouteUtils.any;
-import static com.atlantbh.devdays.demo.abh.restaurants.configuration.security.RouteUtils.post;
+import static com.atlantbh.devdays.demo.abh.restaurants.configuration.security.RouteUtils.*;
 
 /**
  * These are allowed routes for the the application. They do not need authenticated user to be
@@ -22,5 +21,10 @@ public class AllowedRoutes {
   public static final RequestMatcher CITY_API = any("/api/v1/city/**");
   public static final RequestMatcher CUISINE_API = any("/api/v1/cuisine/**");
 
-  public static final RequestMatcher ROUTES = any(LOGIN_ROUTE, LOGOUT_ROUTE, CITY_API, CUISINE_API);
+  public static final RequestMatcher NEAR_BY_RESTAURANTS = get("/api/v1/restaurant/near-by/**");
+  public static final RequestMatcher POPULAR_RESTAURANTS = get("/api/v1/restaurant/popular");
+  public static final RequestMatcher POPULAR_LOCATIONS_RESTAURANTS = get("/api/v1/restaurant/popular-locations");
+
+  public static final RequestMatcher ROUTES =
+      any(LOGIN_ROUTE, LOGOUT_ROUTE, CITY_API, CUISINE_API, NEAR_BY_RESTAURANTS, POPULAR_RESTAURANTS, POPULAR_LOCATIONS_RESTAURANTS);
 }

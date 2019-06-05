@@ -14,47 +14,47 @@ import org.springframework.web.bind.annotation.PathVariable;
  *
  * @author Kenan Klisura
  */
-public class BaseController<T extends BaseCrudService<M, Long, R>, R extends BaseCrudRepository<M, Long>, M> {
-    protected T service;
+public class BaseController<
+    T extends BaseCrudService<M, Long, R>, R extends BaseCrudRepository<M, Long>, M> {
+  protected T service;
 
-    @Autowired
-    public BaseController(T service) {
-        this.service = service;
-    }
+  @Autowired
+  public BaseController(T service) {
+    this.service = service;
+  }
 
-    /**
-     * Returns all items.
-     *
-     * @return All items.
-     */
-    @Transactional(readOnly = true)
-    @GetMapping
-    public Iterable<M> findAll() {
-        return service.findAll();
-    }
+  /**
+   * Returns all items.
+   *
+   * @return All items.
+   */
+  @Transactional(readOnly = true)
+  @GetMapping
+  public Iterable<M> findAll() {
+    return service.findAll();
+  }
 
-    /**
-     * Fetches the model with specified id.
-     *
-     * @param id Id of an entity.
-     * @return Model.
-     * @throws EntityNotFoundServiceException If no entity found.
-     */
-    @Transactional(readOnly = true)
-    @GetMapping("{id}")
-    public M get(@PathVariable("id") Long id) throws EntityNotFoundServiceException {
-        return service.get(id);
-    }
+  /**
+   * Fetches the model with specified id.
+   *
+   * @param id Id of an entity.
+   * @return Model.
+   * @throws EntityNotFoundServiceException If no entity found.
+   */
+  @Transactional(readOnly = true)
+  @GetMapping("{id}")
+  public M get(@PathVariable("id") Long id) throws EntityNotFoundServiceException {
+    return service.get(id);
+  }
 
-    /**
-     * Deletes an entity.
-     *
-     * @param id Id of a specific entity.
-     */
-    @Transactional
-    @DeleteMapping("{id}")
-    public void delete(@PathVariable("id") Long id) {
-        service.delete(id);
-    }
+  /**
+   * Deletes an entity.
+   *
+   * @param id Id of a specific entity.
+   */
+  @Transactional
+  @DeleteMapping("{id}")
+  public void delete(@PathVariable("id") Long id) {
+    service.delete(id);
+  }
 }
-
