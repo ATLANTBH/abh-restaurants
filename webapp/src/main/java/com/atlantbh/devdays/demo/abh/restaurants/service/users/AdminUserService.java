@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class AdminUserService extends UsersService {
   private static final String DEFAULT_ADMIN_NAME = "Admin";
-  private static final String DEFAULT_ADMIN_USERNAME = "admin";
   private static final String DEFAULT_ADMIN_PASSWORD = "admin";
   private static final String DEFAULT_ADMIN_EMAIL = "admin@example.com";
 
@@ -28,7 +27,6 @@ public class AdminUserService extends UsersService {
   /** Creates default users. */
   public void createDefault() {
     createIfNotExists(
-        DEFAULT_ADMIN_USERNAME,
         DEFAULT_ADMIN_EMAIL,
         DEFAULT_ADMIN_PASSWORD,
         DEFAULT_ADMIN_NAME,
@@ -38,24 +36,21 @@ public class AdminUserService extends UsersService {
   /**
    * Creates a new user with given params, if user with similar username does not exist.
    *
-   * @param username Username.
    * @param email Email.
    * @param password Password.
    * @param firstName First name.
    * @param lastName Last name.
    */
-  private void createIfNotExists(
-      String username, String email, String password, String firstName, String lastName) {
-    User user = repository.findUserByUsername(username);
+  private void createIfNotExists(String email, String password, String firstName, String lastName) {
+    User user = repository.findUserByEmail(email);
     if (user == null) {
-      LOGGER.info("Creating default admin {}:{} user...", username, password);
+      LOGGER.info("Creating default admin {}:{} user...", email, password);
 
       user = new User();
 
       user.setFirstName(firstName);
       user.setLastName(lastName);
       user.setEmail(email);
-      user.setUsername(username);
       user.setAdmin(true);
 
       user.setPassword(passwordEncoder.encode(password));

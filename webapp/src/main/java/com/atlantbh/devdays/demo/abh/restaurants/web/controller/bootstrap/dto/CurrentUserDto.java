@@ -16,8 +16,6 @@ public class CurrentUserDto {
 
   private String email;
 
-  private String username;
-
   /**
    * Instantiates a new CurrentUserDto given a user.
    *
@@ -26,7 +24,6 @@ public class CurrentUserDto {
   public CurrentUserDto(User user) {
     this.id = user.getId();
     this.email = user.getEmail();
-    this.username = user.getUsername();
     this.firstName = user.getFirstName();
     this.lastName = user.getLastName();
   }
@@ -65,14 +62,5 @@ public class CurrentUserDto {
    */
   public String getEmail() {
     return email;
-  }
-
-  /**
-   * Gets username.
-   *
-   * @return the username
-   */
-  public String getUsername() {
-    return username;
   }
 }

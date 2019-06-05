@@ -25,6 +25,8 @@ public class AllowedRoutes {
   public static final RequestMatcher POPULAR_RESTAURANTS = get("/api/v1/restaurant/popular");
   public static final RequestMatcher POPULAR_LOCATIONS_RESTAURANTS = get("/api/v1/restaurant/popular-locations");
 
+  public static final RequestMatcher REGISTER = post("/api/v1/users");
+
   public static final RequestMatcher ROUTES =
-      any(LOGIN_ROUTE, LOGOUT_ROUTE, CITY_API, CUISINE_API, NEAR_BY_RESTAURANTS, POPULAR_RESTAURANTS, POPULAR_LOCATIONS_RESTAURANTS);
+      any(LOGIN_ROUTE, LOGOUT_ROUTE, CITY_API, CUISINE_API, NEAR_BY_RESTAURANTS, POPULAR_RESTAURANTS, POPULAR_LOCATIONS_RESTAURANTS, REGISTER);
 }

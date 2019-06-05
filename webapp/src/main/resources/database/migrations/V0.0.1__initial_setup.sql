@@ -9,7 +9,6 @@ CREATE TABLE users (
   first_name VARCHAR(255) NOT NULL,
   last_name VARCHAR(255) NOT NULL,
 
-  username VARCHAR(255) NOT NULL CONSTRAINT users_username_uq UNIQUE,
   email VARCHAR(512) NOT NULL CONSTRAINT users_email_uq UNIQUE,
 
   password VARCHAR(255) NOT NULL,

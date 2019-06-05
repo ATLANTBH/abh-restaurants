@@ -18,10 +18,6 @@ public class UserRequest {
   @Size(max = 255)
   private String lastName;
 
-  @NotNull
-  @Size(max = 255)
-  private String username;
-
   @Email
   @Size(max = 512)
   private String email;
@@ -62,24 +58,6 @@ public class UserRequest {
    */
   public void setLastName(String lastName) {
     this.lastName = lastName;
-  }
-
-  /**
-   * Gets username.
-   *
-   * @return the username
-   */
-  public String getUsername() {
-    return username;
-  }
-
-  /**
-   * Sets username.
-   *
-   * @param username the username
-   */
-  public void setUsername(String username) {
-    this.username = username;
   }
 
   /**

@@ -1,0 +1,10 @@
+<select
+  class="form-input"
+  onchange={{action "onSelectCity" value="target.value"}}
+>
+  {{#each cities as |city|}}
+    <option value="{{city.id}}">
+      {{city.name}}
+    </option>
+  {{/each}}
+</select>

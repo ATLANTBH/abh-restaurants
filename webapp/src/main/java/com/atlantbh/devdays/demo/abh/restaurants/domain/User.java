@@ -3,11 +3,12 @@ package com.atlantbh.devdays.demo.abh.restaurants.domain;
 import com.atlantbh.devdays.demo.abh.restaurants.utils.persistence.Constraint;
 import com.atlantbh.devdays.demo.abh.restaurants.utils.persistence.Constraints;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.Date;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 /**
  * User model.
@@ -18,7 +19,6 @@ import javax.validation.constraints.Size;
 @Table(name = "users")
 @Constraints(
   list = {
-    @Constraint(name = "users_username_uq", errorMessage = "User with given name already exists."),
     @Constraint(name = "users_email_uq", errorMessage = "User with given email already exists."),
   }
 )
@@ -38,10 +38,6 @@ public class User {
   @Size(max = 255)
   @Column(name = "last_name")
   private String lastName;
-
-  @NotNull
-  @Size(max = 255)
-  private String username;
 
   @NotNull
   @Size(max = 512)
@@ -111,24 +107,6 @@ public class User {
    */
   public void setLastName(String lastName) {
     this.lastName = lastName;
-  }
-
-  /**
-   * Gets username.
-   *
-   * @return the username
-   */
-  public String getUsername() {
-    return username;
-  }
-
-  /**
-   * Sets username.
-   *
-   * @param username the username
-   */
-  public void setUsername(String username) {
-    this.username = username;
   }
 
   /**

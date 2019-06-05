@@ -10,7 +10,6 @@ import com.atlantbh.devdays.demo.abh.restaurants.service.users.exception.Passwor
 import com.atlantbh.devdays.demo.abh.restaurants.service.users.requests.UserInfoRequest;
 import com.atlantbh.devdays.demo.abh.restaurants.service.users.requests.UserRequest;
 import com.atlantbh.devdays.demo.abh.restaurants.service.users.requests.UserSecurityInfoRequest;
-import java.util.Collections;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +22,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collections;
 
 /**
  * Users service manages users.
@@ -70,7 +71,7 @@ public class UsersService extends BaseCrudService<User, Long, UserRepository>
    * @throws EntityNotFoundServiceException If user is not found.
    */
   public User get(UserDetails userDetails) throws EntityNotFoundServiceException {
-    User user = repository.findUserByUsername(userDetails.getUsername());
+    User user = repository.findUserByEmail(userDetails.getUsername());
     if (user == null) {
       throw new EntityNotFoundServiceException();
     }
@@ -90,7 +91,6 @@ public class UsersService extends BaseCrudService<User, Long, UserRepository>
     user.setFirstName(request.getFirstName());
     user.setLastName(request.getLastName());
     user.setEmail(request.getEmail());
-    user.setUsername(request.getUsername());
     user.setPassword(passwordEncoder.encode(request.getPassword()));
 
     repository.save(user);
@@ -164,31 +164,27 @@ public class UsersService extends BaseCrudService<User, Long, UserRepository>
   @Transactional(readOnly = true)
   @Override
   public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
-    User user = repository.findUserByUsername(usernameOrEmail);
+    User user = repository.findUserByEmail(usernameOrEmail);
     if (user == null) {
-      user = repository.findUserByEmail(usernameOrEmail);
-    }
-
-    if (user == null) {
-      throw new UsernameNotFoundException("User with given username/email not found!");
+      throw new UsernameNotFoundException("User with given email not found!");
     }
 
     final GrantedAuthority grantedAuthority =
         new SimpleGrantedAuthority(user.isAdmin() ? Roles.ADMIN.name() : Roles.USER.name());
 
     return new org.springframework.security.core.userdetails.User(
-        user.getUsername(), user.getPassword(), Collections.singletonList(grantedAuthority));
+        user.getEmail(), user.getPassword(), Collections.singletonList(grantedAuthority));
   }
 
   /**
    * Verifies a user with given username exists.
    *
-   * @param username Username
+   * @param email Email
    * @return True if user exists.
    */
   @Transactional(readOnly = true)
-  public boolean verifyUserExists(String username) {
-    return repository.existsByUsername(username);
+  public boolean verifyUserExists(String email) {
+    return repository.existsByEmail(email);
   }
 
   /**
@@ -214,7 +210,7 @@ public class UsersService extends BaseCrudService<User, Long, UserRepository>
    */
   private void assertUserAllowedToUpdateSecurityInfo(User user, UserDetails currentUser)
       throws AccessDeniedServiceException {
-    boolean isOwnSecurityInfo = user.getUsername().equalsIgnoreCase(currentUser.getUsername());
+    boolean isOwnSecurityInfo = user.getEmail().equalsIgnoreCase(currentUser.getUsername());
     if (!isOwnSecurityInfo) {
       throw new AccessDeniedServiceException();
     }
@@ -229,7 +225,7 @@ public class UsersService extends BaseCrudService<User, Long, UserRepository>
    */
   private void assertUserAllowedToUpdateInfo(User user, UserDetails currentUser)
       throws AccessDeniedServiceException {
-    boolean isOwnInfo = user.getUsername().equalsIgnoreCase(currentUser.getUsername());
+    boolean isOwnInfo = user.getEmail().equalsIgnoreCase(currentUser.getUsername());
     if (!isOwnInfo) {
       throw new AccessDeniedServiceException();
     }

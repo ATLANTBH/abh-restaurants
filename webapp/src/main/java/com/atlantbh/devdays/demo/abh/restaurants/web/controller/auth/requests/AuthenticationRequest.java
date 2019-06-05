@@ -8,8 +8,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author Kenan Klisura
  */
 public class AuthenticationRequest {
-  @JsonProperty("username")
-  private String usernameOrEmail;
+  @JsonProperty("email")
+  private String email;
 
   private String password;
 
@@ -18,17 +18,17 @@ public class AuthenticationRequest {
    *
    * @return the username or email
    */
-  public String getUsernameOrEmail() {
-    return usernameOrEmail;
+  public String getEmail() {
+    return email;
   }
 
   /**
    * Sets username or email.
    *
-   * @param usernameOrEmail the username or email
+   * @param email the username or email
    */
-  public void setUsernameOrEmail(String usernameOrEmail) {
-    this.usernameOrEmail = usernameOrEmail;
+  public void setEmail(String email) {
+    this.email = email;
   }
 
   /**

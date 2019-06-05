@@ -4,7 +4,8 @@ export default AjaxService.extend({
   post(path, data, queryParams) {
     return this.request(path, {
       method: "POST",
-      data: data
+      contentType: "application/json",
+      data: JSON.stringify(data)
     });
   },
 
