@@ -38,7 +38,7 @@ spring:
   profiles: develop
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://localhost:5432/abh-restaurants
     username: postgres
     password: postgres
 

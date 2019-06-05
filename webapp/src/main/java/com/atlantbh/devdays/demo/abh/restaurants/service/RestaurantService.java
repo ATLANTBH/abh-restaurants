@@ -13,11 +13,12 @@ import com.atlantbh.devdays.demo.abh.restaurants.service.requests.RestaurantRequ
 import com.atlantbh.devdays.demo.abh.restaurants.service.requests.ReviewRequest;
 import com.atlantbh.devdays.demo.abh.restaurants.service.responses.PopularLocation;
 import com.atlantbh.devdays.demo.abh.restaurants.service.responses.RestaurantImageResponse;
-import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Kenan Klisura on 2019-05-23.
@@ -52,13 +53,28 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
     this.restaurantReviewRepository = restaurantReviewRepository;
   }
 
+  /**
+   * Creates a restaurant.
+   *
+   * @param request Create request.
+   * @return Created restaurant.
+   * @throws EntityNotFoundServiceException If dependent entity found.
+   */
   public Restaurant create(RestaurantRequest request) throws EntityNotFoundServiceException {
     Restaurant restaurant = new Restaurant();
     updateRestaurant(restaurant, request);
     return repository.save(restaurant);
   }
 
-  public Restaurant edit(Long id, RestaurantRequest request) throws EntityNotFoundServiceException {
+  /**
+   * Updates a restaurant.
+   *
+   * @param id Id of a restaurant to updated.
+   * @param request Update request.
+   * @return Updated restaurant.
+   * @throws EntityNotFoundServiceException If no restaurant or any other dependent entity found.
+   */
+  public Restaurant update(Long id, RestaurantRequest request) throws EntityNotFoundServiceException {
     Restaurant restaurant = get(id);
     updateRestaurant(restaurant, request);
     return repository.save(restaurant);
