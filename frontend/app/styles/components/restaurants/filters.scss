@@ -1,0 +1,241 @@
+.restaurant-filter-box {
+  position: relative;
+  margin: 10px 0 20px;
+  height: 56px;
+  border-radius: 3px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+}
+
+.restaurant_search_textbox {
+  width: -webkit-calc(100% - 327px) !important;
+  width: -moz-calc(100% - 327px) !important;
+  width: -o-calc(100% - 327px) !important;
+  width: -ms-calc(100% - 327px) !important;
+  width: calc(100% - 327px) !important;
+}
+
+.show-popup-button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  height: 56px;
+  margin: 0;
+  padding: 0 25px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #131d24;
+}
+
+.show-popup-button i {
+  position: relative;
+  top: -2px;
+  font-size: 11px;
+  padding-left: 10px;
+  opacity: 0.4;
+}
+
+#searchFilters,
+#searchSort {
+  position: absolute;
+  box-sizing: border-box;
+  z-index: 50;
+  height: 0px;
+}
+
+#searchFilters {
+  width: 328px;
+  right: 0px;
+  top: 50px;
+}
+
+#searchSort {
+  width: 200px;
+  right: 115px;
+  top: 50px;
+}
+
+.filter-popup-arrow {
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 52;
+  top: 3px;
+  left: 50%;
+  margin-left: -7px;
+  width: 14px;
+  height: 14px;
+  background-color: #fff;
+  border-left: solid 1px #dbdbdb;
+  border-top: solid 1px #dbdbdb;
+
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+#searchFilters .filter-popup-arrow {
+  left: 75%;
+}
+
+.filter-popup-content {
+  display: block;
+  position: absolute;
+  z-index: 51;
+  top: 9px;
+  right: 0;
+  left: 0;
+  border-radius: 3px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.1);
+  border: solid 1px #dbdbdb;
+  padding: 20px;
+  padding-bottom: 24px;
+}
+
+.filter-popup-content h5 {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(46, 57, 63, 0.6);
+  text-transform: uppercase;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.filter-popup-content hr {
+  display: block;
+  outline: none;
+  border: none;
+  height: 1px;
+  background-color: #e7eaec;
+  padding: 0;
+  margin: 20px 0 16px;
+}
+
+.filter-popup-content input[type="checkbox"] {
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+
+.filter-popup-content input[type="checkbox"]:checked + label {
+  color: #fd6f60;
+}
+
+.filter-popup-content input[type="radio"] {
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+
+#price-filter-control,
+#rating-filter-control {
+  display: inline-block;
+  position: relative;
+  width: 140px;
+  cursor: default;
+}
+
+/* TODO REMOVE WHEN RATING IMPLEMENTED */
+#rating-filter-control {
+  opacity: 0.3;
+}
+
+#rating-filter-control h5 {
+  text-decoration: line-through;
+}
+/* END OF TODO */
+
+#price-filter-control label,
+#rating-filter-control label {
+  font-size: 16px;
+  cursor: pointer;
+  margin: 0;
+  color: rgba(19, 29, 36, 0.2);
+}
+
+#price-filter-control label.checked,
+#rating-filter-control label.checked {
+  color: #fd6f60;
+}
+
+.filter-popup-content label.checked {
+  color: #fd6f60;
+}
+
+.sort-by-control label {
+  cursor: pointer;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px 10px;
+}
+
+.multiselect-checkboxes {
+  display: block;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  cursor: default;
+}
+
+.hidden-chackboxes input[type="checkbox"] {
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+
+.multiselect-checkboxes li {
+  position: relative;
+  display: inline-block;
+  width: 140px;
+  margin-bottom: 5px;
+}
+
+.multiselect-checkboxes li label {
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+  color: #000;
+}
+
+.currentFilterBubbleRow {
+  height: 22px;
+  margin-bottom: 20px;
+}
+
+.currentFilterBubble {
+  display: inline-block;
+  position: relative;
+  height: 22px;
+  float: left;
+  background-color: #fd6f60;
+  color: #fff;
+  font-size: 13px;
+  border-radius: 20px;
+  margin: 0;
+  margin-right: 20px;
+  padding: 2px 7px 2px 10px;
+  font-weight: 600;
+}
+
+.currentFilterBubble span {
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 11px;
+  opacity: 0.9;
+  font-weight: 400;
+  margin-right: 5px;
+  cursor: default;
+}
+
+.currentFilterBubble span:last-child {
+  cursor: pointer;
+  margin-right: 0;
+  margin-left: 8px;
+  font-size: 13px;
+}

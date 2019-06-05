@@ -28,7 +28,9 @@ html, body, body > .ember-view {
 
 
 @import "./components/navigation/page-navigation";
+@import "./components/navigation/pagination";
 @import "./components/footer/page-footer";
+@import "./components/restaurants/filters";
 @import "./components/restaurants/restaurant-tile";
 @import "./components/home-popular-locations";
 

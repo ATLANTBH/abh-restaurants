@@ -11,5 +11,9 @@ export default BaseService.extend({
 
   fetchPopularLocations() {
     return this.get("/api/v1/restaurant/popular-locations");
+  },
+
+  findAllRestaurants(request) {
+    return this.get("/api/v1/restaurant", request);
   }
 });
