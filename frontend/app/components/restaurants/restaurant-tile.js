@@ -7,7 +7,7 @@ export default Component.extend({
     return htmlSafe(
       "background-image: url(" +
         this.get("data.profileImagePath") +
-        "), url('/assets/images/rPlaceholder.png')"
+        "), url('/images/restaurants/thumbnails/placeholder.png')"
     );
   })
 });

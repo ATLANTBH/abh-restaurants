@@ -15,5 +15,9 @@ export default BaseService.extend({
 
   findAllRestaurants(request) {
     return this.get("/api/v1/restaurant", request);
+  },
+
+  getRestaurant(id) {
+    return this.get(`/api/v1/restaurant/${id}`);
   }
 });
