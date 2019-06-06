@@ -5,6 +5,8 @@ import com.atlantbh.devdays.demo.abh.restaurants.repository.CuisineRepository;
 import com.atlantbh.devdays.demo.abh.restaurants.service.exceptions.EntityNotFoundServiceException;
 import com.atlantbh.devdays.demo.abh.restaurants.service.requests.CuisineRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -30,11 +32,12 @@ public class CuisineService extends BaseCrudService<Cuisine, Long, CuisineReposi
   /**
    * Returns all models sorted by {@link #DEFAULT_SORT_PROPERTY}.
    *
+   * @param pageable Page request.
    * @return All models sorted by {@link #DEFAULT_SORT_PROPERTY}.
    */
   @Override
-  public Iterable<Cuisine> findAll() {
-    return super.findAll(DEFAULT_SORT_PROPERTY, Sort.Direction.ASC);
+  public Page<Cuisine> findAll(Pageable pageable) {
+    return super.findAll(pageable, DEFAULT_SORT_PROPERTY, Sort.Direction.ASC);
   }
 
   /**

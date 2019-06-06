@@ -15,7 +15,7 @@
           {{else}}
             <li class="pagination-page">
               {{#link-to (query-params page=page.pageNumber)}}
-                {{page.pageNumber}}
+                {{pagination-page-number page.pageNumber}}
               {{/link-to}}
             </li>
           {{/if}}
@@ -23,7 +23,7 @@
       {{/if}}
       <li class="pagination-page pagination-page-current">
         {{#link-to (query-params page=currentPage)}}
-          {{currentPage}}
+          {{pagination-page-number currentPage}}
         {{/link-to}}
       </li>
       {{#if canGoFoward}}
@@ -35,7 +35,7 @@
           {{else}}
             <li class="pagination-page">
               {{#link-to (query-params page=page.pageNumber)}}
-                {{page.pageNumber}}
+                {{pagination-page-number page.pageNumber}}
               {{/link-to}}
             </li>
           {{/if}}

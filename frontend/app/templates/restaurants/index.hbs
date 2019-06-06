@@ -4,15 +4,15 @@
     <div class="container">
       {{restaurants/filters}}
       <div class="row">
-        {{#each model as |restaurant|}}
+        {{#each model.content as |restaurant|}}
           <div class="col-xs-12 col-sm-6 col-md-4">
             {{restaurants/restaurant-tile data=restaurant buttonStyle="white"}}
           </div>
         {{/each}}
       </div>
       {{navigation/pagination
-        currentPage=model.response.pageNumber
-        maxPages=model.response.numberOfPages
+        currentPage=model.pageable.pageNumber
+        maxPages=model.totalPages
       }}
     </div>
     {{home-popular-locations}}

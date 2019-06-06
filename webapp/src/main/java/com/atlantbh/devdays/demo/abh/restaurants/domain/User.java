@@ -47,7 +47,7 @@ public class User {
   @JsonIgnore private String password;
 
   @Column(name = "is_admin")
-  private boolean admin = false;
+  private boolean admin;
 
   @Column(name = "created_at", updatable = false, insertable = false)
   private Date createdAt;

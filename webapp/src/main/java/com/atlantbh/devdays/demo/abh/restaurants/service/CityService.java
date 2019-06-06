@@ -5,6 +5,8 @@ import com.atlantbh.devdays.demo.abh.restaurants.repository.CityRepository;
 import com.atlantbh.devdays.demo.abh.restaurants.service.exceptions.EntityNotFoundServiceException;
 import com.atlantbh.devdays.demo.abh.restaurants.service.requests.CityRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -30,11 +32,12 @@ public class CityService extends BaseCrudService<City, Long, CityRepository> {
   /**
    * Returns all cities sorted by {@link #DEFAULT_SORT_PROPERTY}.
    *
+   * @param pageable Page request.
    * @return All cities sorted.
    */
   @Override
-  public Iterable<City> findAll() {
-    return super.findAll(DEFAULT_SORT_PROPERTY, Sort.Direction.ASC);
+  public Page<City> findAll(Pageable pageable) {
+    return super.findAll(pageable, DEFAULT_SORT_PROPERTY, Sort.Direction.ASC);
   }
 
   /**

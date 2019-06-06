@@ -16,6 +16,8 @@ public class CurrentUserDto {
 
   private String email;
 
+  private boolean admin;
+
   /**
    * Instantiates a new CurrentUserDto given a user.
    *
@@ -26,6 +28,7 @@ public class CurrentUserDto {
     this.email = user.getEmail();
     this.firstName = user.getFirstName();
     this.lastName = user.getLastName();
+    this.admin = user.isAdmin();
   }
 
   /**
@@ -62,5 +65,9 @@ public class CurrentUserDto {
    */
   public String getEmail() {
     return email;
+  }
+
+  public boolean isAdmin() {
+    return admin;
   }
 }

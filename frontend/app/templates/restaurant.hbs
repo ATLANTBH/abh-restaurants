@@ -48,13 +48,13 @@
               {{closeTime}}
             </span>
           </p>
-          {{#if model.user.isLoggedIn}}
+          {{#if currentUser}}
             <button
               class="restaurant-rate-this-button"
               type="button"
               data-toggle="modal"
               data-target="#submitRatingModal"
-              {{action "showRatingDialog"}}
+              {{action "onShowRatingDialog"}}
             >
               {{fa-icon "star"}}
               Rate this place
@@ -92,36 +92,8 @@
             <h2 class="restaurant-card-title">
               Make a Free Reservation
             </h2>
-            <form class="reservation-form" {{action "findTable" on="submit"}}>
-              <select
-                id="numberOfPeople"
-                {{action "setNumberOfPeople" on="change"}}
-              >
-                <option value="1">
-                  1 Person
-                </option>
-                <option value="2">
-                  2 People
-                </option>
-                <option value="3">
-                  3 People
-                </option>
-                <option value="4">
-                  4 People
-                </option>
-                <option value="5">
-                  5 People
-                </option>
-                <option value="6">
-                  6 People
-                </option>
-                <option value="7">
-                  7 People
-                </option>
-                <option value="8">
-                  8 People
-                </option>
-              </select>
+            <form class="reservation-form" {{action "onFindTable" on="submit"}}>
+              {{misc/people-selection onChange=(action "onPeopleSelection")}}
               {{input type="date" value=date required="required" min=today}}
               {{input
                 type="time"

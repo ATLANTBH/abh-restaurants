@@ -1,14 +1,18 @@
-'use strict';
+"use strict";
 
-const EmberApp = require('ember-cli/lib/broccoli/ember-app');
+const EmberApp = require("ember-cli/lib/broccoli/ember-app");
 
 module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
-    'ember-bootstrap': {
-      'bootstrapVersion': 3,
-      'importBootstrapFont': false,
-      'importBootstrapCSS': false
+    "ember-bootstrap": {
+      bootstrapVersion: 3,
+      importBootstrapFont: false,
+      importBootstrapCSS: false
     }
+  });
+
+  app.import("node_modules/moment/moment.js", {
+    using: [{ transformation: "amd", as: "moment" }]
   });
 
   // Use `app.import` to add additional libraries to the generated

@@ -2,9 +2,10 @@ package com.atlantbh.devdays.demo.abh.restaurants.domain;
 
 import com.atlantbh.devdays.demo.abh.restaurants.service.responses.PopularLocation;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.*;
 
 /**
  * Created by Kenan Klisura on 2019-05-22.
@@ -79,8 +80,7 @@ public class Restaurant {
   @OneToMany(mappedBy = "restaurant")
   private List<RestaurantPhoto> photos;
 
-  @JsonIgnore
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
     name = "restaurant_cuisine",
     joinColumns = @JoinColumn(name = "restaurant_id"),

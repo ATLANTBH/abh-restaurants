@@ -33,9 +33,9 @@
         </li>
         {{#if currentUser}}
           <li class="nav-link-custom">
-            {{#if currentUser.isAdmin}}
+            {{#if currentUser.admin}}
               {{#link-to "admin"}}
-                Admin{
+                Admin
               {{/link-to}}
             {{else}}
               {{#link-to "user"}}

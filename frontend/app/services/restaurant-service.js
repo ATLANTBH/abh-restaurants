@@ -19,5 +19,9 @@ export default BaseService.extend({
 
   getRestaurant(id) {
     return this.get(`/api/v1/restaurant/${id}`);
+  },
+
+  reservationInquiry(id, request) {
+    return this.post(`/api/v1/restaurant/${id}/reservation-inquiry`, request);
   }
 });

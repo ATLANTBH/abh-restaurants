@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Reservation controller.
  *
- * <p>TODO(kklisura): Errors when entity is not found. TODO(kklisura): Protected APIs?
- *
  * @author Kenan Klisura
  */
 @RestController
@@ -41,6 +39,13 @@ public class ReservationController
     throw new UnsupportedOperationException("Reservation deletion is not supported.");
   }
 
+  /**
+   * Returns user reservations.
+   *
+   * @param userDetails Current user details.
+   * @return User reservations.
+   * @throws EntityNotFoundServiceException If any entity is not found.
+   */
   @Transactional(readOnly = true)
   @GetMapping("/my")
   public UserReservations myReservations(@AuthenticationPrincipal UserDetails userDetails)

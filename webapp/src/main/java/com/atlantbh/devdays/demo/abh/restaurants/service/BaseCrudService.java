@@ -2,8 +2,12 @@ package com.atlantbh.devdays.demo.abh.restaurants.service;
 
 import com.atlantbh.devdays.demo.abh.restaurants.repository.BaseCrudRepository;
 import com.atlantbh.devdays.demo.abh.restaurants.service.exceptions.EntityNotFoundServiceException;
-import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+
+import java.util.Optional;
 
 /**
  * Base crud service.
@@ -31,21 +35,23 @@ public abstract class BaseCrudService<T, ID, R extends BaseCrudRepository<T, ID>
   /**
    * Returns all models sorted by {@link #DEFAULT_SORT_PROPERTY}.
    *
+   * @param pageRequest Page request.
    * @return All models sorted by {@link #DEFAULT_SORT_PROPERTY}.
    */
-  public Iterable<T> findAll() {
-    return findAll(DEFAULT_SORT_PROPERTY, Sort.Direction.DESC);
+  public Page<T> findAll(Pageable pageRequest) {
+    return findAll(pageRequest, DEFAULT_SORT_PROPERTY, Sort.Direction.DESC);
   }
 
   /**
    * Returns all models sorted by sortProperty and sortDirection.
    *
+   * @param pageRequest Page request.
    * @param sortProperty Sort property.
    * @param sortDirection Sort direction.
    * @return All models sorted.
    */
-  public Iterable<T> findAll(String sortProperty, Sort.Direction sortDirection) {
-    return findAll(Sort.by(sortDirection, sortProperty));
+  public Page<T> findAll(Pageable pageRequest, String sortProperty, Sort.Direction sortDirection) {
+    return findAll(pageRequest, Sort.by(sortDirection, sortProperty));
   }
 
   /**
@@ -54,8 +60,9 @@ public abstract class BaseCrudService<T, ID, R extends BaseCrudRepository<T, ID>
    * @param sort Sort to sort by. :)
    * @return All models sorted.
    */
-  public Iterable<T> findAll(Sort sort) {
-    return repository.findAll(null, sort);
+  public Page<T> findAll(Pageable request, Sort sort) {
+    PageRequest pageRequest = PageRequest.of(request.getPageNumber(), request.getPageSize(), sort);
+    return repository.findAll(null, pageRequest);
   }
 
   /**

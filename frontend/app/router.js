@@ -17,12 +17,13 @@ Router.map(function() {
   this.route("bad-request", { path: "*path" });
 
   this.route("search-results");
+
   this.route("admin", function() {
     this.route("restaurants", function() {
       this.route("new");
-      this.route("edit", { path: "edit/:restaurant_id" });
-      this.route("delete", { path: "delete/:restaurant_id" });
-      this.route("reservations", { path: "reservations/:restaurant_id" });
+      this.route("edit", { path: "edit/:id" });
+      this.route("delete", { path: "delete/:id" });
+      this.route("reservations", { path: "reservations/:id" });
     });
 
     this.route("locations", function() {
