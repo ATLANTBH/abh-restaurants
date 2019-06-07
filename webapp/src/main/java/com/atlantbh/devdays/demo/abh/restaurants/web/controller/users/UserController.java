@@ -1,5 +1,7 @@
 package com.atlantbh.devdays.demo.abh.restaurants.web.controller.users;
 
+import com.atlantbh.devdays.demo.abh.restaurants.domain.User;
+import com.atlantbh.devdays.demo.abh.restaurants.repository.UserRepository;
 import com.atlantbh.devdays.demo.abh.restaurants.service.exceptions.AccessDeniedServiceException;
 import com.atlantbh.devdays.demo.abh.restaurants.service.exceptions.EntityNotFoundServiceException;
 import com.atlantbh.devdays.demo.abh.restaurants.service.users.UsersService;
@@ -7,13 +9,14 @@ import com.atlantbh.devdays.demo.abh.restaurants.service.users.exception.Passwor
 import com.atlantbh.devdays.demo.abh.restaurants.service.users.requests.UserInfoRequest;
 import com.atlantbh.devdays.demo.abh.restaurants.service.users.requests.UserRequest;
 import com.atlantbh.devdays.demo.abh.restaurants.service.users.requests.UserSecurityInfoRequest;
-import javax.validation.Valid;
+import com.atlantbh.devdays.demo.abh.restaurants.web.controller.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * Users controller.
@@ -22,19 +25,11 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/api/v1/users")
-public class UserController {
+public class UserController extends BaseController<UsersService, UserRepository, User> {
   private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
-  private UsersService usersService;
-
-  /**
-   * Sets users service.
-   *
-   * @param usersService the users service
-   */
-  @Autowired
-  public void setUsersService(UsersService usersService) {
-    this.usersService = usersService;
+  public UserController(UsersService service) {
+    super(service);
   }
 
   /**
@@ -44,7 +39,7 @@ public class UserController {
    */
   @RequestMapping(method = RequestMethod.POST)
   public void createUser(@Valid @RequestBody UserRequest request) {
-    usersService.createUser(request);
+    service.createUser(request);
   }
 
   /**
@@ -62,7 +57,7 @@ public class UserController {
       @PathVariable("id") Long userId,
       @AuthenticationPrincipal UserDetails userDetails)
       throws EntityNotFoundServiceException, AccessDeniedServiceException {
-    usersService.update(userId, request, userDetails);
+    service.update(userId, request, userDetails);
   }
 
   /**
@@ -82,6 +77,6 @@ public class UserController {
       @AuthenticationPrincipal UserDetails userDetails)
       throws PasswordMismatchServiceException, EntityNotFoundServiceException,
           AccessDeniedServiceException {
-    usersService.updateSecurityInfo(userId, request, userDetails);
+    service.updateSecurityInfo(userId, request, userDetails);
   }
 }

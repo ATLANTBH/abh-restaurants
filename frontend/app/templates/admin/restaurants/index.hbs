@@ -6,7 +6,7 @@
     Add new Restaurant
   {{/link-to}}
   <ul class="admin-form-object-list">
-    {{#each model.restaurants.model as |restaurant|}}
+    {{#each model.restaurants.content as |restaurant|}}
       <li class="admin-form-object-list-item">
         {{#link-to "restaurant" restaurant.id}}
           <h3>
@@ -38,8 +38,8 @@
     {{/each}}
   </ul>
   {{navigation/pagination
-    currentPage=model.restaurants.pageNumber
-    maxPages=model.restaurants.numberOfPages
+    currentPage=model.restaurants.pageable.pageNumber
+    maxPages=model.restaurants.totalPages
     smallMargins=true
   }}
 </div>

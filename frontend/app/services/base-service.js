@@ -9,9 +9,24 @@ export default AjaxService.extend({
     });
   },
 
+  put(path, data, queryParams) {
+    return this.request(path, {
+      method: "PUT",
+      contentType: "application/json",
+      data: JSON.stringify(data)
+    });
+  },
+
   get(path, queryParams) {
     return this.request(path, {
       method: "GET",
+      data: queryParams
+    });
+  },
+
+  delete(path, queryParams) {
+    return this.request(path, {
+      method: "DELETE",
       data: queryParams
     });
   }

@@ -6,7 +6,7 @@
     Add new Cuisine
   {{/link-to}}
   <ul class="admin-form-object-list">
-    {{#each model.cuisines as |cuisine|}}
+    {{#each model.cuisines.content as |cuisine|}}
       <li class="admin-form-object-list-item">
         <h3>
           {{cuisine.name}}
@@ -20,4 +20,9 @@
       </li>
     {{/each}}
   </ul>
+  {{navigation/pagination
+    currentPage=model.cuisines.pageable.pageNumber
+    maxPages=model.cuisines.totalPages
+    smallMargins=true
+  }}
 </div>

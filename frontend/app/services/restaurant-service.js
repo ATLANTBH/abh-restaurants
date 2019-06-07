@@ -23,5 +23,9 @@ export default BaseService.extend({
 
   reservationInquiry(id, request) {
     return this.post(`/api/v1/restaurant/${id}/reservation-inquiry`, request);
+  },
+
+  deleteRestaurant(id) {
+    return this.delete(`/api/v1/restaurant/${id}`);
   }
 });

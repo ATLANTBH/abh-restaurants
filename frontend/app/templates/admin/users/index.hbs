@@ -6,10 +6,11 @@
     Add new User
   {{/link-to}}
   <ul class="admin-form-object-list">
-    {{#each model.users as |user|}}
+    {{#each model.content as |user|}}
       <li class="admin-form-object-list-item">
         <h3>
-          {{user.name}}
+          {{user.firstName}}
+          {{user.lastName}}
         </h3>
         {{#link-to "admin.users.delete" user.id class="list-item-button"}}
           Delete
@@ -20,4 +21,9 @@
       </li>
     {{/each}}
   </ul>
+  {{navigation/pagination
+    currentPage=model.pageable.pageNumber
+    maxPages=model.totalPages
+    smallMargins=true
+  }}
 </div>

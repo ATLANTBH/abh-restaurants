@@ -15,5 +15,21 @@ export default BaseService.extend({
 
   findMyReservations() {
     return this.get("/api/v1/reservation/my");
+  },
+
+  filter(params) {
+    return this.get(`/api/v1/users`, params);
+  },
+
+  getUser(id) {
+    return this.get(`/api/v1/users/${id}`);
+  },
+
+  editUser(id, request) {
+    return this.put(`/api/v1/users/${id}`, request);
+  },
+
+  delete(id) {
+    return this.delete(`/api/v1/users/${id}`);
   }
 });

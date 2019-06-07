@@ -6,7 +6,7 @@
     Add new Location
   {{/link-to}}
   <ul class="admin-form-object-list">
-    {{#each model.locations as |location|}}
+    {{#each model.content as |location|}}
       <li class="admin-form-object-list-item">
         <h3>
           {{location.name}}
@@ -21,4 +21,9 @@
       </li>
     {{/each}}
   </ul>
+  {{navigation/pagination
+    currentPage=model.pageable.pageNumber
+    maxPages=model.totalPages
+    smallMargins=true
+  }}
 </div>

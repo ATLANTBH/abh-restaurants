@@ -15,7 +15,7 @@ export default Route.extend({
     return hash({
       restaurants: this.get("restaurantService").findAllRestaurants({
         page: params.page,
-        size: 18
+        size: 15
       })
     });
   }

@@ -1,18 +1,20 @@
-import Route from '@ember/routing/route';
+import Route from "@ember/routing/route";
 import { hash } from "rsvp";
+import { inject as service } from "@ember/service";
 
 export default Route.extend({
-  ajax: Ember.inject.service(),
+  locationService: service("location-service"),
+
   model(params) {
     return hash({
-      location: this.get('ajax').request('/getCity/' + params.location_id),
-      isEdit: true,
+      location: this.get("locationService").getCity(params.id),
+      isEdit: true
     });
   },
 
-  renderTemplate: function (controller, model) {
-    this.render('admin.locations.new', {
-      model: model,
+  renderTemplate: function(controller, model) {
+    this.render("admin.locations.new", {
+      model: model
     });
-  },
+  }
 });

@@ -1,15 +1,13 @@
-import Route from '@ember/routing/route';
+import Route from "@ember/routing/route";
 import { hash } from "rsvp";
+import { inject as service } from "@ember/service";
 
 export default Route.extend({
-  ajax: Ember.inject.service(),
+  userService: service("user-service"),
+
   model(params) {
     return hash({
-      user: this.get('ajax').request('/admin/getUser/' + params.user_id, {
-        xhrFields: {
-          withCredentials: true,
-        },
-      }),
+      user: this.get("userService").getUser(params.id)
     });
-  },
+  }
 });

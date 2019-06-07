@@ -4,6 +4,7 @@
       <h1 class="admin-from-title">
         Delete
         {{model.cuisine.name}}
+        cuisine
         ?
       </h1>
     </div>
@@ -12,11 +13,12 @@
     <div class="col-xs-12" style="text-align: right">
       {{#link-to
         "admin.cuisines"
-        class="form-button form-button-small form-button-grey"
+        tagName="button"
+        class="form-button form-button-extra-small form-button-grey"
       }}
         Cancel
       {{/link-to}}
-      <button class="form-button form-button-small" type="submit">
+      <button class="form-button form-button-extra-small" type="submit">
         Delete
         {{model.cuisine.name}}
       </button>

@@ -1,18 +1,20 @@
-import Route from '@ember/routing/route';
+import Route from "@ember/routing/route";
 import { hash } from "rsvp";
+import { inject as service } from "@ember/service";
 
 export default Route.extend({
-  ajax: Ember.inject.service(),
+  cuisineService: service("cuisine-service"),
+
   model(params) {
     return hash({
-      cuisine: this.get('ajax').request('/getCuisine/' + params.cuisine_id),
-      isEdit: true,
+      cuisine: this.get("cuisineService").getCuisine(params.id),
+      isEdit: true
     });
   },
 
-  renderTemplate: function (controller, model) {
-    this.render('admin.cuisines.new', {
-      model: model,
+  renderTemplate: function(controller, model) {
+    this.render("admin.cuisines.new", {
+      model: model
     });
-  },
+  }
 });

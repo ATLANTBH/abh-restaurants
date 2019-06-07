@@ -28,22 +28,23 @@ Router.map(function() {
 
     this.route("locations", function() {
       this.route("new");
-      this.route("edit", { path: "edit/:location_id" });
-      this.route("delete", { path: "delete/:location_id" });
+      this.route("edit", { path: "edit/:id" });
+      this.route("delete", { path: "delete/:id" });
     });
 
     this.route("users", function() {
       this.route("new");
-      this.route("edit", { path: "edit/:user_id" });
-      this.route("delete", { path: "delete/:user_id" });
+      this.route("edit", { path: "edit/:id" });
+      this.route("delete", { path: "delete/:id" });
+    });
+
+    this.route("cuisines", function() {
+      this.route("new");
+      this.route("edit", { path: "edit/:id" });
+      this.route("delete", { path: "delete/:id" });
     });
 
     this.route("settings");
-    this.route("cuisines", function() {
-      this.route("new");
-      this.route("edit", { path: "edit/:cuisine_id" });
-      this.route("delete", { path: "delete/:cuisine_id" });
-    });
   });
 
   this.route("reservation-details", {

@@ -7,7 +7,9 @@ export default Route.extend({
 
   model(params) {
     return hash({
-      restaurant: this.get("restaurantService").getRestaurant(params.id)
+      restaurant: this.get("restaurantService")
+        .getRestaurant(params.id)
+        .catch(() => this.transitionTo("admin.restaurants"))
     });
   }
 });

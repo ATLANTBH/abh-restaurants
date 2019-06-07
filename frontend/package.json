@@ -46,13 +46,14 @@
     "ember-radio-button": "^2.0.1",
     "ember-resolver": "^5.0.1",
     "ember-source": "~3.10.0",
+    "ember-uploader": "^2.0.0",
     "ember-welcome-page": "^4.0.0",
     "eslint-plugin-ember": "^6.2.0",
     "eslint-plugin-node": "^9.0.1",
     "loader.js": "^4.7.0",
+    "moment": "^2.24.0",
     "qunit-dom": "^0.8.4",
-    "sass": "^1.20.1",
-    "moment": "^2.24.0"
+    "sass": "^1.20.1"
   },
   "engines": {
     "node": "8.* || >= 10.*"

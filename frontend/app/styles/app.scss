@@ -6,9 +6,10 @@
   font-family: "Source Sans Pro", sans-serif;
 }
 
-
 // TODO(kklisura): This should be refactored away!
-html, body, body > .ember-view {
+html,
+body,
+body > .ember-view {
   height: 100%;
 }
 
@@ -17,15 +18,14 @@ html, body, body > .ember-view {
   min-height: 100%;
 }
 
-  .white-wrapeer {
-    background-color: #fff !important;
-  }
+.white-wrapeer {
+  background-color: #fff !important;
+}
 
 #main {
   /*overflow: auto;*/
   padding-bottom: 230px;
 }
-
 
 @import "./components/navigation/page-navigation";
 @import "./components/navigation/pagination";
@@ -38,3 +38,11 @@ html, body, body > .ember-view {
 @import "./login";
 @import "./restaurant";
 @import "./user";
+
+.form-button-extra-small {
+  font-size: 14px;
+  padding: 3px 15px;
+  height: 40px;
+  width: auto;
+  margin-left: 14px;
+}

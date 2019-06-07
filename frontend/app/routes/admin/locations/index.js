@@ -1,10 +1,19 @@
-import Route from '@ember/routing/route';
+import Route from "@ember/routing/route";
+import { inject as service } from "@ember/service";
 
 export default Route.extend({
-  ajax: Ember.inject.service(),
-  model() {
-    return Ember.RSVP.hash({
-      locations: this.get('ajax').request('/getAllCities'),
-    });
+  locationService: service("location-service"),
+
+  queryParams: {
+    page: {
+      refreshModel: true
+    }
   },
+
+  model(params) {
+    return this.get("locationService").getAllCities({
+      page: params.page,
+      size: 15
+    });
+  }
 });

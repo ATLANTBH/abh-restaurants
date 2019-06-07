@@ -48,13 +48,13 @@
                     {{fa-icon "fa-cloud-upload"}}
                     Upload Logo
                   </label>
-                  {{file-upload
+                  {{misc/file-uploader
                     id="profileImageUpload"
                     url="http://localhost:9000/api/v1/fileUpload"
                     restaurantId=model.restaurant.id
                     imageFor="profile"
                     progress=uploadProgressProfile
-                    onFinishedUpload=(action "uploadedImage")
+                    onFinishedUpload=(action "onUploadedImage")
                   }}
                 </div>
               </div>
@@ -111,13 +111,13 @@
                 {{fa-icon "fa-cloud-upload"}}
                 Upload Cover Photo
               </label>
-              {{file-upload
+              {{misc/file-uploader
                 id="coverImageUpload"
                 url="http://localhost:9000/api/v1/fileUpload"
                 restaurantId=model.restaurant.id
                 imageFor="cover"
                 progress=uploadProgressCover
-                onFinishedUpload=(action "uploadedImage")
+                onFinishedUpload=(action "onUploadedImage")
               }}
             </div>
           </div>
@@ -133,20 +133,7 @@
             }}
           </div>
           <div class="col-xs-12 col-sm-6">
-            <select
-              class="form-input"
-              id="city-select"
-              {{action "setCity" on="change"}}
-            >
-              {{#each model.cities as |city|}}
-                <option
-                  value={{city.id}}
-                  selected={{eq model.restaurant.city.id city.id}}
-                >
-                  {{city.name}}
-                </option>
-              {{/each}}
-            </select>
+            {{misc/city-selection onChange=(action "onCitySelected")}}
           </div>
         </div>
         <div class="row">
@@ -160,7 +147,7 @@
             }}
           </div>
           <div class="col-xs-12 col-sm-6 small-map">
-            {{google-map
+            {{misc/google-map
               marker=marker
               polygon=polygon
               defaultMerkerPosition=defaultMerkerPosition
