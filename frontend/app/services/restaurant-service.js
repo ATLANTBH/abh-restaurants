@@ -27,5 +27,13 @@ export default BaseService.extend({
 
   deleteRestaurant(id) {
     return this.delete(`/api/v1/restaurant/${id}`);
+  },
+
+  create(request) {
+    return this.post(`/api/v1/restaurant`, request);
+  },
+
+  update(id, restaurant) {
+    return this.put(`/api/v1/restaurant/${id}`, restaurant);
   }
 });

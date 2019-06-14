@@ -146,9 +146,9 @@
   clear: both;
 }
 
+
 .admin-tabs {
   display: block;
-  float: left;
   border-radius: 3px;
   background-color: #ffffff;
   border: solid 1px #e6e8eb;
@@ -174,7 +174,7 @@
 }
 
 .admin-tabs li.active a {
-  color: #fd6f60;
+  color: #fd6f60 !important;
 }
 
 .admin-tabs li:first-child a {
@@ -183,6 +183,22 @@
 
 .admin-tabs li:last-child a {
   padding-right: 24px;
+}
+
+.admin-tabs .nav-tabs > li > a {
+  border-width: 0;
+  border-bottom: 1px solid #ddd;
+  border-radius: 0;
+}
+
+.admin-tabs li.active a {
+  border-bottom-color:  #ddd;
+}
+
+.admin-tabs {
+  .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    border-width: 0;
+  }
 }
 
 .admin-form {
@@ -502,21 +518,23 @@
   margin-left: 5px;
 }
 
-#pricerange-control {
+// TODO(kklisura): Move these to its own scss file.
+.pricerange-control {
   margin-top: -15px;
 }
 
-#pricerange-control input[type="radio"] {
+.pricerange-control input[type="radio"] {
   visibility: hidden;
   width: 0;
   height: 0;
 }
 
-#pricerange-control label {
+.pricerange-control label {
   cursor: pointer;
+
   font-size: 16px;
 }
 
-#pricerange-control .empty {
+.pricerange-control .empty {
   color: rgba(19, 29, 36, 0.2);
 }

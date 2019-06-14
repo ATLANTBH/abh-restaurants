@@ -1,30 +1,6 @@
-<div class="admin-tabs-container">
-  <ul class="admin-tabs" role="tablist">
-    <li role="presentation" class="active">
-      <a href="#basics" aria-controls="basics" role="tab" data-toggle="tab">
-        Basic Details
-      </a>
-    </li>
-    <li role="presentation">
-      <a href="#cuisine" aria-controls="cuisine" role="tab" data-toggle="tab">
-        Cuisines
-      </a>
-    </li>
-    <li role="presentation">
-      <a href="#tables" aria-controls="tables" role="tab" data-toggle="tab">
-        Tables
-      </a>
-    </li>
-    <li role="presentation">
-      <a href="#menu" aria-controls="menu" role="tab" data-toggle="tab">
-        Menu
-      </a>
-    </li>
-  </ul>
-</div>
-<form {{action "submitRestaurant" on="submit"}}>
-  <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="basics">
+<form class="admin-tabs" {{action "onSubmitRestaurant" on="submit"}}>
+  {{#bs-tab as |tab|}}
+    {{#tab.pane title="Basic Details"}}
       <div class="admin-form">
         <div class="row">
           <div class="col-xs-12 col-sm-6">
@@ -38,23 +14,23 @@
                   style={{profileImageStyle}}
                 >
                   <label class="image-upload-label" for="profileImageUpload">
-                    {{#if uploadProgressProfile}}
+                    {{#if profileImageUploadProgress}}
                       <p class="image-upload-progress">
                         Uploading:
-                        {{uploadProgressProfile}}
+                        {{profileImageUploadProgress}}
                         %
                       </p>
                     {{/if}}
-                    {{fa-icon "fa-cloud-upload"}}
+                    {{fa-icon "cloud-upload"}}
                     Upload Logo
                   </label>
                   {{misc/file-uploader
                     id="profileImageUpload"
-                    url="http://localhost:9000/api/v1/fileUpload"
+                    url="/api/v1/file/upload"
                     restaurantId=model.restaurant.id
                     imageFor="profile"
-                    progress=uploadProgressProfile
-                    onFinishedUpload=(action "onUploadedImage")
+                    progress=profileImageUploadProgress
+                    onFinishedUpload=(action "onProfileImageUploaded")
                   }}
                 </div>
               </div>
@@ -62,36 +38,11 @@
                 <h1 class="admin-from-title">
                   Price Range
                 </h1>
-                <div id="pricerange-control">
-                  {{#radio-button
-                    value=1
-                    groupValue=model.restaurant.priceRange
-                    changed="priceRangeChanged"
-                  }}
-                    {{fa-icon "usd" class=isRangeOne}}
-                  {{/radio-button}}
-                  {{#radio-button
-                    value=2
-                    groupValue=model.restaurant.priceRange
-                    changed="priceRangeChanged"
-                  }}
-                    {{fa-icon "usd" class=isRangeTwo}}
-                  {{/radio-button}}
-                  {{#radio-button
-                    value=3
-                    groupValue=model.restaurant.priceRange
-                    changed="priceRangeChanged"
-                  }}
-                    {{fa-icon "usd" class=isRangeThree}}
-                  {{/radio-button}}
-                  {{#radio-button
-                    value=4
-                    groupValue=model.restaurant.priceRange
-                    changed="priceRangeChanged"
-                  }}
-                    {{fa-icon "usd" class=isRangeFour}}
-                  {{/radio-button}}
-                </div>
+                {{misc/range-selection
+                  priceRange=restaurant.priceRange
+                  onPriceRangeChanged=(action "onPriceRangeChanged")
+                  class="pricerange-control"
+                }}
               </div>
             </div>
           </div>
@@ -101,23 +52,23 @@
             </h1>
             <div class="admin-form-image-cover" style={{coverImageStyle}}>
               <label class="image-upload-label" for="coverImageUpload">
-                {{#if uploadProgressCover}}
+                {{#if coverImageUploadProgress}}
                   <p class="image-upload-progress">
                     Uploading:
-                    {{uploadProgressCover}}
+                    {{coverImageUploadProgress}}
                     %
                   </p>
                 {{/if}}
-                {{fa-icon "fa-cloud-upload"}}
+                {{fa-icon "cloud-upload"}}
                 Upload Cover Photo
               </label>
               {{misc/file-uploader
                 id="coverImageUpload"
-                url="http://localhost:9000/api/v1/fileUpload"
+                url="/api/v1/file/upload"
                 restaurantId=model.restaurant.id
                 imageFor="cover"
-                progress=uploadProgressCover
-                onFinishedUpload=(action "onUploadedImage")
+                progress=coverImageUploadProgress
+                onFinishedUpload=(action "onCoverImageUploaded")
               }}
             </div>
           </div>
@@ -172,22 +123,15 @@
               class="form-input"
               type="text"
               placeholder="Phone"
+              required="required"
               value=model.restaurant.phone
             }}
           </div>
         </div>
         <div class="row">
           <div class="col-xs-12 col-sm-6">
-            {{input
-              class="form-input"
-              type="time"
-              value=model.restaurant.openTime
-            }}
-            {{input
-              class="form-input"
-              type="time"
-              value=model.restaurant.closeTime
-            }}
+            {{input class="form-input" type="time" value=openTime}}
+            {{input class="form-input" type="time" value=closeTime}}
           </div>
           <div class="col-xs-12 col-sm-6"></div>
         </div>
@@ -206,13 +150,13 @@
           </div>
         </div>
       </div>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="cuisine">
+    {{/tab.pane}}
+    {{#tab.pane title="Cuisines"}}
       <div class="admin-form">
         {{#multiselect-checkboxes
           class="hidden-chackboxes"
-          options=cuisinePrimitives
-          selection=selectedCuisinePrimitives as |cuisine isSelected|
+          options=cuisines
+          selection=selectedCuisines as |cuisine isSelected|
         }}
           <li>
             <label class="{{if isSelected "active"}}">
@@ -236,13 +180,13 @@
           </div>
         </div>
       </div>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="tables">
+    {{/tab.pane}}
+    {{#tab.pane title="Tables"}}
       <div class="admin-form">
         <h1 class="admin-from-title">
           Tables
         </h1>
-        <button class="admin-from-new-button grey" {{action "addTable"}}>
+        <button class="admin-from-new-button grey" {{action "onAddTable"}}>
           Add Table
         </button>
         <div class="row">
@@ -250,13 +194,13 @@
             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
               <label class="table-box">
                 <span>
-                  {{restaurant-table-enum index}}
+                  {{increment-value index}}
                   .
                 </span>
                 Table for
                 {{input type="number" min=1 max=8 value=table.numberOfChairs}}
                 People
-                <button {{action "removeTable" table.id}}>
+                <button {{action "onRemoveTable" table}}>
                   {{fa-icon "trash"}}
                 </button>
               </label>
@@ -278,198 +222,171 @@
           </div>
         </div>
       </div>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="menu">
-      <div class="admin-form">
-        <div class="row">
-          <div class="col-xs-12">
-            <ul class="nav nav-pills">
-              <li class="active">
-                <a href="#breakfast" data-toggle="tab">
-                  Breakfast
-                </a>
-              </li>
-              <li>
-                <a href="#lunch" data-toggle="tab">
-                  Lunch
-                </a>
-              </li>
-              <li>
-                <a href="#dinner" data-toggle="tab">
-                  Dinner
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="row menu-content">
-          <div class="col-xs-12">
-            <div class="tab-content">
-              <div class="tab-pane active" id="breakfast">
-                {{#each model.restaurant.menu.breakfast as |item index|}}
-                  <div class="row">
-                    <div class="col-xs-1 menu-enum">
-                      {{restaurant-table-enum index}}
-                      .
-                    </div>
-                    <div class="col-xs-11">
-                      <div class="row">
-                        <div class="col-xs-12">
-                          {{input
-                            type="text"
-                            value=item.name
-                            placeholder="Name"
-                            class="menu-input"
-                          }}
-                          <span class="menu-price-sign">
-                            $
-                          </span>
-                          {{input
-                            type="number"
-                            value=item.price
-                            placeholder="Price"
-                            class="menu-input"
-                            step="0.01"
-                            min=0
-                          }}
-                          <button {{action "removeBreakfastItem" item}}>
-                            {{fa-icon "trash"}}
-                          </button>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-xs-12">
-                          {{input
-                            type="text"
-                            value=item.description
-                            placeholder="Description"
-                            class="menu-input"
-                          }}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                {{/each}}
-                <button class="menu-add-button" {{action "addMenuBreakfast"}}>
-                  Add Item
-                </button>
+    {{/tab.pane}}
+    {{#tab.pane title="Menu"}}
+      {{#bs-tab as |tab|}}
+        {{#tab.pane title="Breakfast"}}
+          {{#each model.restaurant.menu.breakfast as |item index|}}
+            <div class="row">
+              <div class="col-xs-1 menu-enum">
+                {{increment-value index}}
+                .
               </div>
-              <div class="tab-pane" id="lunch">
-                {{#each model.restaurant.menu.lunch as |item index|}}
-                  <div class="row">
-                    <div class="col-xs-1 menu-enum">
-                      {{restaurant-table-enum index}}
-                      .
-                    </div>
-                    <div class="col-xs-11">
-                      <div class="row">
-                        <div class="col-xs-12">
-                          {{input
-                            type="text"
-                            value=item.name
-                            placeholder="Name"
-                            class="menu-input"
-                          }}
-                          <span class="menu-price-sign">
-                            $
-                          </span>
-                          {{input
-                            type="number"
-                            value=item.price
-                            placeholder="Price"
-                            class="menu-input"
-                            step="0.01"
-                            min=0
-                          }}
-                          <button {{action "removeLunchItem" item}}>
-                            {{fa-icon "trash"}}
-                          </button>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-xs-12">
-                          {{input
-                            type="text"
-                            value=item.description
-                            placeholder="Description"
-                            class="menu-input"
-                          }}
-                        </div>
-                      </div>
-                    </div>
+              <div class="col-xs-11">
+                <div class="row">
+                  <div class="col-xs-12">
+                    {{input
+                      type="text"
+                      value=item.name
+                      placeholder="Name"
+                      class="menu-input"
+                    }}
+                    <span class="menu-price-sign">
+                      $
+                    </span>
+                    {{input
+                      type="number"
+                      value=item.price
+                      placeholder="Price"
+                      class="menu-input"
+                      step="0.01"
+                      min=0
+                    }}
+                    <button {{action "onRemoveBreakfastItem" item}}>
+                      {{fa-icon "trash"}}
+                    </button>
                   </div>
-                {{/each}}
-                <button class="menu-add-button" {{action "addMenuLunch"}}>
-                  Add Item
-                </button>
-              </div>
-              <div class="tab-pane" id="dinner">
-                {{#each model.restaurant.menu.dinner as |item index|}}
-                  <div class="row">
-                    <div class="col-xs-1 menu-enum">
-                      {{restaurant-table-enum index}}
-                      .
-                    </div>
-                    <div class="col-xs-11">
-                      <div class="row">
-                        <div class="col-xs-12">
-                          {{input
-                            type="text"
-                            value=item.name
-                            placeholder="Name"
-                            class="menu-input"
-                          }}
-                          <span class="menu-price-sign">
-                            $
-                          </span>
-                          {{input
-                            type="number"
-                            value=item.price
-                            placeholder="Price"
-                            class="menu-input"
-                            step="0.01"
-                            min=0
-                          }}
-                          <button {{action "removeDinnerItem" item}}>
-                            {{fa-icon "trash"}}
-                          </button>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-xs-12">
-                          {{input
-                            type="text"
-                            value=item.description
-                            placeholder="Description"
-                            class="menu-input"
-                          }}
-                        </div>
-                      </div>
-                    </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12">
+                    {{input
+                      type="text"
+                      value=item.description
+                      placeholder="Description"
+                      class="menu-input"
+                    }}
                   </div>
-                {{/each}}
-                <button class="menu-add-button" {{action "addMenuDinner"}}>
-                  Add Item
-                </button>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12" style="text-align: right">
-            {{#link-to
-              "admin.restaurants"
-              class="form-button form-button-small form-button-grey"
-            }}
-              Cancel
-            {{/link-to}}
-            <button class="form-button form-button-small" type="submit">
-              {{if model.isEdit "Edit" "Add"}}
-              Restaurant
-            </button>
-          </div>
+          {{/each}}
+          <button class="menu-add-button" {{action "onAddMenuBreakfast"}}>
+            Add Item
+          </button>
+        {{/tab.pane}}
+        {{#tab.pane title="Lunch"}}
+          {{#each model.restaurant.menu.lunch as |item index|}}
+            <div class="row">
+              <div class="col-xs-1 menu-enum">
+                {{increment-value index}}
+                .
+              </div>
+              <div class="col-xs-11">
+                <div class="row">
+                  <div class="col-xs-12">
+                    {{input
+                      type="text"
+                      value=item.name
+                      placeholder="Name"
+                      class="menu-input"
+                    }}
+                    <span class="menu-price-sign">
+                      $
+                    </span>
+                    {{input
+                      type="number"
+                      value=item.price
+                      placeholder="Price"
+                      class="menu-input"
+                      step="0.01"
+                      min=0
+                    }}
+                    <button {{action "onRemoveLunchItem" item}}>
+                      {{fa-icon "trash"}}
+                    </button>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12">
+                    {{input
+                      type="text"
+                      value=item.description
+                      placeholder="Description"
+                      class="menu-input"
+                    }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {{/each}}
+          <button class="menu-add-button" {{action "onAddMenuLunch"}}>
+            Add Item
+          </button>
+        {{/tab.pane}}
+        {{#tab.pane title="Dinner"}}
+          {{#each model.restaurant.menu.dinner as |item index|}}
+            <div class="row">
+              <div class="col-xs-1 menu-enum">
+                {{increment-value index}}
+                .
+              </div>
+              <div class="col-xs-11">
+                <div class="row">
+                  <div class="col-xs-12">
+                    {{input
+                      type="text"
+                      value=item.name
+                      placeholder="Name"
+                      class="menu-input"
+                    }}
+                    <span class="menu-price-sign">
+                      $
+                    </span>
+                    {{input
+                      type="number"
+                      value=item.price
+                      placeholder="Price"
+                      class="menu-input"
+                      step="0.01"
+                      min=0
+                    }}
+                    <button {{action "onRemoveDinnerItem" item}}>
+                      {{fa-icon "trash"}}
+                    </button>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12">
+                    {{input
+                      type="text"
+                      value=item.description
+                      placeholder="Description"
+                      class="menu-input"
+                    }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {{/each}}
+          <button class="menu-add-button" {{action "onAddMenuDinner"}}>
+            Add Item
+          </button>
+        {{/tab.pane}}
+      {{/bs-tab}}
+      <div class="row">
+        <div class="col-xs-12" style="text-align: right">
+          {{#link-to
+            "admin.restaurants"
+            class="form-button form-button-small form-button-grey"
+          }}
+            Cancel
+          {{/link-to}}
+          <button class="form-button form-button-small" type="submit">
+            {{if model.isEdit "Edit" "Add"}}
+            Restaurant
+          </button>
         </div>
       </div>
-    </div>
-  </div>
+    {{/tab.pane}}
+  {{/bs-tab}}
 </form>

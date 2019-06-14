@@ -46,3 +46,18 @@ body > .ember-view {
   width: auto;
   margin-left: 14px;
 }
+
+
+.multiselect-checkboxes li label.active {
+  color: #fd6f60 !important;
+}
+
+.map-canvas {
+  height: 360px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.small-map .map-canvas {
+  height: 180px;
+}

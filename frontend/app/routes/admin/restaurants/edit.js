@@ -4,14 +4,15 @@ import { hash } from "rsvp";
 
 export default Route.extend({
   restaurantService: service("restaurant-service"),
+  cuisineService: service("cuisine-service"),
 
   model(params) {
     return hash({
-      restaurant: this.get("ajax").request(
-        "/getRestaurant/" + params.restaurant_id
-      ),
-      cities: this.get("ajax").request("/getAllCities"),
-      cuisines: this.get("ajax").request("/getAllCuisines"),
+      restaurant: this.get("restaurantService").getRestaurant(params.id),
+      cuisines: this.get("cuisineService").fetchAllCuisines({
+        page: 0,
+        size: 100
+      }),
       isEdit: true
     });
   },

@@ -1,6 +1,16 @@
 import moment from "moment";
 
 /**
+ * Formats a timeString HH:mm to a date object.
+ *
+ * @param {String} timeString Time string.
+ */
+export function timeStringToDate(timeString) {
+  debugger;
+  return moment(timeString, "HH:mm").toDate();
+}
+
+/**
  * Formats a time.
  *
  * @param {Number} dateTime Date/time.

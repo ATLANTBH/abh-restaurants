@@ -1,10 +1,9 @@
 package com.atlantbh.devdays.demo.abh.restaurants.service;
 
-import com.atlantbh.devdays.demo.abh.restaurants.domain.Restaurant;
-import com.atlantbh.devdays.demo.abh.restaurants.domain.RestaurantReview;
-import com.atlantbh.devdays.demo.abh.restaurants.domain.User;
+import com.atlantbh.devdays.demo.abh.restaurants.domain.*;
 import com.atlantbh.devdays.demo.abh.restaurants.repository.RestaurantRepository;
 import com.atlantbh.devdays.demo.abh.restaurants.repository.RestaurantReviewRepository;
+import com.atlantbh.devdays.demo.abh.restaurants.repository.RestaurantTableRepository;
 import com.atlantbh.devdays.demo.abh.restaurants.repository.specification.RestaurantSpecification;
 import com.atlantbh.devdays.demo.abh.restaurants.service.exceptions.EntityNotFoundServiceException;
 import com.atlantbh.devdays.demo.abh.restaurants.service.requests.RestaurantFilter;
@@ -18,10 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.OptionalDouble;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -36,6 +32,18 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
 
   private CityService cityService;
   private RestaurantReviewRepository restaurantReviewRepository;
+  private CuisineService cuisineService;
+  private RestaurantTableRepository restaurantTableRepository;
+
+  @Autowired
+  public void setRestaurantTableRepository(RestaurantTableRepository restaurantTableRepository) {
+    this.restaurantTableRepository = restaurantTableRepository;
+  }
+
+  @Autowired
+  public void setCuisineService(CuisineService cuisineService) {
+    this.cuisineService = cuisineService;
+  }
 
   /**
    * Instantiates a new Base crud service.
@@ -202,6 +210,40 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
     restaurant.setProfileImagePath(request.getProfileImagePath());
     restaurant.setCloseTime(request.getCloseTime());
     restaurant.setOpenTime(request.getOpenTime());
+
+    final List<Cuisine> ourCuisines = new ArrayList<>();
+    final List<Cuisine> cuisines = request.getCuisines();
+    if (CollectionUtils.isNotEmpty(cuisines)) {
+      for (Cuisine cuisine : cuisines) {
+        Cuisine ourCuisine = cuisineService.get(cuisine.getId());
+        ourCuisines.add(ourCuisine);
+      }
+    }
+    restaurant.setCuisines(ourCuisines);
+
+    final List<RestaurantTable> ourTables = new ArrayList<>();
+    final List<RestaurantTable> tables = request.getTables();
+    if (CollectionUtils.isNotEmpty(tables)) {
+      for (RestaurantTable table : tables) {
+        if (table.getId() == null) {
+          table.setRestaurant(restaurant);
+          final RestaurantTable ourTable = restaurantTableRepository.save(table);
+          ourTables.add(ourTable);
+        } else {
+          final Optional<RestaurantTable> ourTableOptional = restaurantTableRepository.findById(table.getId());
+          if (ourTableOptional.isPresent()) {
+            final RestaurantTable ourTable = ourTableOptional.get();
+
+            ourTable.setRestaurant(restaurant);
+            ourTable.setNumberOfChairs(table.getNumberOfChairs());
+            restaurantTableRepository.save(ourTable);
+
+            ourTables.add(ourTable);
+          }
+        }
+      }
+    }
+    restaurant.setTables(ourTables);
   }
 
   /**

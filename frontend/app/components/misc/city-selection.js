@@ -12,7 +12,7 @@ export default Component.extend({
 
     this.get("cityService")
       .fetchAllCities()
-      .then(cities => this.set("cities", cities));
+      .then(cities => this.set("cities", cities.content));
   },
 
   actions: {

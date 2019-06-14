@@ -1,6 +1,10 @@
 package com.atlantbh.devdays.demo.abh.restaurants.service.requests;
 
+import com.atlantbh.devdays.demo.abh.restaurants.domain.Cuisine;
+import com.atlantbh.devdays.demo.abh.restaurants.domain.RestaurantTable;
+
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Kenan Klisura on 2019-05-23.
@@ -33,6 +37,30 @@ public class RestaurantRequest {
   private Float latitude;
 
   private Float longitude;
+
+  private List<Cuisine> cuisines;
+
+  private List<RestaurantTable> tables;
+
+  public List<Cuisine> getCuisines() {
+    return cuisines;
+  }
+
+
+
+
+  public void setCuisines(List<Cuisine> cuisines) {
+    this.cuisines = cuisines;
+  }
+
+  public List<RestaurantTable> getTables() {
+    return tables;
+  }
+
+  public void setTables(List<RestaurantTable> tables) {
+    this.tables = tables;
+  }
+
 
   public String getName() {
     return name;

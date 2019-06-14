@@ -39,7 +39,7 @@ public class Restaurant {
   private String name;
 
   @JsonIgnore
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "city_id")
   private City city;
 
@@ -92,7 +92,6 @@ public class Restaurant {
   @OneToMany(mappedBy = "restaurant")
   private List<RestaurantReview> reviews;
 
-  @JsonIgnore
   @OneToMany(mappedBy = "restaurant")
   private List<RestaurantTable> tables;
 
@@ -451,6 +450,15 @@ public class Restaurant {
    */
   public void setLongitude(Float longitude) {
     this.longitude = longitude;
+  }
+
+  @Transient
+  public Long getCityId() {
+    if (getCity() != null) {
+      return getCity().getId();
+    }
+
+    return null;
   }
 
   public Date getCreatedAt() {

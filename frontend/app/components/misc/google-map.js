@@ -1,9 +1,10 @@
 import Component from "@ember/component";
-import $ from "jquery";
 
 export default Component.extend({
   editableMarker: false,
   editableBounds: false,
+
+  classNames: ['map-canvas'],
 
   didInsertElement(...args) {
     this._super(...args);

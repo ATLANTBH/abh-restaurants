@@ -1,9 +1,6 @@
 import FileField from "ember-uploader/components/file-field";
-import Uploader from 'ember-uploader/uploaders/uploader';
-
-import Ember from "ember";
-
-const { isEmpty } = Ember;
+import Uploader from "ember-uploader/uploaders/uploader";
+import { isEmpty } from "@ember/utils";
 
 export default FileField.extend({
   filesDidChange(files) {
@@ -23,15 +20,9 @@ export default FileField.extend({
       this.set("progress", Math.round(e.percent) - 1);
     });
 
-    uploader.on("didUpload", () => {
+    uploader.on("didUpload", ({ path }) => {
       this.set("progress", null);
-      let explodedFilename = files[0].name.split(".");
-
-      this.sendAction(
-        "onFinishedUpload",
-        this.get("imageFor"),
-        explodedFilename[explodedFilename.length - 1]
-      );
+      this.sendAction("onFinishedUpload", path);
     });
   }
 });
