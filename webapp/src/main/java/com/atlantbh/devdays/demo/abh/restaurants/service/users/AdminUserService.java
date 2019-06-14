@@ -27,10 +27,7 @@ public class AdminUserService extends UsersService {
   /** Creates default users. */
   public void createDefault() {
     createIfNotExists(
-        DEFAULT_ADMIN_EMAIL,
-        DEFAULT_ADMIN_PASSWORD,
-        DEFAULT_ADMIN_NAME,
-        DEFAULT_ADMIN_NAME);
+        DEFAULT_ADMIN_EMAIL, DEFAULT_ADMIN_PASSWORD, DEFAULT_ADMIN_NAME, DEFAULT_ADMIN_NAME);
   }
 
   /**

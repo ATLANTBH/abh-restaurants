@@ -2,12 +2,11 @@ package com.atlantbh.devdays.demo.abh.restaurants.service;
 
 import com.atlantbh.devdays.demo.abh.restaurants.repository.BaseCrudRepository;
 import com.atlantbh.devdays.demo.abh.restaurants.service.exceptions.EntityNotFoundServiceException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Base crud service.
@@ -43,6 +42,16 @@ public abstract class BaseCrudService<T, ID, R extends BaseCrudRepository<T, ID>
   }
 
   /**
+   * Populates items.
+   *
+   * @param item Item.
+   * @return Item.
+   */
+  protected T populateItem(T item) {
+    return item;
+  }
+
+  /**
    * Returns all models sorted by sortProperty and sortDirection.
    *
    * @param pageRequest Page request.
@@ -62,7 +71,14 @@ public abstract class BaseCrudService<T, ID, R extends BaseCrudRepository<T, ID>
    */
   public Page<T> findAll(Pageable request, Sort sort) {
     PageRequest pageRequest = PageRequest.of(request.getPageNumber(), request.getPageSize(), sort);
-    return repository.findAll(null, pageRequest);
+    final Page<T> result = repository.findAll(null, pageRequest);
+
+    final List<T> items = result.getContent()
+            .stream()
+            .map(this::populateItem)
+            .collect(Collectors.toList());
+
+    return new PageImpl<>(items, pageRequest, result.getTotalElements());
   }
 
   /**

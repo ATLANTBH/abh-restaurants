@@ -16,8 +16,8 @@
   <properties>
     <useIncrementalCompilation>false</useIncrementalCompilation>
 
-    <node.version>v9.9.0</node.version>
-    <npm.version>6.1.0</npm.version>
+    <node.version>v11.8.0</node.version>
+    <npm.version>6.9.0</npm.version>
 
     <frontend.maven.version>1.6</frontend.maven.version>
   </properties>

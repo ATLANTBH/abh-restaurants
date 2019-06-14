@@ -11,11 +11,10 @@ import com.atlantbh.devdays.demo.abh.restaurants.service.requests.ReservationReq
 import com.atlantbh.devdays.demo.abh.restaurants.service.requests.RestaurantRequest;
 import com.atlantbh.devdays.demo.abh.restaurants.service.responses.PopularLocation;
 import com.atlantbh.devdays.demo.abh.restaurants.service.responses.ReservationInquiryResponse;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * Restaurant controller.
@@ -70,7 +69,6 @@ public class RestaurantController
   public List<PopularLocation> findPopularLocations() throws EntityNotFoundServiceException {
     return service.findPopularLocations();
   }
-
 
   @Transactional(readOnly = true)
   @PostMapping("/{id}/reservation-inquiry")

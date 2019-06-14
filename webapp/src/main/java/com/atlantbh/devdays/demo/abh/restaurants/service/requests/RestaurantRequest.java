@@ -2,7 +2,6 @@ package com.atlantbh.devdays.demo.abh.restaurants.service.requests;
 
 import com.atlantbh.devdays.demo.abh.restaurants.domain.Cuisine;
 import com.atlantbh.devdays.demo.abh.restaurants.domain.RestaurantTable;
-
 import java.util.Date;
 import java.util.List;
 
@@ -46,9 +45,6 @@ public class RestaurantRequest {
     return cuisines;
   }
 
-
-
-
   public void setCuisines(List<Cuisine> cuisines) {
     this.cuisines = cuisines;
   }
@@ -60,7 +56,6 @@ public class RestaurantRequest {
   public void setTables(List<RestaurantTable> tables) {
     this.tables = tables;
   }
-
 
   public String getName() {
     return name;

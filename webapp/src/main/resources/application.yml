@@ -28,11 +28,6 @@ spring:
     enabled: false
     checkTemplateLocation: false
 
-# App related config
-logging:
-  level:
-    root: TRACE
-
 ---
 #
 # Develop profile

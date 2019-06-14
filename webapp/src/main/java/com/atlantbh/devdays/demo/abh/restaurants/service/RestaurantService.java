@@ -65,6 +65,11 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
     this.restaurantReviewRepository = restaurantReviewRepository;
   }
 
+  @Override
+  public Restaurant get(Long aLong) throws EntityNotFoundServiceException {
+    return populateItem(super.get(aLong));
+  }
+
   /**
    * Creates a restaurant.
    *
@@ -107,7 +112,7 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
    * @return List of near-by restaurants.
    */
   public List<Restaurant> findNearBy(float latitude, float longitude) {
-    return populateRestaurantRatings(repository.findNearBy(latitude, longitude));
+    return populateRestaurants(repository.findNearBy(latitude, longitude));
   }
 
   /**
@@ -116,7 +121,7 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
    * @return List of popular restaurants.
    */
   public List<Restaurant> findPopular() {
-    return populateRestaurantRatings(repository.findPopular());
+    return populateRestaurants(repository.findPopular());
   }
 
   /**
@@ -230,7 +235,8 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
           final RestaurantTable ourTable = restaurantTableRepository.save(table);
           ourTables.add(ourTable);
         } else {
-          final Optional<RestaurantTable> ourTableOptional = restaurantTableRepository.findById(table.getId());
+          final Optional<RestaurantTable> ourTableOptional =
+              restaurantTableRepository.findById(table.getId());
           if (ourTableOptional.isPresent()) {
             final RestaurantTable ourTable = ourTableOptional.get();
 
@@ -252,24 +258,42 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
    * @param restaurants List of restaurants.
    * @return List of restaurants with its ratings populated.
    */
-  private List<Restaurant> populateRestaurantRatings(Collection<Restaurant> restaurants) {
-    return restaurants.stream().map(this::populateRestaurantRatings).collect(Collectors.toList());
+  private List<Restaurant> populateRestaurants(Collection<Restaurant> restaurants) {
+    return restaurants.stream()
+            .map(this::populateItem)
+            .collect(Collectors.toList());
+  }
+
+  @Override
+  protected Restaurant populateItem(Restaurant item) {
+    populateRatings(item);
+    populateTables(item);
+    return item;
   }
 
   /**
    * Populates a ratings on a restaurant.
    *
    * @param restaurant Restaurant to populate its rating.
-   * @return A restaurant.
    */
-  private Restaurant populateRestaurantRatings(Restaurant restaurant) {
+  private void populateRatings(Restaurant restaurant) {
     final List<RestaurantReview> reviews = restaurantReviewRepository.findByRestaurant(restaurant);
     if (CollectionUtils.isNotEmpty(reviews)) {
       restaurant.setNumberOfRatings(reviews.size());
-      final OptionalDouble averageRating = reviews.stream().mapToInt(RestaurantReview::getRating).average();
+      final OptionalDouble averageRating =
+          reviews.stream().mapToInt(RestaurantReview::getRating).average();
       restaurant.setAverageRating((float) averageRating.orElse(0d));
     }
+  }
 
-    return restaurant;
+
+  /**
+   * Populates a ratings on a restaurant.
+   *
+   * @param restaurant Restaurant to populate its rating.
+   */
+  private void populateTables(Restaurant restaurant) {
+    final List<RestaurantTable> tables = restaurantTableRepository.findByRestaurant(restaurant);
+    restaurant.setTables(tables);
   }
 }

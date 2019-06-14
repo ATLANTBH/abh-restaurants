@@ -2,6 +2,7 @@
 
 HASH_FUNCTION=md5
 NPM=./node/npm
+CURRENT_DIR=scripts
 CACHE_DIR=node_modules_cache
 
 # Get the current cache-key
@@ -16,5 +17,6 @@ if [ ! -d "$CACHE_DIR/$CACHE_KEY" ]; then
     mkdir -p "$CACHE_DIR/$CACHE_KEY" && \
     cd .. && \
     rm -rf node_modules && \
-    sh $NPM install
+    sh $NPM install && \
+    cp -R node_modules/ "$CURRENT_DIR/$CACHE_DIR/$CACHE_KEY/"
 fi

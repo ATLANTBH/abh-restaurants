@@ -1,5 +1,7 @@
 package com.atlantbh.devdays.demo.abh.restaurants.service;
 
+import static com.atlantbh.devdays.demo.abh.restaurants.utils.time.DateTimeUtils.*;
+
 import com.atlantbh.devdays.demo.abh.restaurants.domain.Reservation;
 import com.atlantbh.devdays.demo.abh.restaurants.domain.RestaurantTable;
 import com.atlantbh.devdays.demo.abh.restaurants.domain.User;
@@ -11,15 +13,12 @@ import com.atlantbh.devdays.demo.abh.restaurants.service.requests.ReservationReq
 import com.atlantbh.devdays.demo.abh.restaurants.service.responses.ReservationInquiryResponse;
 import com.atlantbh.devdays.demo.abh.restaurants.service.responses.UserReservations;
 import com.atlantbh.devdays.demo.abh.restaurants.utils.java.PredicateUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
-import static com.atlantbh.devdays.demo.abh.restaurants.utils.time.DateTimeUtils.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Reservation service manages restaurant reservations.

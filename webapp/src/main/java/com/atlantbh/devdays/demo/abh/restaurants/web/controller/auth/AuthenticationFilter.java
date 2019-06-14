@@ -6,6 +6,10 @@ import com.atlantbh.devdays.demo.abh.restaurants.web.controller.auth.requests.Au
 import com.atlantbh.devdays.demo.abh.restaurants.web.controller.bootstrap.dto.CurrentUserDto;
 import com.atlantbh.devdays.demo.abh.restaurants.web.controller.response.Response;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.util.ArrayList;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,11 +21,6 @@ import org.springframework.security.web.authentication.AbstractAuthenticationPro
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.RequestMatcher;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * Authentication filter parses incoming login request, as {@link AuthenticationRequest} and

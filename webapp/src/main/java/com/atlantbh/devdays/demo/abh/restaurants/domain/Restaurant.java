@@ -402,8 +402,6 @@ public class Restaurant {
     this.averageRating = averageRating;
   }
 
-
-
   // TODO(kklisura): Should this be in service?
   //    /**
   //     * Gets average rating.

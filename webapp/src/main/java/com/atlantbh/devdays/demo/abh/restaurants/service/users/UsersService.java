@@ -10,6 +10,7 @@ import com.atlantbh.devdays.demo.abh.restaurants.service.users.exception.Passwor
 import com.atlantbh.devdays.demo.abh.restaurants.service.users.requests.UserInfoRequest;
 import com.atlantbh.devdays.demo.abh.restaurants.service.users.requests.UserRequest;
 import com.atlantbh.devdays.demo.abh.restaurants.service.users.requests.UserSecurityInfoRequest;
+import java.util.Collections;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,8 +23,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Collections;
 
 /**
  * Users service manages users.
