@@ -1,0 +1,78 @@
+{{#if hasError}}
+  <div class="row">
+    <div class="col-xs-12">
+      <p class="error-message">
+        {{fa-icon "exclamation-triangle"}}
+        {{errorMessage}}
+      </p>
+    </div>
+  </div>
+{{/if}}
+<form class="login-register-form" {{action "onRegister" on="submit"}}>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <h1 class="form-title">
+        Create Account
+      </h1>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <h5 class="form-link">
+        {{#if useLinks}}
+          {{#link-to "login"}}
+            Login
+          {{/link-to}}
+        {{else}}
+          <a {{action "onLogin"}}>
+            Login
+          </a>
+        {{/if}}
+      </h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      {{input
+        class="form-input"
+        type="text"
+        placeholder="First Name"
+        value=firstName
+      }}
+      {{input
+        class="form-input"
+        type="text"
+        placeholder="Last Name"
+        value=lastName
+      }}
+      {{input
+        class="form-input"
+        id="username"
+        type="email"
+        placeholder="Email"
+        value=email
+      }}
+      {{input
+        class="form-input"
+        type="text"
+        placeholder="Phone Number"
+        value=phone
+      }}
+      {{input class="form-input" type="text" placeholder="Address" value=address
+      }}
+      {{input
+        class="form-input"
+        type="password"
+        placeholder="Password"
+        value=password
+      }}
+      {{input
+        class="form-input"
+        type="password"
+        placeholder="Confirm Password"
+        value=confirmPassword
+      }}
+      <button class="form-button" type="submit">
+        Create Account
+      </button>
+    </div>
+  </div>
+</form>

@@ -14,6 +14,13 @@ export default Controller.extend({
   restaurantId: alias("model.restaurant.id"),
   numberOfPeople: 1,
 
+  inquiryResponse: {
+    inquiry: { numberOfPeople: 1, date: 1560517200000 },
+    numberOfTablesLeft: 3,
+    numberOfReservationsToday: 0,
+    timeSuggestions: [1560517200000]
+  },
+
   menu: computed("model.restaurant.menu", function() {
     return JSON.parse(this.get("model.restaurant.menu"));
   }),
@@ -42,7 +49,21 @@ export default Controller.extend({
       };
 
       this.get("restaurantService")
-        .reservationInquiry(this.get("restaurantId"), reservationRequest);
+        .reservationInquiry(this.get("restaurantId"), reservationRequest)
+        .then(response => this.set("inquiryResponse", response));
+    },
+
+    onReserve(time) {
+      const reservationRequest = {
+        numberOfPeople: this.get("numberOfPeople"),
+        date: new Date(time)
+      };
+
+      this.get("restaurantService")
+        .createReservation(this.get("restaurantId"), reservationRequest)
+        .then(response =>
+          this.transitionToRoute("reservation-details", response.id)
+        );
     }
   }
 });

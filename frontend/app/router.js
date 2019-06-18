@@ -48,7 +48,7 @@ Router.map(function() {
   });
 
   this.route("reservation-details", {
-    path: "reservation-details/:reservation_id"
+    path: "reservation-details/:id"
   });
 });
 

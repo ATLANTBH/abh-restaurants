@@ -10,12 +10,14 @@ import com.atlantbh.devdays.demo.abh.restaurants.service.users.requests.UserInfo
 import com.atlantbh.devdays.demo.abh.restaurants.service.users.requests.UserRequest;
 import com.atlantbh.devdays.demo.abh.restaurants.service.users.requests.UserSecurityInfoRequest;
 import com.atlantbh.devdays.demo.abh.restaurants.web.controller.BaseController;
-import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * Users controller.
@@ -37,6 +39,7 @@ public class UserController extends BaseController<UsersService, UserRepository,
    * @param request the user request
    */
   @RequestMapping(method = RequestMethod.POST)
+  @ResponseStatus(HttpStatus.NO_CONTENT)
   public void createUser(@Valid @RequestBody UserRequest request) {
     service.createUser(request);
   }

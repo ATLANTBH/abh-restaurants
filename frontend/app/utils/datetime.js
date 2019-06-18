@@ -6,7 +6,6 @@ import moment from "moment";
  * @param {String} timeString Time string.
  */
 export function timeStringToDate(timeString) {
-  debugger;
   return moment(timeString, "HH:mm").toDate();
 }
 
@@ -17,6 +16,15 @@ export function timeStringToDate(timeString) {
  */
 export function formatTime(dateTime) {
   return moment(dateTime).format("HH:mm");
+}
+
+/**
+ * Formats a date.
+ *
+ * @param {Number} dateTime Date/time.
+ */
+export function formatDate(dateTime) {
+  return moment(dateTime).format("YYYY-MM-DD");
 }
 
 /**

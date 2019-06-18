@@ -1,0 +1,114 @@
+.confirm-reservation-title {
+  font-size: 36px;
+  font-weight: normal;
+  color: #262626;
+  margin-top: 40px;
+  margin-bottom: 49px;
+  text-align: center;
+}
+
+.reservation-details {
+  position: relative;
+  box-sizing: border-box;
+  padding: 24px 30px 38px;
+  width: 100%;
+  border-radius: 2px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.1);
+}
+
+.reservation-details-title {
+  font-size: 20px;
+  font-weight: normal;
+  color: rgba(19, 29, 36, 0.4);
+  margin: 0;
+}
+
+.reservation-confirmation-timer {
+  float: right;
+  margin-top: -4px;
+  margin-right: -10px;
+  border-radius: 2px;
+  background-color: rgba(253, 111, 96, 0.4);
+  font-size: 14px;
+  font-weight: normal;
+  color: rgba(38, 38, 38, 0.7);
+  padding: 8px 13px;
+}
+
+.reservation-confirmation-timer i {
+  margin-right: 8px;
+}
+
+.reservation-image {
+  float: left;
+  width: 130px;
+  height: 113px;
+  margin: 0;
+  margin-right: 40px;
+}
+
+.reservation-restaurant-name {
+  font-size: 20px;
+  font-weight: normal;
+  color: #fd6f60;
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+.reservation-restaurant-name span {
+  opacity: 0.4;
+  font-size: 14px;
+  font-weight: 600;
+  color: #171717;
+  text-transform: uppercase;
+}
+
+.reservation-details-info {
+  font-size: 20px;
+  font-weight: normal;
+  color: #131d24;
+}
+
+.reservation-details-info > span {
+  display: inline-block;
+  margin: 0;
+  margin-right: 50px;
+}
+
+.reservation-details-info > span > span {
+  opacity: 0.4;
+  font-size: 14px;
+  font-weight: 600;
+  color: #171717;
+  text-transform: uppercase;
+}
+
+.confirm-reservation-button {
+  outline: none;
+  border: none;
+  width: 300px;
+  height: 56px;
+  border-radius: 3px;
+  background-color: #fd6f60;
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  margin-top: 150px;
+  margin-bottom: 40px;
+}
+
+.confirm-reservation-button:disabled {
+  cursor: default;
+  background-color: #eee;
+  color: #131d24;
+}
+
+.disclaimer {
+  font-size: 14px;
+  font-weight: normal;
+  color: #878787;
+  margin-top: 0;
+  margin-bottom: 40px;
+}

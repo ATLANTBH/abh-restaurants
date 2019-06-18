@@ -1,0 +1,136 @@
+<div id="wrap">
+  {{navigation/page-navigation}}
+  <div id="main">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <h1 class="confirm-reservation-title">
+            Complete your reservation
+          </h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="reservation-details">
+            <div class="row">
+              <div class="col-xs-12 col-sm-4">
+                <p class="reservation-details-title">
+                  Reservation Details
+                </p>
+              </div>
+              <div class="col-xs-12 col-sm-8">
+                {{#if model.reservation.confirmed}}
+                  Reservation Confirmed
+                {{else}}
+                  <p class="reservation-confirmation-timer">
+                    {{#if hasExpired}}
+                      {{fa-icon "exclamation"}}
+                      This reservation has expired. Please start a new Inquiry
+                    {{else}}
+                      {{fa-icon "clock-o"}}
+                      You have
+                      {{countdown-string
+                        startDate=countdownStart
+                        endDate=countdownEnd
+                      }}
+                      to complete your reservation
+                    {{/if}}
+                  </p>
+                {{/if}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12">
+                <img
+                  class="reservation-image"
+                  src="{{restaurant.profileImagePath}}"
+                 />
+
+                <h1 class="reservation-restaurant-name">
+                  <span>
+                    Restaurant
+                  </span>
+                  <br />
+                  {{restaurant.name}}
+                </h1>
+                <p class="reservation-details-info">
+                  <span>
+                    <span>
+                      Max. Guests
+                    </span>
+                    <br />
+                    {{model.reservation.table.numberOfChairs}}
+                  </span>
+                  <span>
+                    <span>
+                      Date
+                    </span>
+                    <br />
+                    {{date-format model.reservation.reservedOn}}
+                  </span>
+                  <span>
+                    <span>
+                      Time
+                    </span>
+                    <br />
+                    {{time-format model.reservation.reservedOn}}
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{#unless currentUser}}
+        {{#if showRegistrationForm}}
+          <div class="row">
+            <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+              {{user/register-form
+                onRegister=(action "onRegister")
+                onLogin=(action "onSwitchToLoginView")
+                useLinks=false
+              }}
+            </div>
+          </div>
+        {{else}}
+          <div class="row">
+            <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+              {{user/login-form
+                onCreateAccount=(action "onSwitchToRegisterView")
+                onLogin=(action "onLogin")
+                useLinks=false
+              }}
+            </div>
+          </div>
+        {{/if}}
+      {{/unless}}
+      {{#if currentUser.admin}}
+        <div class="row">
+          <div class="col-xs-12" style="text-align: center; margin-top: 60px;">
+            <p class="disclaimer">
+              You can not reserve a table using an Administrator Account.
+            </p>
+          </div>
+        </div>
+      {{else}}
+        {{#unless hasExpired}}
+          <div class="row">
+            <div class="col-xs-12" style="text-align: center">
+              <button
+                class="confirm-reservation-button"
+                type="button"
+                disabled={{if currentUser false true}}
+                {{action "onConfirmReservation"}}
+              >
+                Complete Reservation
+              </button>
+              <p class="disclaimer">
+                By clicking “Complete Reservation” you agree to the Terms of use and Privacy Policy.
+              </p>
+            </div>
+          </div>
+        {{/unless}}
+      {{/if}}
+    </div>
+  </div>
+</div>

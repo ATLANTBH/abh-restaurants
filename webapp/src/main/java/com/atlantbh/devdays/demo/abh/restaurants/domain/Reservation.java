@@ -1,8 +1,9 @@
 package com.atlantbh.devdays.demo.abh.restaurants.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.Date;
+
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by Kenan Klisura on 2019-05-22.
@@ -37,15 +38,10 @@ public class Reservation {
   private Boolean confirmed = false;
 
   @Column(name = "created_at", updatable = false, insertable = false)
-  private java.util.Date createdAt;
+  private Date createdAt;
 
   @Column(name = "updated_at", updatable = false, insertable = false)
-  private java.util.Date updatedAt;
-
-  // TODO(kklisura): DTO?
-  @Transient private String date;
-
-  @Transient private String time;
+  private Date updatedAt;
 
   /** Instantiates a new Reservation. */
   public Reservation() {}
@@ -156,46 +152,6 @@ public class Reservation {
    */
   public void setConfirmed(Boolean confirmed) {
     this.confirmed = confirmed;
-  }
-
-  // TODO(kklisura): Remove this.
-  //    /**
-  //     * Gets date.
-  //     *
-  //     * @return the date
-  //     */
-  //    public String getDate() {
-  //        DateFormat df = new SimpleDateFormat(DATE_PATTERN);
-  //        return df.format(this.startTime.getTime());
-  //    }
-
-  /**
-   * Sets date.
-   *
-   * @param date the date
-   */
-  public void setDate(String date) {
-    this.date = date;
-  }
-
-  // TODO(kklisura): Remove this.
-  //    /**
-  //     * Gets time.
-  //     *
-  //     * @return the time
-  //     */
-  //    public String getTime() {
-  //        DateFormat df = new SimpleDateFormat(TIME_PATTERN);
-  //        return df.format(this.startTime.getTime());
-  //    }
-
-  /**
-   * Sets time.
-   *
-   * @param time the time
-   */
-  public void setTime(String time) {
-    this.time = time;
   }
 
   public Date getCreatedAt() {

@@ -1,7 +1,5 @@
 package com.atlantbh.devdays.demo.abh.restaurants.service;
 
-import static com.atlantbh.devdays.demo.abh.restaurants.utils.time.DateTimeUtils.*;
-
 import com.atlantbh.devdays.demo.abh.restaurants.domain.Reservation;
 import com.atlantbh.devdays.demo.abh.restaurants.domain.RestaurantTable;
 import com.atlantbh.devdays.demo.abh.restaurants.domain.User;
@@ -12,13 +10,19 @@ import com.atlantbh.devdays.demo.abh.restaurants.service.exceptions.NoTablesAvai
 import com.atlantbh.devdays.demo.abh.restaurants.service.requests.ReservationRequest;
 import com.atlantbh.devdays.demo.abh.restaurants.service.responses.ReservationInquiryResponse;
 import com.atlantbh.devdays.demo.abh.restaurants.service.responses.UserReservations;
+import com.atlantbh.devdays.demo.abh.restaurants.service.users.UsersService;
 import com.atlantbh.devdays.demo.abh.restaurants.utils.java.PredicateUtils;
+import com.atlantbh.devdays.demo.abh.restaurants.web.controller.response.ReservationInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
+
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+
+import static com.atlantbh.devdays.demo.abh.restaurants.utils.time.DateTimeUtils.*;
 
 /**
  * Reservation service manages restaurant reservations.
@@ -28,6 +32,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ReservationService extends BaseCrudService<Reservation, Long, ReservationRepository> {
   private RestaurantRepository restaurantRepository;
+  private RestaurantService restaurantService;
+  private UsersService usersService;
 
   /**
    * Instantiates a new reservation service.
@@ -40,6 +46,16 @@ public class ReservationService extends BaseCrudService<Reservation, Long, Reser
       RestaurantRepository restaurantRepository, ReservationRepository repository) {
     super(repository);
     this.restaurantRepository = restaurantRepository;
+  }
+
+  @Autowired
+  public void setRestaurantService(RestaurantService restaurantService) {
+    this.restaurantService = restaurantService;
+  }
+
+  @Autowired
+  public void setUsersService(UsersService usersService) {
+    this.usersService = usersService;
   }
 
   /**
@@ -65,15 +81,15 @@ public class ReservationService extends BaseCrudService<Reservation, Long, Reser
         getFreeTables(restaurantId, desiredDateTime, numberOfPeople);
     builder.withNumberOfTablesLeft(freeTables.size());
 
-    if (!freeTables.isEmpty()) {
-      builder.withSuggestedTimes(Collections.singletonList(request.getDate()));
-    } else {
+    if (freeTables.isEmpty()) {
       final List<Date> suggestedTimes =
-          suggestedDateTimes(desiredDateTime)
-              .filter(date -> hasFreeTables(restaurantId, date, numberOfPeople))
-              .collect(Collectors.toList());
+              suggestedDateTimes(desiredDateTime)
+                      .filter(date -> hasFreeTables(restaurantId, date, numberOfPeople))
+                      .collect(Collectors.toList());
 
       builder.withSuggestedTimes(suggestedTimes);
+    } else {
+      builder.withSuggestedTimes(Collections.singletonList(request.getDate()));
     }
 
     return builder.build();
@@ -167,10 +183,11 @@ public class ReservationService extends BaseCrudService<Reservation, Long, Reser
     return Optional.of(tables.get(0));
   }
 
-  public Reservation create(Long restaurantId, ReservationRequest request)
-      throws NoTablesAvailableServiceException {
+  public Reservation create(Long restaurantId, ReservationRequest request, UserDetails userDetails)
+          throws NoTablesAvailableServiceException, EntityNotFoundServiceException {
     Reservation reservation = new Reservation();
 
+    reservation.setUser(usersService.get(userDetails));
     reservation.setStartTime(advanceDateTime(request.getDate(), Calendar.HOUR_OF_DAY, 1));
     reservation.setReservedOn(new Date());
     reservation.setConfirmed(false);
@@ -224,5 +241,22 @@ public class ReservationService extends BaseCrudService<Reservation, Long, Reser
     Date endOfDay = endOfDay(date);
 
     return repository.findConfirmedReservations(restaurantId, startOfDay, endOfDay);
+  }
+
+  /**
+   * Finds a reservation.
+   *
+   * @param id Reservation id.
+   * @return Reservation info.
+   * @throws EntityNotFoundServiceException If no reservation is found.
+   */
+  public ReservationInfo getReservation(Long id) throws EntityNotFoundServiceException {
+    // TODO(kklisura): Make sure this reservation is by specific user.
+    Reservation reservation = get(id);
+
+    ReservationInfo reservationInfo = new ReservationInfo(reservation);
+    reservationInfo.setRestaurant(restaurantService.get(reservation.getTable().getRestaurant().getId()));
+
+    return reservationInfo;
   }
 }

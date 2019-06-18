@@ -25,6 +25,10 @@ export default BaseService.extend({
     return this.post(`/api/v1/restaurant/${id}/reservation-inquiry`, request);
   },
 
+  createReservation(id, request) {
+    return this.post(`/api/v1/restaurant/${id}/reservation`, request);
+  },
+
   deleteRestaurant(id) {
     return this.delete(`/api/v1/restaurant/${id}`);
   },

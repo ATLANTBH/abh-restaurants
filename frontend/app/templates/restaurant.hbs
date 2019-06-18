@@ -106,40 +106,40 @@
                 Find Table
               </button>
             </form>
-            {{#if model.didFindTable}}
+            {{#if inquiryResponse}}
               <h3 class="restaurant-reservation-availability">
                 Availability on
-                {{model.response.inquiry.date}}
+                {{date-format inquiryResponse.inquiry.date}}
                 around
-                {{model.response.inquiry.time}}
+                {{time-format inquiryResponse.inquiry.date}}
                 for
-                {{model.response.inquiry.numberOfPeople}}
+                {{inquiryResponse.inquiry.numberOfPeople}}
                 People:
               </h3>
               <p class="restaurant-reservation-info">
                 <span>
-                  {{#if areAvailableTables}}
+                  {{#if inquiryResponse.numberOfTablesLeft}}
                     {{fa-icon "check-circle"}}
                   {{else}}
                     {{fa-icon "times-circle"}}
                   {{/if}}
                   Number of Tables Left:
-                  {{model.response.numberOfTablesLeft}}
+                  {{inquiryResponse.numberOfTablesLeft}}
                 </span>
                 <span>
                   {{fa-icon "info-circle"}}
                   Reservations Today:
-                  {{model.response.numberOfReservationsToday}}
+                  {{inquiryResponse.numberOfReservationsToday}}
                 </span>
               </p>
-              {{#unless (eq model.response.numberOfTablesLeft 0)}}
+              {{#unless (eq inquiryResponse.numberOfTablesLeft 0)}}
                 <h5 class="restaurant-reservation-times-title">
                   Select the best time that fits you:
                 </h5>
                 <p class="restaurant-reservation-times">
-                  {{#each model.response.timeSuggestions as |suggestion|}}
-                    <span {{action "reserve" suggestion}}>
-                      {{suggestion}}
+                  {{#each inquiryResponse.timeSuggestions as |suggestion|}}
+                    <span {{action "onReserve" suggestion}}>
+                      {{time-format suggestion}}
                     </span>
                   {{/each}}
                 </p>

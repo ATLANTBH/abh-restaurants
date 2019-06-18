@@ -65,7 +65,7 @@ public class ReservationInquiryResponse {
     }
 
     public ReservationInquiryResponse build() {
-      ReservationInquiryResponse result = new ReservationInquiryResponse();
+      ReservationInquiryResponse result = this.instance;
       this.instance = new ReservationInquiryResponse();
       return result;
     }
