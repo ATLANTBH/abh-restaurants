@@ -48,7 +48,7 @@ export default Controller.extend({
 
       return this.get("userService")
         .register(userRequest)
-        .then(() => this.transitionToRoute("index"))
+        .then(() => window.location.reload())
         .catch(error => {
           return {
             hasError: true,
@@ -79,6 +79,7 @@ export default Controller.extend({
 
     onConfirmReservation() {
       const id = this.get("model.reservation.id");
+
       this.get("reservationService")
         .confirmReservation(id)
         .then(() => this.transitionToRoute("user"))

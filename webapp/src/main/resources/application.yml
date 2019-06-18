@@ -28,6 +28,10 @@ spring:
     enabled: false
     checkTemplateLocation: false
 
+logging:
+  level:
+    root: TRACE
+
 ---
 #
 # Develop profile

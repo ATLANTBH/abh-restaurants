@@ -187,7 +187,9 @@ public class ReservationService extends BaseCrudService<Reservation, Long, Reser
           throws NoTablesAvailableServiceException, EntityNotFoundServiceException {
     Reservation reservation = new Reservation();
 
-    reservation.setUser(usersService.get(userDetails));
+    if (userDetails != null) {
+      reservation.setUser(usersService.get(userDetails));
+    }
     reservation.setStartTime(advanceDateTime(request.getDate(), Calendar.HOUR_OF_DAY, 1));
     reservation.setReservedOn(new Date());
     reservation.setConfirmed(false);
@@ -207,13 +209,19 @@ public class ReservationService extends BaseCrudService<Reservation, Long, Reser
    * Confirms a reservation.
    *
    * @param reservationId Reservation id.
+   * @param userDetails Current user details.
    * @throws EntityNotFoundServiceException If no reservation can be found.
    */
-  public void confirmReservation(Long reservationId) throws EntityNotFoundServiceException {
+  public void confirmReservation(Long reservationId, UserDetails userDetails) throws EntityNotFoundServiceException {
     Reservation reservation = get(reservationId);
 
-    // TODO(kklisura): Who's reservation is this?
+    final User currentUser = usersService.get(userDetails);
 
+    if (reservation.getUser() != null && !currentUser.getId().equals(reservation.getUser().getId())) {
+      throw new EntityNotFoundServiceException();
+    }
+
+    reservation.setUser(currentUser);
     reservation.setConfirmed(true);
 
     repository.save(reservation);
@@ -222,11 +230,13 @@ public class ReservationService extends BaseCrudService<Reservation, Long, Reser
   /**
    * Returns user reservations.
    *
-   * @param user User.
+   * @param userDetails User.
    * @return List of reservations.
    */
-  public UserReservations findUserReservations(User user) {
-    return new UserReservations(repository.findUserReservations(user));
+  public UserReservations findUserReservations(UserDetails userDetails) throws EntityNotFoundServiceException {
+    final List<Reservation> userReservations = repository.findUserReservations(usersService.get(userDetails));
+    final List<ReservationInfo> reservationInfos = mapReservationToReservationInfo(userReservations);
+    return new UserReservations(reservationInfos);
   }
 
   /**
@@ -253,10 +263,20 @@ public class ReservationService extends BaseCrudService<Reservation, Long, Reser
   public ReservationInfo getReservation(Long id) throws EntityNotFoundServiceException {
     // TODO(kklisura): Make sure this reservation is by specific user.
     Reservation reservation = get(id);
+    return mapReservationToReservationInfo(reservation);
+  }
 
+  private List<ReservationInfo> mapReservationToReservationInfo(List<Reservation> reservations) throws EntityNotFoundServiceException {
+    List<ReservationInfo> result = new ArrayList<>(reservations.size());
+    for (Reservation reservation : reservations) {
+      result.add(mapReservationToReservationInfo(reservation));
+    }
+    return result;
+  }
+
+  private ReservationInfo mapReservationToReservationInfo(Reservation reservation) throws EntityNotFoundServiceException {
     ReservationInfo reservationInfo = new ReservationInfo(reservation);
     reservationInfo.setRestaurant(restaurantService.get(reservation.getTable().getRestaurant().getId()));
-
     return reservationInfo;
   }
 }

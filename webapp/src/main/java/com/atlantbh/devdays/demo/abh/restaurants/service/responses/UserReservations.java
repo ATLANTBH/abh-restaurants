@@ -1,6 +1,7 @@
 package com.atlantbh.devdays.demo.abh.restaurants.service.responses;
 
-import com.atlantbh.devdays.demo.abh.restaurants.domain.Reservation;
+import com.atlantbh.devdays.demo.abh.restaurants.web.controller.response.ReservationInfo;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,17 +12,17 @@ import java.util.List;
  * @author Kenan Klisura
  */
 public class UserReservations {
-  private List<Reservation> upcoming = new ArrayList<>();
-  private List<Reservation> past = new ArrayList<>();
+  private List<ReservationInfo> upcoming = new ArrayList<>();
+  private List<ReservationInfo> past = new ArrayList<>();
 
   /**
    * Instantiates a new User reservations.
    *
    * @param allReservations the all reservations
    */
-  public UserReservations(final List<Reservation> allReservations) {
+  public UserReservations(final List<ReservationInfo> allReservations) {
     final Date currentDate = new Date();
-    for (Reservation reservation : allReservations) {
+    for (ReservationInfo reservation : allReservations) {
       if (currentDate.after(reservation.getStartTime())) {
         this.past.add(reservation);
       } else {
@@ -35,7 +36,7 @@ public class UserReservations {
    *
    * @return the upcoming
    */
-  public List<Reservation> getUpcoming() {
+  public List<ReservationInfo> getUpcoming() {
     return this.upcoming;
   }
 
@@ -44,7 +45,7 @@ public class UserReservations {
    *
    * @return the past
    */
-  public List<Reservation> getPast() {
+  public List<ReservationInfo> getPast() {
     return this.past;
   }
 }

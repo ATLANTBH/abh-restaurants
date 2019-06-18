@@ -33,6 +33,10 @@ public class RouteUtils {
     return new AntPathRequestMatcher(path, HttpMethod.GET.name());
   }
 
+  public static RequestMatcher put(String path) {
+    return new AntPathRequestMatcher(path, HttpMethod.PUT.name());
+  }
+
   /**
    * Matches a any request on a given path.
    *

@@ -5,7 +5,7 @@
     </h1>
     <div class="reservation-list">
       {{#each model.reservations.upcoming as |reservation|}}
-        {{user-reservation-details
+        {{user/reservation-details
           reservation=reservation
           class="user-reservation"
         }}
@@ -18,7 +18,7 @@
     </h1>
     <div class="reservation-list">
       {{#each model.reservations.past as |reservation|}}
-        {{user-reservation-details
+        {{user/reservation-details
           reservation=reservation
           class="user-reservation"
         }}

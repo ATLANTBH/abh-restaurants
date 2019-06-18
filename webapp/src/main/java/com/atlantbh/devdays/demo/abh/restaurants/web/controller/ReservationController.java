@@ -3,7 +3,6 @@ package com.atlantbh.devdays.demo.abh.restaurants.web.controller;
 import com.atlantbh.devdays.demo.abh.restaurants.service.ReservationService;
 import com.atlantbh.devdays.demo.abh.restaurants.service.exceptions.EntityNotFoundServiceException;
 import com.atlantbh.devdays.demo.abh.restaurants.service.responses.UserReservations;
-import com.atlantbh.devdays.demo.abh.restaurants.service.users.UsersService;
 import com.atlantbh.devdays.demo.abh.restaurants.web.controller.response.ReservationInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,12 +20,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/api/v1/reservation")
 public class ReservationController {
   private ReservationService service;
-  private UsersService usersService;
 
   @Autowired
-  public ReservationController(ReservationService service, UsersService usersService) {
+  public ReservationController(ReservationService service) {
     this.service = service;
-    this.usersService = usersService;
   }
 
   @Transactional(readOnly = true)
@@ -46,14 +43,14 @@ public class ReservationController {
   @GetMapping("/my")
   public UserReservations myReservations(@AuthenticationPrincipal UserDetails userDetails)
       throws EntityNotFoundServiceException {
-    return service.findUserReservations(usersService.get(userDetails));
+    return service.findUserReservations(userDetails);
   }
 
   @Transactional
   @PutMapping("/{id}/confirm")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void confirmReservation(@PathVariable("id") Long id)
+  public void confirmReservation(@PathVariable("id") Long id, @AuthenticationPrincipal UserDetails userDetails)
       throws EntityNotFoundServiceException {
-    service.confirmReservation(id);
+    service.confirmReservation(id, userDetails);
   }
 }

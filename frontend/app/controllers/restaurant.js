@@ -14,12 +14,7 @@ export default Controller.extend({
   restaurantId: alias("model.restaurant.id"),
   numberOfPeople: 1,
 
-  inquiryResponse: {
-    inquiry: { numberOfPeople: 1, date: 1560517200000 },
-    numberOfTablesLeft: 3,
-    numberOfReservationsToday: 0,
-    timeSuggestions: [1560517200000]
-  },
+  inquiryResponse: null,
 
   menu: computed("model.restaurant.menu", function() {
     return JSON.parse(this.get("model.restaurant.menu"));

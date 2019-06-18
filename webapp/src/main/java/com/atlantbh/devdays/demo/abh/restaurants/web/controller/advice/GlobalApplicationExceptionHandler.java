@@ -3,7 +3,8 @@ package com.atlantbh.devdays.demo.abh.restaurants.web.controller.advice;
 import com.atlantbh.devdays.demo.abh.restaurants.service.exceptions.ServiceException;
 import com.atlantbh.devdays.demo.abh.restaurants.utils.persistence.PersistenceUtils;
 import com.atlantbh.devdays.demo.abh.restaurants.web.controller.utils.ResponseUtils;
-import javax.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Global application exception handler.
  *
@@ -23,6 +26,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class GlobalApplicationExceptionHandler extends ResponseEntityExceptionHandler {
   private static final String MISSING_REQUEST_BODY = "Missing request body";
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(GlobalApplicationExceptionHandler.class);
 
   /**
    * Handles service exception.
@@ -34,8 +39,9 @@ public class GlobalApplicationExceptionHandler extends ResponseEntityExceptionHa
   @ExceptionHandler(ServiceException.class)
   public ResponseEntity<Object> handleServiceException(
       ServiceException ex, HttpServletRequest request) {
-    return ResponseUtils.buildErrorResponseEntity(
-        ResponseUtils.buildError(ex.getStatus(), ex.getMessage(), request));
+    LOGGER.error("Error while executing {} {}: {}", request.getMethod(), request.getRequestURI(), ex.getMessage(), ex);
+
+    return ResponseUtils.buildErrorResponseEntity(ResponseUtils.buildError(ex.getStatus(), ex.getMessage(), request));
   }
 
   /**
