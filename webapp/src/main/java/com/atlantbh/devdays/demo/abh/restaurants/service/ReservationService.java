@@ -1,5 +1,7 @@
 package com.atlantbh.devdays.demo.abh.restaurants.service;
 
+import static com.atlantbh.devdays.demo.abh.restaurants.utils.time.DateTimeUtils.*;
+
 import com.atlantbh.devdays.demo.abh.restaurants.domain.Reservation;
 import com.atlantbh.devdays.demo.abh.restaurants.domain.RestaurantTable;
 import com.atlantbh.devdays.demo.abh.restaurants.domain.User;
@@ -13,16 +15,13 @@ import com.atlantbh.devdays.demo.abh.restaurants.service.responses.UserReservati
 import com.atlantbh.devdays.demo.abh.restaurants.service.users.UsersService;
 import com.atlantbh.devdays.demo.abh.restaurants.utils.java.PredicateUtils;
 import com.atlantbh.devdays.demo.abh.restaurants.web.controller.response.ReservationInfo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
-
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
-import static com.atlantbh.devdays.demo.abh.restaurants.utils.time.DateTimeUtils.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 /**
  * Reservation service manages restaurant reservations.
@@ -83,9 +82,9 @@ public class ReservationService extends BaseCrudService<Reservation, Long, Reser
 
     if (freeTables.isEmpty()) {
       final List<Date> suggestedTimes =
-              suggestedDateTimes(desiredDateTime)
-                      .filter(date -> hasFreeTables(restaurantId, date, numberOfPeople))
-                      .collect(Collectors.toList());
+          suggestedDateTimes(desiredDateTime)
+              .filter(date -> hasFreeTables(restaurantId, date, numberOfPeople))
+              .collect(Collectors.toList());
 
       builder.withSuggestedTimes(suggestedTimes);
     } else {
@@ -184,7 +183,7 @@ public class ReservationService extends BaseCrudService<Reservation, Long, Reser
   }
 
   public Reservation create(Long restaurantId, ReservationRequest request, UserDetails userDetails)
-          throws NoTablesAvailableServiceException, EntityNotFoundServiceException {
+      throws NoTablesAvailableServiceException, EntityNotFoundServiceException {
     Reservation reservation = new Reservation();
 
     if (userDetails != null) {
@@ -212,12 +211,14 @@ public class ReservationService extends BaseCrudService<Reservation, Long, Reser
    * @param userDetails Current user details.
    * @throws EntityNotFoundServiceException If no reservation can be found.
    */
-  public void confirmReservation(Long reservationId, UserDetails userDetails) throws EntityNotFoundServiceException {
+  public void confirmReservation(Long reservationId, UserDetails userDetails)
+      throws EntityNotFoundServiceException {
     Reservation reservation = get(reservationId);
 
     final User currentUser = usersService.get(userDetails);
 
-    if (reservation.getUser() != null && !currentUser.getId().equals(reservation.getUser().getId())) {
+    if (reservation.getUser() != null
+        && !currentUser.getId().equals(reservation.getUser().getId())) {
       throw new EntityNotFoundServiceException();
     }
 
@@ -233,9 +234,12 @@ public class ReservationService extends BaseCrudService<Reservation, Long, Reser
    * @param userDetails User.
    * @return List of reservations.
    */
-  public UserReservations findUserReservations(UserDetails userDetails) throws EntityNotFoundServiceException {
-    final List<Reservation> userReservations = repository.findUserReservations(usersService.get(userDetails));
-    final List<ReservationInfo> reservationInfos = mapReservationToReservationInfo(userReservations);
+  public UserReservations findUserReservations(UserDetails userDetails)
+      throws EntityNotFoundServiceException {
+    final List<Reservation> userReservations =
+        repository.findUserReservations(usersService.get(userDetails));
+    final List<ReservationInfo> reservationInfos =
+        mapReservationToReservationInfo(userReservations);
     return new UserReservations(reservationInfos);
   }
 
@@ -266,7 +270,8 @@ public class ReservationService extends BaseCrudService<Reservation, Long, Reser
     return mapReservationToReservationInfo(reservation);
   }
 
-  private List<ReservationInfo> mapReservationToReservationInfo(List<Reservation> reservations) throws EntityNotFoundServiceException {
+  private List<ReservationInfo> mapReservationToReservationInfo(List<Reservation> reservations)
+      throws EntityNotFoundServiceException {
     List<ReservationInfo> result = new ArrayList<>(reservations.size());
     for (Reservation reservation : reservations) {
       result.add(mapReservationToReservationInfo(reservation));
@@ -274,9 +279,11 @@ public class ReservationService extends BaseCrudService<Reservation, Long, Reser
     return result;
   }
 
-  private ReservationInfo mapReservationToReservationInfo(Reservation reservation) throws EntityNotFoundServiceException {
+  private ReservationInfo mapReservationToReservationInfo(Reservation reservation)
+      throws EntityNotFoundServiceException {
     ReservationInfo reservationInfo = new ReservationInfo(reservation);
-    reservationInfo.setRestaurant(restaurantService.get(reservation.getTable().getRestaurant().getId()));
+    reservationInfo.setRestaurant(
+        restaurantService.get(reservation.getTable().getRestaurant().getId()));
     return reservationInfo;
   }
 }

@@ -1,9 +1,8 @@
 package com.atlantbh.devdays.demo.abh.restaurants.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
 import java.util.Date;
+import javax.persistence.*;
 
 /**
  * Created by Kenan Klisura on 2019-05-22.

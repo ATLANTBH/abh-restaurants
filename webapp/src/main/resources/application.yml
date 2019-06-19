@@ -3,8 +3,6 @@
 # This is production first application configuration; Override specific parts of this configuration in appropriate profile sections down below.
 #
 spring:
-  port: 8080
-
   profiles:
     active: @activeProfile@
 
@@ -27,10 +25,6 @@ spring:
   thymeleaf:
     enabled: false
     checkTemplateLocation: false
-
-logging:
-  level:
-    root: TRACE
 
 ---
 #
@@ -63,3 +57,9 @@ spring:
 # Production profile
 spring:
   profiles: production
+
+  datasource:
+    url: ${DATABASE_URL}
+
+server:
+  port: ${PORT}

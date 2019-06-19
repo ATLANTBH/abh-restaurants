@@ -12,13 +12,12 @@ import com.atlantbh.devdays.demo.abh.restaurants.service.requests.RestaurantRequ
 import com.atlantbh.devdays.demo.abh.restaurants.service.requests.ReviewRequest;
 import com.atlantbh.devdays.demo.abh.restaurants.service.responses.PopularLocation;
 import com.atlantbh.devdays.demo.abh.restaurants.service.responses.RestaurantImageResponse;
+import java.util.*;
+import java.util.stream.Collectors;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Created by Kenan Klisura on 2019-05-23.
@@ -259,9 +258,7 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
    * @return List of restaurants with its ratings populated.
    */
   private List<Restaurant> populateRestaurants(Collection<Restaurant> restaurants) {
-    return restaurants.stream()
-            .map(this::populateItem)
-            .collect(Collectors.toList());
+    return restaurants.stream().map(this::populateItem).collect(Collectors.toList());
   }
 
   @Override
@@ -285,7 +282,6 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
       restaurant.setAverageRating((float) averageRating.orElse(0d));
     }
   }
-
 
   /**
    * Populates a ratings on a restaurant.

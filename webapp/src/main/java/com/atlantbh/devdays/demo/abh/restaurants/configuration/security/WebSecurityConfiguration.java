@@ -7,6 +7,8 @@ import com.atlantbh.devdays.demo.abh.restaurants.service.users.UsersService;
 import com.atlantbh.devdays.demo.abh.restaurants.web.controller.auth.AuthenticationFilter;
 import com.atlantbh.devdays.demo.abh.restaurants.web.controller.auth.SimpleUserAuthorizationFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -19,9 +21,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * Web security configuration.

@@ -11,13 +11,12 @@ import com.atlantbh.devdays.demo.abh.restaurants.service.requests.ReservationReq
 import com.atlantbh.devdays.demo.abh.restaurants.service.requests.RestaurantRequest;
 import com.atlantbh.devdays.demo.abh.restaurants.service.responses.PopularLocation;
 import com.atlantbh.devdays.demo.abh.restaurants.service.responses.ReservationInquiryResponse;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * Restaurant controller.
@@ -83,8 +82,10 @@ public class RestaurantController
   @Transactional
   @PostMapping("/{id}/reservation")
   public Reservation reservation(
-      @PathVariable("id") Long id, @RequestBody ReservationRequest request, @AuthenticationPrincipal UserDetails userDetails)
-          throws NoTablesAvailableServiceException, EntityNotFoundServiceException {
+      @PathVariable("id") Long id,
+      @RequestBody ReservationRequest request,
+      @AuthenticationPrincipal UserDetails userDetails)
+      throws NoTablesAvailableServiceException, EntityNotFoundServiceException {
     return reservationService.create(id, request, userDetails);
   }
 

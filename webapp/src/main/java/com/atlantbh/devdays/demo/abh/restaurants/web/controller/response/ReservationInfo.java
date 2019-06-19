@@ -4,7 +4,6 @@ import com.atlantbh.devdays.demo.abh.restaurants.domain.Reservation;
 import com.atlantbh.devdays.demo.abh.restaurants.domain.Restaurant;
 import com.atlantbh.devdays.demo.abh.restaurants.domain.RestaurantTable;
 import com.atlantbh.devdays.demo.abh.restaurants.domain.User;
-
 import java.util.Date;
 
 /**
@@ -13,71 +12,70 @@ import java.util.Date;
  * @author Kenan Klisura
  */
 public class ReservationInfo {
-    private Long id;
+  private Long id;
 
-    private Restaurant restaurant;
-    private RestaurantTable table;
+  private Restaurant restaurant;
+  private RestaurantTable table;
 
-    private User user;
+  private User user;
 
-    private Date startTime;
-    private Date reservedOn;
+  private Date startTime;
+  private Date reservedOn;
 
-    private Boolean confirmed = false;
+  private Boolean confirmed = false;
 
-    private Date createdAt;
+  private Date createdAt;
 
-    private Date updatedAt;
+  private Date updatedAt;
 
-    public ReservationInfo(Reservation reservation) {
-        this.id = reservation.getId();
-        this.user = reservation.getUser();
-        this.table = reservation.getTable();
-        this.startTime = reservation.getStartTime();
-        this.reservedOn = reservation.getReservedOn();
-        this.confirmed = reservation.getConfirmed();
-        this.createdAt = reservation.getCreatedAt();
-        this.updatedAt = reservation.getUpdatedAt();
-    }
+  public ReservationInfo(Reservation reservation) {
+    this.id = reservation.getId();
+    this.user = reservation.getUser();
+    this.table = reservation.getTable();
+    this.startTime = reservation.getStartTime();
+    this.reservedOn = reservation.getReservedOn();
+    this.confirmed = reservation.getConfirmed();
+    this.createdAt = reservation.getCreatedAt();
+    this.updatedAt = reservation.getUpdatedAt();
+  }
 
-    public Long getId() {
-        return id;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public Restaurant getRestaurant() {
-        return restaurant;
-    }
+  public Restaurant getRestaurant() {
+    return restaurant;
+  }
 
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
-    }
+  public void setRestaurant(Restaurant restaurant) {
+    this.restaurant = restaurant;
+  }
 
-    public RestaurantTable getTable() {
-        return table;
-    }
+  public RestaurantTable getTable() {
+    return table;
+  }
 
-    public User getUser() {
-        return user;
-    }
+  public User getUser() {
+    return user;
+  }
 
-    public Date getStartTime() {
-        return startTime;
-    }
+  public Date getStartTime() {
+    return startTime;
+  }
 
-    public Date getReservedOn() {
-        return reservedOn;
-    }
+  public Date getReservedOn() {
+    return reservedOn;
+  }
 
-    public Boolean getConfirmed() {
-        return confirmed;
-    }
+  public Boolean getConfirmed() {
+    return confirmed;
+  }
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
+  public Date getCreatedAt() {
+    return createdAt;
+  }
 
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
+  public Date getUpdatedAt() {
+    return updatedAt;
+  }
 }

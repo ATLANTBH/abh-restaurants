@@ -1,0 +1,1 @@
+web: java $JAVA_OPTS -jar webapp/target/abh-restaurants-webapp-1.0-SNAPSHOT.jar -Dserver.port=$PORT $JAR_OPTS

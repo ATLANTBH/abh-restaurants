@@ -1,7 +1,6 @@
 package com.atlantbh.devdays.demo.abh.restaurants.service.responses;
 
 import com.atlantbh.devdays.demo.abh.restaurants.web.controller.response.ReservationInfo;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

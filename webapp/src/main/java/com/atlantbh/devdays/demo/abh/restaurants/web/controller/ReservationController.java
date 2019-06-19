@@ -49,7 +49,8 @@ public class ReservationController {
   @Transactional
   @PutMapping("/{id}/confirm")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void confirmReservation(@PathVariable("id") Long id, @AuthenticationPrincipal UserDetails userDetails)
+  public void confirmReservation(
+      @PathVariable("id") Long id, @AuthenticationPrincipal UserDetails userDetails)
       throws EntityNotFoundServiceException {
     service.confirmReservation(id, userDetails);
   }
