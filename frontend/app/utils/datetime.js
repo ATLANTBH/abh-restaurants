@@ -34,5 +34,9 @@ export function formatDate(dateTime) {
  * @param {String} time Time in HH:mm format.
  */
 export function toDate(date, time) {
-  return moment(date + " " + time, "YYYY-MM-DD HH:mm").toDate();
+  if (date && time) {
+    return moment(date + " " + time, "YYYY-MM-DD HH:mm").toDate();
+  }
+
+  return moment(date).toDate();
 }

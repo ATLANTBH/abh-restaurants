@@ -1,19 +1,21 @@
 import Controller from "@ember/controller";
+import { formatTime, formatDate, toDate } from "../utils/datetime";
+
+const TODAY = new Date();
 
 export default Controller.extend({
   restaurant_name: "",
   number_of_people: 2,
 
-  time: "17:30",
-  date: new Date().toISOString().substring(0, 10),
+  time: formatTime(TODAY),
+  date: formatDate(TODAY),
 
   actions: {
     findTable() {
-      let filters = {
+      const filters = {
         name: this.get("restaurant_name"),
         people: this.get("number_of_people"),
-        date: this.get("date"),
-        time: this.get("time")
+        time: toDate(this.get("date"), this.get("time")).getTime()
       };
       this.transitionToRoute("search-results", { queryParams: filters });
     },
