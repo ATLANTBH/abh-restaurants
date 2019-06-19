@@ -13,6 +13,7 @@ export default Controller.extend({
   actions: {
     findTable() {
       const filters = {
+        page: 0,
         name: this.get("restaurant_name"),
         people: this.get("number_of_people"),
         time: toDate(this.get("date"), this.get("time")).getTime()
