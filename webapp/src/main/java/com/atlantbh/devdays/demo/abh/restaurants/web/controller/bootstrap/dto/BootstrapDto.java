@@ -8,6 +8,7 @@ package com.atlantbh.devdays.demo.abh.restaurants.web.controller.bootstrap.dto;
 public class BootstrapDto {
   private CurrentUserDto currentUser;
   private GitRepositoryInfoDto buildInfo;
+  private RestaurantsInfoDto restaurantsInfo;
 
   /**
    * Gets current user.
@@ -43,5 +44,26 @@ public class BootstrapDto {
    */
   public void setBuildInfo(GitRepositoryInfoDto buildInfo) {
     this.buildInfo = buildInfo;
+  }
+
+
+  public RestaurantsInfoDto getRestaurantsInfo() {
+    return restaurantsInfo;
+  }
+
+  public void setRestaurantsInfo(RestaurantsInfoDto restaurantsInfo) {
+    this.restaurantsInfo = restaurantsInfo;
+  }
+
+  public static class RestaurantsInfoDto {
+    private long numberOfRestaurants;
+
+    public RestaurantsInfoDto(long numberOfRestaurants) {
+      this.numberOfRestaurants = numberOfRestaurants;
+    }
+
+    public long getNumberOfRestaurants() {
+      return numberOfRestaurants;
+    }
   }
 }

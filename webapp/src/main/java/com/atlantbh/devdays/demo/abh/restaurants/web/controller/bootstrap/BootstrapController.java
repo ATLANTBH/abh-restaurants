@@ -1,6 +1,7 @@
 package com.atlantbh.devdays.demo.abh.restaurants.web.controller.bootstrap;
 
 import com.atlantbh.devdays.demo.abh.restaurants.configuration.git.config.GitRepositoryInfoConfig;
+import com.atlantbh.devdays.demo.abh.restaurants.service.RestaurantService;
 import com.atlantbh.devdays.demo.abh.restaurants.service.exceptions.EntityNotFoundServiceException;
 import com.atlantbh.devdays.demo.abh.restaurants.service.users.UsersService;
 import com.atlantbh.devdays.demo.abh.restaurants.web.controller.bootstrap.dto.BootstrapDto;
@@ -23,6 +24,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class BootstrapController {
   private UsersService usersService;
   private GitRepositoryInfoConfig gitRepositoryConfig;
+  private RestaurantService restaurantService;
+
+  @Autowired
+  public void setRestaurantService(RestaurantService restaurantService) {
+    this.restaurantService = restaurantService;
+  }
 
   /**
    * Sets git repository config.
@@ -59,6 +66,7 @@ public class BootstrapController {
     if (userDetails != null) {
       result.setCurrentUser(new CurrentUserDto(usersService.get(userDetails)));
     }
+    result.setRestaurantsInfo(new BootstrapDto.RestaurantsInfoDto(restaurantService.getNumberOfRestaurants()));
     return result;
   }
 }

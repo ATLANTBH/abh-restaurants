@@ -5,14 +5,16 @@
   {{inquiryResponse.numberOfReservationsToday}}
   Tables Left:
   {{inquiryResponse.numberOfTablesLeft}}
-  <h5 class="restaurant-reservation-times-title">
-    Select the best time that fits you:
-  </h5>
-  <p class="restaurant-reservation-times">
-    {{#each inquiryResponse.timeSuggestions as |suggestion|}}
-      <span {{action "onReserve" suggestion}}>
-        {{suggestion}}
-      </span>
-    {{/each}}
-  </p>
+  {{#if inquiryResponse.numberOfTablesLeft}}
+    <h5 class="restaurant-reservation-times-title">
+      Select the best time that fits you:
+    </h5>
+    <p class="restaurant-reservation-times">
+      {{#each inquiryResponse.timeSuggestions as |suggestion|}}
+        <span {{action "onReserve" suggestion}}>
+          {{suggestion}}
+        </span>
+      {{/each}}
+    </p>
+  {{/if}}
 {{/if}}

@@ -31,7 +31,7 @@ export default Route.extend({
   model(params) {
     const request = {
       page: params.page,
-      size: 2,
+      size: 9,
       name: params.name,
       price: params.price,
       rating: params.rating,

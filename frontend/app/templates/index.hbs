@@ -1,20 +1,19 @@
 <div id="wrap" class="white-wrapeer">
   {{#navigation/home-navigation
     type="homepage"
-    coverImage="/images/home-header.jpeg"
-    user=model.user
+    coverImage="/assets/images/home-header.jpeg"
   }}
     <h1>
       Make a free reservation
     </h1>
     <h3>
       Choose a table from
-      {{model.numberOfRastaurants}}
+      {{bootstrap.restaurantsInfo.numberOfRestaurants}}
       restaurants near you
     </h3>
     <form
       class="search-box table-search-box"
-      {{action "findTable" on="submit"}}
+      {{action "onFindTable" on="submit"}}
     >
       <label for="search">
         {{fa-icon "search"}}

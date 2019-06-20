@@ -11,7 +11,7 @@ export default Controller.extend({
   date: formatDate(TODAY),
 
   actions: {
-    findTable() {
+    onFindTable() {
       const filters = {
         page: 0,
         name: this.get("restaurant_name"),
