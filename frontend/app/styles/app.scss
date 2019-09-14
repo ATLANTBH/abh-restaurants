@@ -39,6 +39,7 @@ body > .ember-view {
 @import "./restaurant";
 @import "./user";
 @import "./reservation-details";
+@import "./bad-request.scss";
 
 .form-button-extra-small {
   font-size: 14px;
