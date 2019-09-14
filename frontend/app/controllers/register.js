@@ -17,7 +17,11 @@ export default Controller.extend({
 
       return this.get("userService")
         .register(userRequest)
-        .then(() => this.transitionToRoute("index"))
+        .then(() => {
+          return this.get("userService")
+            .login(email, password)
+            .then(() => window.location.reload());
+        })
         .catch(error => {
           return {
             hasError: true,

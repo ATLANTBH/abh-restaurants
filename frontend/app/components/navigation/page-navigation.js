@@ -7,6 +7,7 @@ export default Component.extend({
   coverImage: null,
 
   navigationStyle: computed("coverImage", function() {
-    return htmlSafe("background-image: url(" + this.get("coverImage") + ")");
+    const url = this.get("coverImage") || "/assets/images/home-header.jpg";
+    return htmlSafe(`background-image: url(${url})`);
   })
 });
