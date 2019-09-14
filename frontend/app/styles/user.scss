@@ -50,6 +50,10 @@
   padding: 12px 10px 14px;
   text-decoration: none;
   color: inherit;
+
+  &.active {
+    color: #fd6f60;
+  }
 }
 
 .reservation-list {

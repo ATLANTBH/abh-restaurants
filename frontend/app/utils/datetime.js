@@ -1,6 +1,16 @@
 import moment from "moment";
 
 /**
+ * Formats a date-time object.
+ *
+ * @param {*} dateTime Date time.
+ * @param {String} formatString Formatting.
+ */
+export function format(dateTime, formatString) {
+  return moment(dateTime).format(formatString);
+}
+
+/**
  * Formats a timeString HH:mm to a date object.
  *
  * @param {String} timeString Time string.
