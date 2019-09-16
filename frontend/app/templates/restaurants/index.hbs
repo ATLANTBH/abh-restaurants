@@ -2,7 +2,13 @@
   {{navigation/page-navigation}}
   <div id="main">
     <div class="container">
-      {{restaurants/filters}}
+      {{restaurants/filters
+        name=name
+        sortBy=sortBy
+        cuisine=cuisine
+        price=price
+        rating=rating
+      }}
       <div class="row">
         {{#each model.content as |restaurant|}}
           <div class="col-xs-12 col-sm-6 col-md-4">

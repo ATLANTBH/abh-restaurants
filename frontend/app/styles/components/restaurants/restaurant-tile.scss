@@ -36,6 +36,12 @@
 
 .restaurant-tile-stars {
   float: left;
+
+  &.restaurant-tile-stars--editable {
+    .fa-star {
+      cursor: pointer;
+    }
+  }
 }
 
 .restaurant-tile-stars i.full {
@@ -64,6 +70,12 @@
   float: left;
   padding: 3px 0;
   margin-left: 5px;
+
+  &.pricernage--editable {
+    .fa-usd {
+      cursor: pointer;
+    }
+  }
 }
 
 .restaurant-tile-pricernage .empty {

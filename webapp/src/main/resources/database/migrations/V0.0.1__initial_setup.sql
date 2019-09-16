@@ -77,6 +77,9 @@ CREATE TABLE restaurant (
   open_time TIME WITHOUT TIME ZONE NOT NULL DEFAULT '09:00:00',
   close_time TIME WITHOUT TIME ZONE NOT NULL DEFAULT '23:00:00',
 
+  number_of_ratings INTEGER DEFAULT 0,
+  average_rating FLOAT DEFAULT 0,
+
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );

@@ -12,12 +12,15 @@ import com.atlantbh.devdays.demo.abh.restaurants.service.requests.RestaurantRequ
 import com.atlantbh.devdays.demo.abh.restaurants.service.requests.ReviewRequest;
 import com.atlantbh.devdays.demo.abh.restaurants.service.responses.PopularLocation;
 import com.atlantbh.devdays.demo.abh.restaurants.service.responses.RestaurantImageResponse;
-import java.util.*;
-import java.util.stream.Collectors;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by Kenan Klisura on 2019-05-23.
@@ -98,11 +101,11 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
   }
 
   public Page<Restaurant> find(RestaurantFilter filter) {
+    final Pageable pageRequest = RestaurantSpecification.createPage(filter);
     final Page<Restaurant> restaurants =
         repository.findAll(
-            new RestaurantSpecification(filter), RestaurantSpecification.createPage(filter));
-    applySorting(restaurants, filter);
-    return restaurants;
+            new RestaurantSpecification(filter), pageRequest);
+    return transformPage(restaurants, pageRequest);
   }
 
   /**
@@ -139,6 +142,15 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
     return popularLocations;
   }
 
+  /**
+   * Creates a review for this restaurant.
+   *
+   * @param restaurantId Restaurant id.
+   * @param request Review request.
+   * @param user User.
+   * @throws EntityNotFoundServiceException If no restaurant found.
+   */
+  @Transactional
   public void createReview(Long restaurantId, ReviewRequest request, User user)
       throws EntityNotFoundServiceException {
     final Restaurant restaurant = get(restaurantId);
@@ -158,6 +170,26 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
     review.setReview(request.getReviewText());
 
     restaurantReviewRepository.save(review);
+  }
+
+  /**
+   * Updates a restaurant rating.
+   * @param restaurantId Id of a restaurant.
+   * @throws EntityNotFoundServiceException If no restaurant found.
+   */
+  @Transactional
+  public void updateRestaurantRating(Long restaurantId) throws EntityNotFoundServiceException {
+    final Restaurant restaurant = get(restaurantId);
+
+    final List<RestaurantReview> reviews = restaurantReviewRepository.findByRestaurant(restaurant);
+    if (CollectionUtils.isNotEmpty(reviews)) {
+      restaurant.setNumberOfRatings(reviews.size());
+      final OptionalDouble averageRating =
+              reviews.stream().mapToInt(RestaurantReview::getRating).average();
+      restaurant.setAverageRating((float) averageRating.orElse(0d));
+      restaurant.setNumberOfRatings(reviews.size());
+      repository.save(restaurant);
+    }
   }
 
   public long getNumberOfRestaurants() {
@@ -184,19 +216,6 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
     repository.save(restaurant);
 
     return new RestaurantImageResponse(request.getImageType(), newImagePath);
-  }
-
-  /**
-   * This is used to apply custom sorting. This only supports {@link RestaurantFilter.Sort#RATING}.
-   * This should sort restaurants in place.
-   *
-   * @param restaurants Restaurants result.
-   * @param filter Filter.
-   */
-  private void applySorting(Page<Restaurant> restaurants, RestaurantFilter filter) {
-    if (!filter.getSortBy().hasPropertyName()) {
-      // TODO(kklisura): Add support for RATING sort.
-    }
   }
 
   private void updateRestaurant(Restaurant restaurant, RestaurantRequest request)
@@ -263,24 +282,8 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
 
   @Override
   protected Restaurant populateItem(Restaurant item) {
-    populateRatings(item);
     populateTables(item);
     return item;
-  }
-
-  /**
-   * Populates a ratings on a restaurant.
-   *
-   * @param restaurant Restaurant to populate its rating.
-   */
-  private void populateRatings(Restaurant restaurant) {
-    final List<RestaurantReview> reviews = restaurantReviewRepository.findByRestaurant(restaurant);
-    if (CollectionUtils.isNotEmpty(reviews)) {
-      restaurant.setNumberOfRatings(reviews.size());
-      final OptionalDouble averageRating =
-          reviews.stream().mapToInt(RestaurantReview::getRating).average();
-      restaurant.setAverageRating((float) averageRating.orElse(0d));
-    }
   }
 
   /**

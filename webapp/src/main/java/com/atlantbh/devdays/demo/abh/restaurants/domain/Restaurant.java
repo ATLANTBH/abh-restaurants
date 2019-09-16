@@ -2,9 +2,10 @@ package com.atlantbh.devdays.demo.abh.restaurants.domain;
 
 import com.atlantbh.devdays.demo.abh.restaurants.service.responses.PopularLocation;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.*;
 
 /**
  * Created by Kenan Klisura on 2019-05-22.
@@ -100,11 +101,15 @@ public class Restaurant {
   @Column(name = "updated_at", updatable = false, insertable = false)
   private Date updatedAt;
 
-  @Transient private int numberOfRatings = 0;
+  @Column(name = "number_of_ratings")
+  private int numberOfRatings = 0;
 
-  @Transient private float averageRating = 0f;
+  @Column(name = "average_rating")
+  private float averageRating = 0f;
 
-  /** Instantiates a new Restaurant. */
+  /**
+   * Instantiates a new Restaurant.
+   */
   public Restaurant() {}
 
   /**
@@ -188,6 +193,11 @@ public class Restaurant {
     return openTime;
   }
 
+  /**
+   * Sets open time.
+   *
+   * @param openTime the open time
+   */
   public void setOpenTime(Date openTime) {
     this.openTime = openTime;
   }
@@ -201,6 +211,11 @@ public class Restaurant {
     return closeTime;
   }
 
+  /**
+   * Sets close time.
+   *
+   * @param closeTime the close time
+   */
   public void setCloseTime(Date closeTime) {
     this.closeTime = closeTime;
   }
@@ -385,33 +400,41 @@ public class Restaurant {
     this.tables = tables;
   }
 
+  /**
+   * Gets number of ratings.
+   *
+   * @return the number of ratings
+   */
   public int getNumberOfRatings() {
     return numberOfRatings;
   }
 
+  /**
+   * Sets number of ratings.
+   *
+   * @param numberOfRatings the number of ratings
+   */
   public void setNumberOfRatings(int numberOfRatings) {
     this.numberOfRatings = numberOfRatings;
   }
 
+  /**
+   * Gets average rating.
+   *
+   * @return the average rating
+   */
   public float getAverageRating() {
     return averageRating;
   }
 
+  /**
+   * Sets average rating.
+   *
+   * @param averageRating the average rating
+   */
   public void setAverageRating(float averageRating) {
     this.averageRating = averageRating;
   }
-
-  // TODO(kklisura): Should this be in service?
-  //    /**
-  //     * Gets average rating.
-  //     *
-  //     * @return the average rating
-  //     */
-  //    public Double getAverageRating() {
-  //        OptionalDouble average =
-  // this.reviews.stream().mapToInt(RestaurantReview::getRating).average();
-  //        return average.isPresent() ? average.getAsDouble() : 0D;
-  //    }
 
   /**
    * Gets latitude.
@@ -449,6 +472,11 @@ public class Restaurant {
     this.longitude = longitude;
   }
 
+  /**
+   * Gets city id.
+   *
+   * @return the city id
+   */
   @Transient
   public Long getCityId() {
     if (getCity() != null) {
@@ -458,10 +486,20 @@ public class Restaurant {
     return null;
   }
 
+  /**
+   * Gets created at.
+   *
+   * @return the created at
+   */
   public Date getCreatedAt() {
     return createdAt;
   }
 
+  /**
+   * Gets updated at.
+   *
+   * @return the updated at
+   */
   public Date getUpdatedAt() {
     return updatedAt;
   }

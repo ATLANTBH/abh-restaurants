@@ -26,6 +26,11 @@
   color: #fff;
 }
 
+.container.white-text .nav-link-custom > a.active,
+.container.grey-text .nav-link-custom > a.active {
+  color: #fd6f60;
+}
+
 .container.grey-text .navbar-brand {
   color: #131d24 !important;
 }

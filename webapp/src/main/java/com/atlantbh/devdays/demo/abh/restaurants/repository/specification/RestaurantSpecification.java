@@ -1,19 +1,23 @@
 package com.atlantbh.devdays.demo.abh.restaurants.repository.specification;
 
 import com.atlantbh.devdays.demo.abh.restaurants.domain.City_;
+import com.atlantbh.devdays.demo.abh.restaurants.domain.Cuisine_;
 import com.atlantbh.devdays.demo.abh.restaurants.domain.Restaurant;
 import com.atlantbh.devdays.demo.abh.restaurants.domain.Restaurant_;
 import com.atlantbh.devdays.demo.abh.restaurants.repository.utils.PredicateUtils;
 import com.atlantbh.devdays.demo.abh.restaurants.service.requests.RestaurantFilter;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Kenan Klisura on 2019-05-27.
@@ -37,9 +41,35 @@ public class RestaurantSpecification implements Specification<Restaurant> {
           PredicateUtils.and(
               criteriaBuilder,
               result,
-              criteriaBuilder.equal(
+              criteriaBuilder.like(
                   criteriaBuilder.lower(root.get(Restaurant_.NAME)),
-                  filter.getName().toLowerCase()));
+                  "%" + filter.getName().toLowerCase() + "%"));
+    }
+
+    if (filter.getPrice() != null) {
+      result =
+              PredicateUtils.and(
+                      criteriaBuilder,
+                      result,
+                      criteriaBuilder.lessThanOrEqualTo(root.get(Restaurant_.PRICE_RANGE), filter.getPrice()));
+    }
+
+    if (filter.getRating() != null) {
+      result =
+              PredicateUtils.and(
+                      criteriaBuilder,
+                      result,
+                      criteriaBuilder.lessThanOrEqualTo(root.get(Restaurant_.AVERAGE_RATING), filter.getRating()));
+    }
+
+    if (StringUtils.isNotEmpty(filter.getCuisine())) {
+      final List<String> cuisine = Arrays.stream(filter.getCuisine().split(","))
+              .map(String::toLowerCase)
+              .collect(Collectors.toList());
+
+      result = PredicateUtils.and(criteriaBuilder,
+              result,
+              criteriaBuilder.lower(root.join(Restaurant_.CUISINES).get(Cuisine_.NAME)).in(cuisine));
     }
 
     if (filter.getCityId() != null) {
@@ -55,12 +85,7 @@ public class RestaurantSpecification implements Specification<Restaurant> {
 
   public static Pageable createPage(RestaurantFilter filter) {
     RestaurantFilter.Sort sortProperty = filter.getSortBy();
-
-    if (!sortProperty.hasPropertyName()) {
-      return PageRequest.of(filter.getPage(), filter.getPageSize());
-    }
-
     return PageRequest.of(
-        filter.getPage(), filter.getPageSize(), Sort.Direction.ASC, sortProperty.getPropertyName());
+            filter.getPage(), filter.getPageSize(), sortProperty.getDirection(), sortProperty.getPropertyName());
   }
 }

@@ -35,21 +35,25 @@
   opacity: 0.4;
 }
 
-#searchFilters,
-#searchSort {
+.restaurant-filters-dropdown {
   position: absolute;
   box-sizing: border-box;
   z-index: 50;
   height: 0px;
-}
-
-#searchFilters {
   width: 328px;
   right: 0px;
   top: 50px;
+
+  .filter-popup-arrow {
+    left: 75%;
+  }
 }
 
-#searchSort {
+.restaurant-sort-dropdown {
+  position: absolute;
+  box-sizing: border-box;
+  z-index: 50;
+  height: 0px;
   width: 200px;
   right: 115px;
   top: 50px;
@@ -73,10 +77,6 @@
   -moz-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
-}
-
-#searchFilters .filter-popup-arrow {
-  left: 75%;
 }
 
 .filter-popup-content {
@@ -128,37 +128,6 @@
   width: 0;
   height: 0;
   visibility: hidden;
-}
-
-#price-filter-control,
-#rating-filter-control {
-  display: inline-block;
-  position: relative;
-  width: 140px;
-  cursor: default;
-}
-
-/* TODO REMOVE WHEN RATING IMPLEMENTED */
-#rating-filter-control {
-  opacity: 0.3;
-}
-
-#rating-filter-control h5 {
-  text-decoration: line-through;
-}
-/* END OF TODO */
-
-#price-filter-control label,
-#rating-filter-control label {
-  font-size: 16px;
-  cursor: pointer;
-  margin: 0;
-  color: rgba(19, 29, 36, 0.2);
-}
-
-#price-filter-control label.checked,
-#rating-filter-control label.checked {
-  color: #fd6f60;
 }
 
 .filter-popup-content label.checked {
@@ -238,4 +207,47 @@
   margin-right: 0;
   margin-left: 8px;
   font-size: 13px;
+}
+
+.filter-popup-header {
+  display: flex;
+  flex-direction: row;
+
+  > div {
+    flex: 1;
+  }
+
+  .fa-usd.full {
+    color: rgb(253, 111, 96);
+  }
+
+  .fa-times {
+    font-size: 16px;
+    cursor: pointer;
+    color: rgb(253, 111, 96);
+  }
+
+  .restaurant-tile-pricernage {
+    float: none;
+    font-size: 16px;
+    display: inline-block;
+    margin-left: 8px;
+    margin-top: 0;
+    padding-top: 0;
+
+    .fa-usd {
+      width: 12px;
+    }
+  }
+
+  .restaurant-tile-stars {
+    float: none;
+    display: inline-block;
+    height: 15px;
+    margin-left: 8px;
+
+    .restaurant-tile-stars i {
+      margin-right: 2px;
+    }
+  }
 }

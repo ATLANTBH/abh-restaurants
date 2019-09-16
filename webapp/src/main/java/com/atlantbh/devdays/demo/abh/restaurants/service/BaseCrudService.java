@@ -2,10 +2,11 @@ package com.atlantbh.devdays.demo.abh.restaurants.service;
 
 import com.atlantbh.devdays.demo.abh.restaurants.repository.BaseCrudRepository;
 import com.atlantbh.devdays.demo.abh.restaurants.service.exceptions.EntityNotFoundServiceException;
+import org.springframework.data.domain.*;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import org.springframework.data.domain.*;
 
 /**
  * Base crud service.
@@ -71,11 +72,19 @@ public abstract class BaseCrudService<T, ID, R extends BaseCrudRepository<T, ID>
   public Page<T> findAll(Pageable request, Sort sort) {
     PageRequest pageRequest = PageRequest.of(request.getPageNumber(), request.getPageSize(), sort);
     final Page<T> result = repository.findAll(null, pageRequest);
+    return transformPage(result, request);
+  }
 
-    final List<T> items =
-        result.getContent().stream().map(this::populateItem).collect(Collectors.toList());
-
-    return new PageImpl<>(items, pageRequest, result.getTotalElements());
+  /**
+   * Transforms the items in the page.
+   *
+   * @param page Page.
+   * @param pageRequest Page request.
+   * @return Transformed page items.
+   */
+  protected Page<T> transformPage(Page<T> page, Pageable pageRequest) {
+    final List<T> items = page.getContent().stream().map(this::populateItem).collect(Collectors.toList());
+    return new PageImpl<>(items, pageRequest, page.getTotalElements());
   }
 
   /**
