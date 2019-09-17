@@ -1,0 +1,30 @@
+{{#each items as |item index|}}
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="menu-item">
+        <div class="row">
+          <div class="col-xs-8">
+            <h3 class="dish-name">
+              {{item.name}}
+            </h3>
+          </div>
+          <div class="col-xs-4">
+            <h4 class="dish-price">
+              <span class="menu-price-sign">
+                $
+              </span>
+              {{item.price}}
+            </h4>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <h5 class="dish-description">
+            {{item.description}}
+          </h5>
+        </div>
+      </div>
+    </div>
+  </div>
+{{/each}}

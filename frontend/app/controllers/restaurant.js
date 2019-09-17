@@ -5,6 +5,17 @@ import { formatTime, toDate } from "../utils/datetime";
 
 const { alias } = computed;
 
+const TAB_PANE_ITEMS = [{
+  id: 'BREAKFAST',
+  title: 'Breakfast'
+}, {
+  id: 'LUNCH',
+  title: 'Lunch'
+}, {
+  id: 'DINNER',
+  title: 'Dinner'
+}];
+
 export default Controller.extend({
   restaurantService: service("restaurant-service"),
 
@@ -15,6 +26,8 @@ export default Controller.extend({
   numberOfPeople: 1,
 
   inquiryResponse: null,
+
+  tabPaneItems: TAB_PANE_ITEMS,
 
   menu: computed("model.restaurant.menu", function() {
     return JSON.parse(this.get("model.restaurant.menu"));

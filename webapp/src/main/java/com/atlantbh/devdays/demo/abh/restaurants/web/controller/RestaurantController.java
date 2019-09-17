@@ -11,14 +11,13 @@ import com.atlantbh.devdays.demo.abh.restaurants.service.requests.RestaurantFilt
 import com.atlantbh.devdays.demo.abh.restaurants.service.requests.RestaurantRequest;
 import com.atlantbh.devdays.demo.abh.restaurants.service.responses.PopularLocation;
 import com.atlantbh.devdays.demo.abh.restaurants.service.responses.ReservationInquiryResponse;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * Restaurant controller.
@@ -40,15 +39,14 @@ public class RestaurantController {
   @Transactional(readOnly = true)
   @GetMapping
   public Page<Restaurant> findAll(
-          @RequestParam(name = "page", required = false, defaultValue = "0") int page,
-          @RequestParam(name = "size", required = false, defaultValue = "9") int pageSize,
-          @RequestParam(name = "name", required = false) String name,
-          @RequestParam(name = "price", required = false) Long price,
-          @RequestParam(name = "rating", required = false) Long rating,
-          @RequestParam(name = "sortBy", required = false) String sortBy,
-          @RequestParam(name = "cuisine", required = false) String cuisine,
-          @RequestParam(name = "city", required = false) Long cityId)
-  {
+      @RequestParam(name = "page", required = false, defaultValue = "0") int page,
+      @RequestParam(name = "size", required = false, defaultValue = "9") int pageSize,
+      @RequestParam(name = "name", required = false) String name,
+      @RequestParam(name = "price", required = false) Long price,
+      @RequestParam(name = "rating", required = false) Long rating,
+      @RequestParam(name = "sortBy", required = false) String sortBy,
+      @RequestParam(name = "cuisine", required = false) String cuisine,
+      @RequestParam(name = "city", required = false) Long cityId) {
     final RestaurantFilter filter = new RestaurantFilter();
     filter.setPage(page);
     filter.setPageSize(pageSize);

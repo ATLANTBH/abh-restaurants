@@ -66,7 +66,8 @@ public class BootstrapController {
     if (userDetails != null) {
       result.setCurrentUser(new CurrentUserDto(usersService.get(userDetails)));
     }
-    result.setRestaurantsInfo(new BootstrapDto.RestaurantsInfoDto(restaurantService.getNumberOfRestaurants()));
+    result.setRestaurantsInfo(
+        new BootstrapDto.RestaurantsInfoDto(restaurantService.getNumberOfRestaurants()));
     return result;
   }
 }

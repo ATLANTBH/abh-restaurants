@@ -314,3 +314,9 @@
   outline: none;
   border: none;
 }
+
+.tab-pane.nav-pills {
+  > li {
+    cursor: pointer;
+  }
+}

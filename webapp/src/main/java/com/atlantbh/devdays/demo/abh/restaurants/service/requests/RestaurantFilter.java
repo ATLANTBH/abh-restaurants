@@ -11,14 +11,18 @@ import org.apache.commons.lang3.StringUtils;
 public class RestaurantFilter {
   public enum Sort {
     NAME(Restaurant_.NAME, org.springframework.data.domain.Sort.Direction.ASC, "name"),
-    RATING(Restaurant_.AVERAGE_RATING,  org.springframework.data.domain.Sort.Direction.DESC,"rating"),
-    PRICE(Restaurant_.PRICE_RANGE,  org.springframework.data.domain.Sort.Direction.DESC,"price");
+    RATING(
+        Restaurant_.AVERAGE_RATING, org.springframework.data.domain.Sort.Direction.DESC, "rating"),
+    PRICE(Restaurant_.PRICE_RANGE, org.springframework.data.domain.Sort.Direction.DESC, "price");
 
     private final String queryValue;
     private final String propertyName;
     private org.springframework.data.domain.Sort.Direction direction;
 
-    Sort(String propertyName, org.springframework.data.domain.Sort.Direction direction, String queryValue) {
+    Sort(
+        String propertyName,
+        org.springframework.data.domain.Sort.Direction direction,
+        String queryValue) {
       this.propertyName = propertyName;
       this.queryValue = queryValue;
       this.direction = direction;

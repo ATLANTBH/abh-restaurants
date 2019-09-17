@@ -1,0 +1,19 @@
+<ul class="nav nav-pills tab-pane">
+  {{#each items as |item|}}
+    <li
+      class={{if (eq item.id activeItem) "active"}}
+      onclick={{action "onSetActiveItem" item.id}}
+    >
+      <a data-toggle="tab">
+        {{item.title}}
+      </a>
+    </li>
+  {{/each}}
+</ul>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="tab-content">
+      {{yield activeItem}}
+    </div>
+  </div>
+</div>

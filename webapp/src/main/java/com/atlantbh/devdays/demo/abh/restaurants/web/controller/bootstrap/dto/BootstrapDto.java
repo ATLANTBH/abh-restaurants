@@ -46,7 +46,6 @@ public class BootstrapDto {
     this.buildInfo = buildInfo;
   }
 
-
   public RestaurantsInfoDto getRestaurantsInfo() {
     return restaurantsInfo;
   }

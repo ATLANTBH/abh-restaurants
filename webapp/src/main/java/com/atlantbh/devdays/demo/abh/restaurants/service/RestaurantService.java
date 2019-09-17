@@ -12,15 +12,14 @@ import com.atlantbh.devdays.demo.abh.restaurants.service.requests.RestaurantRequ
 import com.atlantbh.devdays.demo.abh.restaurants.service.requests.ReviewRequest;
 import com.atlantbh.devdays.demo.abh.restaurants.service.responses.PopularLocation;
 import com.atlantbh.devdays.demo.abh.restaurants.service.responses.RestaurantImageResponse;
+import java.util.*;
+import java.util.stream.Collectors;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Created by Kenan Klisura on 2019-05-23.
@@ -103,8 +102,7 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
   public Page<Restaurant> find(RestaurantFilter filter) {
     final Pageable pageRequest = RestaurantSpecification.createPage(filter);
     final Page<Restaurant> restaurants =
-        repository.findAll(
-            new RestaurantSpecification(filter), pageRequest);
+        repository.findAll(new RestaurantSpecification(filter), pageRequest);
     return transformPage(restaurants, pageRequest);
   }
 
@@ -174,6 +172,7 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
 
   /**
    * Updates a restaurant rating.
+   *
    * @param restaurantId Id of a restaurant.
    * @throws EntityNotFoundServiceException If no restaurant found.
    */
@@ -185,7 +184,7 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
     if (CollectionUtils.isNotEmpty(reviews)) {
       restaurant.setNumberOfRatings(reviews.size());
       final OptionalDouble averageRating =
-              reviews.stream().mapToInt(RestaurantReview::getRating).average();
+          reviews.stream().mapToInt(RestaurantReview::getRating).average();
       restaurant.setAverageRating((float) averageRating.orElse(0d));
       restaurant.setNumberOfRatings(reviews.size());
       repository.save(restaurant);

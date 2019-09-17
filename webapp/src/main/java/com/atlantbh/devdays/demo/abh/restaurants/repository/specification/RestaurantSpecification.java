@@ -6,18 +6,17 @@ import com.atlantbh.devdays.demo.abh.restaurants.domain.Restaurant;
 import com.atlantbh.devdays.demo.abh.restaurants.domain.Restaurant_;
 import com.atlantbh.devdays.demo.abh.restaurants.repository.utils.PredicateUtils;
 import com.atlantbh.devdays.demo.abh.restaurants.service.requests.RestaurantFilter;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
-
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
 /**
  * Created by Kenan Klisura on 2019-05-27.
@@ -48,28 +47,35 @@ public class RestaurantSpecification implements Specification<Restaurant> {
 
     if (filter.getPrice() != null) {
       result =
-              PredicateUtils.and(
-                      criteriaBuilder,
-                      result,
-                      criteriaBuilder.lessThanOrEqualTo(root.get(Restaurant_.PRICE_RANGE), filter.getPrice()));
+          PredicateUtils.and(
+              criteriaBuilder,
+              result,
+              criteriaBuilder.lessThanOrEqualTo(
+                  root.get(Restaurant_.PRICE_RANGE), filter.getPrice()));
     }
 
     if (filter.getRating() != null) {
       result =
-              PredicateUtils.and(
-                      criteriaBuilder,
-                      result,
-                      criteriaBuilder.lessThanOrEqualTo(root.get(Restaurant_.AVERAGE_RATING), filter.getRating()));
+          PredicateUtils.and(
+              criteriaBuilder,
+              result,
+              criteriaBuilder.lessThanOrEqualTo(
+                  root.get(Restaurant_.AVERAGE_RATING), filter.getRating()));
     }
 
     if (StringUtils.isNotEmpty(filter.getCuisine())) {
-      final List<String> cuisine = Arrays.stream(filter.getCuisine().split(","))
+      final List<String> cuisine =
+          Arrays.stream(filter.getCuisine().split(","))
               .map(String::toLowerCase)
               .collect(Collectors.toList());
 
-      result = PredicateUtils.and(criteriaBuilder,
+      result =
+          PredicateUtils.and(
+              criteriaBuilder,
               result,
-              criteriaBuilder.lower(root.join(Restaurant_.CUISINES).get(Cuisine_.NAME)).in(cuisine));
+              criteriaBuilder
+                  .lower(root.join(Restaurant_.CUISINES).get(Cuisine_.NAME))
+                  .in(cuisine));
     }
 
     if (filter.getCityId() != null) {
@@ -86,6 +92,9 @@ public class RestaurantSpecification implements Specification<Restaurant> {
   public static Pageable createPage(RestaurantFilter filter) {
     RestaurantFilter.Sort sortProperty = filter.getSortBy();
     return PageRequest.of(
-            filter.getPage(), filter.getPageSize(), sortProperty.getDirection(), sortProperty.getPropertyName());
+        filter.getPage(),
+        filter.getPageSize(),
+        sortProperty.getDirection(),
+        sortProperty.getPropertyName());
   }
 }

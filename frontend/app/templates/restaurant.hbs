@@ -162,125 +162,20 @@
             <h2 class="restaurant-card-title floating">
               Menu:
             </h2>
-            <ul class="nav nav-pills">
-              <li class="active">
-                <a href="#breakfast" data-toggle="tab">
-                  Breakfast
-                </a>
-              </li>
-              <li>
-                <a href="#lunch" data-toggle="tab">
-                  Lunch
-                </a>
-              </li>
-              <li>
-                <a href="#dinner" data-toggle="tab">
-                  Dinner
-                </a>
-              </li>
-            </ul>
-            <div class="row">
-              <div class="col-xs-12">
-                <div class="tab-content">
-                  <div class="tab-pane active" id="breakfast">
-                    {{#each breakfastMenu as |item index|}}
-                      <div class="row">
-                        <div class="col-xs-12">
-                          <div class="menu-item">
-                            <div class="row">
-                              <div class="col-xs-8">
-                                <h3 class="dish-name">
-                                  {{item.name}}
-                                </h3>
-                              </div>
-                              <div class="col-xs-4">
-                                <h4 class="dish-price">
-                                  <span class="menu-price-sign">
-                                    $
-                                  </span>
-                                  {{item.price}}
-                                </h4>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-xs-12">
-                              <h5 class="dish-description">
-                                {{item.description}}
-                              </h5>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    {{/each}}
-                  </div>
-                  <div class="tab-pane" id="lunch">
-                    {{#each lunchMenu as |item index|}}
-                      <div class="row">
-                        <div class="col-xs-12">
-                          <div class="menu-item">
-                            <div class="row">
-                              <div class="col-xs-8">
-                                <h3 class="dish-name">
-                                  {{item.name}}
-                                </h3>
-                              </div>
-                              <div class="col-xs-4">
-                                <h4 class="dish-price">
-                                  <span class="menu-price-sign">
-                                    $
-                                  </span>
-                                  {{item.price}}
-                                </h4>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-xs-12">
-                              <h5 class="dish-description">
-                                {{item.description}}
-                              </h5>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    {{/each}}
-                  </div>
-                  <div class="tab-pane" id="dinner">
-                    {{#each dinnerMenu as |item index|}}
-                      <div class="row">
-                        <div class="col-xs-12">
-                          <div class="menu-item">
-                            <div class="row">
-                              <div class="col-xs-8">
-                                <h3 class="dish-name">
-                                  {{item.name}}
-                                </h3>
-                              </div>
-                              <div class="col-xs-4">
-                                <h4 class="dish-price">
-                                  <span class="menu-price-sign">
-                                    $
-                                  </span>
-                                  {{item.price}}
-                                </h4>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-xs-12">
-                              <h5 class="dish-description">
-                                {{item.description}}
-                              </h5>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    {{/each}}
-                  </div>
-                </div>
-              </div>
-            </div>
+            {{#ui/tab-pane
+              items=tabPaneItems
+              activeItem="BREAKFAST" as |activeItem|
+            }}
+              {{#ui/tab-pane-content id="BREAKFAST" activeItem=activeItem}}
+                {{restaurant/menu-list items=breakfastMenu}}
+              {{/ui/tab-pane-content}}
+              {{#ui/tab-pane-content id="LUNCH" activeItem=activeItem}}
+                {{restaurant/menu-list items=lunchMenu}}
+              {{/ui/tab-pane-content}}
+              {{#ui/tab-pane-content id="DINNER" activeItem=activeItem}}
+                {{restaurant/menu-list items=dinnerMenu}}
+              {{/ui/tab-pane-content}}
+            {{/ui/tab-pane}}
           </div>
         </div>
       </div>
