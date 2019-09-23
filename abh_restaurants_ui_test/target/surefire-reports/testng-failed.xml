@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" verbose="0" name="Failed suite [Smoke test]">
+  <parameter name="browser" value="firefox"/>
+  <parameter name="url" value="https://abh-restaurants-dev-days.herokuapp.com"/>
+  <test name="Make Reservation(failed)">
+    <classes>
+      <class name="smoke.MakeReservation">
+        <methods>
+          <include name="loginToRestaurantsPage"/>
+          <include name="tearDown"/>
+          <include name="setUp"/>
+          <include name="checkUserLoginIsSuccessful"/>
+        </methods>
+      </class> <!-- smoke.MakeReservation -->
+    </classes>
+  </test> <!-- Make Reservation(failed) -->
+</suite> <!-- Failed suite [Smoke test] -->

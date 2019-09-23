@@ -1,0 +1,28 @@
+-------------------------------------------------------------------------------
+Test set: TestSuite
+-------------------------------------------------------------------------------
+Tests run: 10, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 91.225 sec <<< FAILURE! - in TestSuite
+loginToRestaurantsPage(smoke.MakeReservation)  Time elapsed: 20.152 sec  <<< FAILURE!
+org.openqa.selenium.NoSuchElementException: 
+Unable to locate element: div[class='row'] input[id='passwrd']
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.5.3', revision: 'a88d25fe6b', time: '2017-08-29T12:42:44.417Z'
+System info: host: 'MacBook-Pro-4.local', ip: 'fe80:0:0:0:1c31:af40:1916:98fe%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.14.6', java.version: '1.8.0_221'
+Driver info: org.openqa.selenium.firefox.FirefoxDriver
+Capabilities [{moz:profile=/var/folders/p1/vjsh9h7s04qc3rw_5fmktxd80000gp/T/rust_mozprofile.quxI8xz8lBQa, rotatable=false, moz:geckodriverVersion=0.24.0, timeouts={implicit=0, pageLoad=300000, script=30000}, pageLoadStrategy=normal, unhandledPromptBehavior=dismiss and notify, strictFileInteractability=false, moz:headless=false, platform=MAC, moz:accessibilityChecks=false, moz:useNonSpecCompliantPointerOrigin=false, acceptInsecureCerts=true, browserVersion=66.0.2, moz:shutdownTimeout=60000, platformVersion=18.7.0, moz:processID=35868, browserName=firefox, javascriptEnabled=true, platformName=MAC, setWindowRect=true, moz:webdriverClick=true}]
+Session ID: 520a0056-71b8-1448-b308-8a9f9f10e65b
+*** Element info: {Using=css selector, value=div[class='row'] input[id='passwrd']}
+	at smoke.MakeReservation.loginToRestaurantsPage(MakeReservation.java:71)
+
+checkUserLoginIsSuccessful(smoke.MakeReservation)  Time elapsed: 20.02 sec  <<< FAILURE!
+org.openqa.selenium.NoSuchElementException: 
+Unable to locate element: #main > div > div > h1
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.5.3', revision: 'a88d25fe6b', time: '2017-08-29T12:42:44.417Z'
+System info: host: 'MacBook-Pro-4.local', ip: 'fe80:0:0:0:1c31:af40:1916:98fe%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.14.6', java.version: '1.8.0_221'
+Driver info: org.openqa.selenium.firefox.FirefoxDriver
+Capabilities [{moz:profile=/var/folders/p1/vjsh9h7s04qc3rw_5fmktxd80000gp/T/rust_mozprofile.quxI8xz8lBQa, rotatable=false, moz:geckodriverVersion=0.24.0, timeouts={implicit=0, pageLoad=300000, script=30000}, pageLoadStrategy=normal, unhandledPromptBehavior=dismiss and notify, strictFileInteractability=false, moz:headless=false, platform=MAC, moz:accessibilityChecks=false, moz:useNonSpecCompliantPointerOrigin=false, acceptInsecureCerts=true, browserVersion=66.0.2, moz:shutdownTimeout=60000, platformVersion=18.7.0, moz:processID=35868, browserName=firefox, javascriptEnabled=true, platformName=MAC, setWindowRect=true, moz:webdriverClick=true}]
+Session ID: 520a0056-71b8-1448-b308-8a9f9f10e65b
+*** Element info: {Using=css selector, value=#main > div > div > h1}
+	at smoke.MakeReservation.checkUserLoginIsSuccessful(MakeReservation.java:76)
+
