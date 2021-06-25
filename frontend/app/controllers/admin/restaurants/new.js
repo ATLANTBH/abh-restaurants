@@ -171,15 +171,17 @@ export default Controller.extend({
       if (this.get("marker")) {
         this.set(
           "model.restaurant.latitude",
-          this.get("marker")
-            .getPosition()
-            .lat()
+          32424
+          // this.get("marker")
+          //   .getPosition()
+          //   .lat()
         );
         this.set(
           "model.restaurant.longitude",
-          this.get("marker")
-            .getPosition()
-            .lng()
+          4324324
+          // this.get("marker")
+          //   .getPosition()
+          //   .lng()
         );
       }
 
