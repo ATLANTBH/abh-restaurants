@@ -2,7 +2,7 @@ import Controller from "@ember/controller";
 import { computed } from "@ember/object";
 import { inject as service } from "@ember/service";
 import { htmlSafe } from "@ember/template";
-import { timeStringToDate, formatTime } from "../../../utils/datetime";
+import { timeStringToDate, formatTime, lessThanOneHour } from "../../../utils/datetime";
 
 const { alias } = computed;
 
@@ -215,6 +215,33 @@ export default Controller.extend({
 
       if (!this.get("model.restaurant.priceRange")) {
         return alert("Please select a correct price range.");
+      }
+
+      if (!this.get("model.restaurant.cityId")) {
+        return alert("Please select a city.");
+      }
+
+      if(!this.get("model.restaurant.coverImagePath")) {
+        return alert("Please upload a cover photo.");
+      }
+
+      if(!this.get("model.restaurant.profileImagePath")) {
+        return alert("Please upload a profile photo.");
+      }
+
+      if(!this.get("model.restaurant.openTime")) {
+        return alert("Please add an opening time");
+      }
+
+      if(!this.get("model.restaurant.closeTime")) {
+        return alert("Please add a closing time");
+      }
+
+      const openTimeDate = new Date(this.get("model.restaurant.openTime"));
+      const closeTimeDate = new Date(this.get("model.restaurant.closeTime"));
+
+      if(lessThanOneHour(openTimeDate, closeTimeDate)) {
+        return alert("The restaurant must be open for at least 1 hour");
       }
 
       this.set(

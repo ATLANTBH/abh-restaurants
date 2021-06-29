@@ -116,6 +116,7 @@
               type="text"
               placeholder="Address"
               value=model.restaurant.address
+              required="required"
             }}
           </div>
           <div class="col-xs-12 col-sm-6">
@@ -130,7 +131,9 @@
         </div>
         <div class="row">
           <div class="col-xs-12 col-sm-6">
+            <h1 class="admin-from-title" style="margin-bottom: 10px">Open time</h1>
             {{input class="form-input" type="time" value=openTime}}
+            <h1 class="admin-from-title" style="margin-bottom: 10px">Close time</h1>
             {{input class="form-input" type="time" value=closeTime}}
           </div>
           <div class="col-xs-12 col-sm-6"></div>

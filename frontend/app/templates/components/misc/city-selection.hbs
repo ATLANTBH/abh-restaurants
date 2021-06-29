@@ -2,6 +2,8 @@
   class="form-input"
   onchange={{action "onSelectCity" value="target.value"}}
 >
+  <option value="" selected disabled hidden>City</option>
+
   {{#each cities as |city|}}
     <option value="{{city.id}}">
       {{city.name}}

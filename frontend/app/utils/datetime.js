@@ -50,3 +50,7 @@ export function toDate(date, time) {
 
   return moment(date).toDate();
 }
+
+export function lessThanOneHour(openDateTime, closeDateTime) {
+  return moment(openDateTime).isAfter(moment(closeDateTime).subtract(1, 'hours'));
+}
