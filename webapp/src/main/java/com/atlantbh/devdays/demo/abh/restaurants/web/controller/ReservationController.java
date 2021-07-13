@@ -50,4 +50,12 @@ public class ReservationController {
       throws EntityNotFoundServiceException {
     service.confirmReservation(id, userDetails);
   }
+
+  @Transactional
+  @PutMapping("/{id}/cancel")
+  public void cancelReservation(
+      @PathVariable("id") Long id, @AuthenticationPrincipal UserDetails userDetails)
+      throws EntityNotFoundServiceException {
+    service.cancelReservation(id, userDetails);
+  }
 }

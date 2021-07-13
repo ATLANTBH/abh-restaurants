@@ -20,6 +20,8 @@ public class ReservationInfo {
 
   private Boolean confirmed = false;
 
+  private boolean canceled;
+
   private Date createdAt;
 
   private Date updatedAt;
@@ -38,6 +40,7 @@ public class ReservationInfo {
     this.confirmed = reservation.getConfirmed();
     this.createdAt = reservation.getCreatedAt();
     this.updatedAt = reservation.getUpdatedAt();
+    this.canceled = reservation.isCanceled();
   }
 
   /**
@@ -128,5 +131,9 @@ public class ReservationInfo {
    */
   public Date getUpdatedAt() {
     return updatedAt;
+  }
+
+  public boolean isCanceled() {
+    return canceled;
   }
 }
