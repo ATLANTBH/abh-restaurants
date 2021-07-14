@@ -1,0 +1,2 @@
+ALTER TABLE reservation ADD COLUMN canceled BOOLEAN DEFAULT FALSE;
+ALTER TABLE reservation ADD COLUMN canceled_at TIMESTAMP;
