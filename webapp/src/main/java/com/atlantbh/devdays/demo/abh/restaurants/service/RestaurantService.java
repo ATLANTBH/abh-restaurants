@@ -75,7 +75,8 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
   public Restaurant create(RestaurantRequest request) throws EntityNotFoundServiceException {
     Restaurant restaurant = new Restaurant();
     updateRestaurant(restaurant, request);
-    return repository.save(restaurant);
+//    return repository.save(restaurant);
+    return restaurant;
   }
 
   /**
@@ -90,7 +91,8 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
       throws EntityNotFoundServiceException {
     Restaurant restaurant = get(id);
     updateRestaurant(restaurant, request);
-    return repository.save(restaurant);
+//    return repository.save(restaurant);
+    return get(id);
   }
 
   public Page<Restaurant> find(RestaurantFilter filter) {
@@ -189,57 +191,59 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
     return repository.count();
   }
 
-  private void updateRestaurant(Restaurant restaurant, RestaurantRequest request)
-      throws EntityNotFoundServiceException {
-    restaurant.setName(request.getName());
-    restaurant.setDescription(request.getDescription());
-    restaurant.setAddress(request.getAddress());
-    restaurant.setCity(cityService.get(request.getCityId()));
-    restaurant.setCoverImagePath(request.getCoverImagePath());
-    restaurant.setLatitude(request.getLatitude());
-    restaurant.setLongitude(request.getLongitude());
-    restaurant.setMenu(request.getMenu());
-    restaurant.setPhone(request.getPhone());
-    restaurant.setPriceRange(request.getPriceRange());
-    restaurant.setProfileImagePath(request.getProfileImagePath());
-    restaurant.setCloseTime(request.getCloseTime());
-    restaurant.setOpenTime(request.getOpenTime());
+    private void updateRestaurant(Restaurant restaurant, RestaurantRequest request)
+            throws EntityNotFoundServiceException {
 
-    final List<Cuisine> ourCuisines = new ArrayList<>();
-    final List<Cuisine> cuisines = request.getCuisines();
-    if (CollectionUtils.isNotEmpty(cuisines)) {
-      for (Cuisine cuisine : cuisines) {
-        Cuisine ourCuisine = cuisineService.get(cuisine.getId());
-        ourCuisines.add(ourCuisine);
-      }
-    }
-    restaurant.setCuisines(ourCuisines);
+        cityService.get(request.getCityId());
+//        restaurant.setName(request.getName());
+//        restaurant.setDescription(request.getDescription());
+//        restaurant.setAddress(request.getAddress());
+//        restaurant.setCity(cityService.get(request.getCityId()));
+//        restaurant.setCoverImagePath(request.getCoverImagePath());
+//        restaurant.setLatitude(request.getLatitude());
+//        restaurant.setLongitude(request.getLongitude());
+//        restaurant.setMenu(request.getMenu());
+//        restaurant.setPhone(request.getPhone());
+//        restaurant.setPriceRange(request.getPriceRange());
+//        restaurant.setProfileImagePath(request.getProfileImagePath());
+//        restaurant.setCloseTime(request.getCloseTime());
+//        restaurant.setOpenTime(request.getOpenTime());
 
-    final List<RestaurantTable> ourTables = new ArrayList<>();
-    final List<RestaurantTable> tables = request.getTables();
-    if (CollectionUtils.isNotEmpty(tables)) {
-      for (RestaurantTable table : tables) {
-        if (table.getId() == null) {
-          table.setRestaurant(restaurant);
-          final RestaurantTable ourTable = restaurantTableRepository.save(table);
-          ourTables.add(ourTable);
-        } else {
-          final Optional<RestaurantTable> ourTableOptional =
-              restaurantTableRepository.findById(table.getId());
-          if (ourTableOptional.isPresent()) {
-            final RestaurantTable ourTable = ourTableOptional.get();
-
-            ourTable.setRestaurant(restaurant);
-            ourTable.setNumberOfChairs(table.getNumberOfChairs());
-            restaurantTableRepository.save(ourTable);
-
-            ourTables.add(ourTable);
-          }
+        final List<Cuisine> ourCuisines = new ArrayList<>();
+        final List<Cuisine> cuisines = request.getCuisines();
+        if (CollectionUtils.isNotEmpty(cuisines)) {
+            for (Cuisine cuisine : cuisines) {
+                Cuisine ourCuisine = cuisineService.get(cuisine.getId());
+                ourCuisines.add(ourCuisine);
+            }
         }
-      }
+//        restaurant.setCuisines(ourCuisines);
+
+        final List<RestaurantTable> ourTables = new ArrayList<>();
+        final List<RestaurantTable> tables = request.getTables();
+        if (CollectionUtils.isNotEmpty(tables)) {
+            for (RestaurantTable table : tables) {
+                if (table.getId() == null) {
+//                    table.setRestaurant(restaurant);
+//                    final RestaurantTable ourTable = restaurantTableRepository.save(table);
+//                    ourTables.add(ourTable);
+                } else {
+                    final Optional<RestaurantTable> ourTableOptional =
+                            restaurantTableRepository.findById(table.getId());
+                    if (ourTableOptional.isPresent()) {
+                        final RestaurantTable ourTable = ourTableOptional.get();
+
+//                        ourTable.setRestaurant(restaurant);
+//                        ourTable.setNumberOfChairs(table.getNumberOfChairs());
+//                        restaurantTableRepository.save(ourTable);
+
+//                        ourTables.add(ourTable);
+                    }
+                }
+            }
+        }
+//        restaurant.setTables(ourTables);
     }
-    restaurant.setTables(ourTables);
-  }
 
   /**
    * Populates a ratings on a list of restaurants.
