@@ -1,6 +1,7 @@
 package com.atlantbh.devdays.demo.abh.restaurants;
 
 import com.atlantbh.devdays.demo.abh.restaurants.service.users.AdminUserService;
+import com.atlantbh.devdays.demo.abh.restaurants.service.users.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ApplicationStartup implements ApplicationListener<ContextRefreshedEvent> {
   private AdminUserService adminUserService;
+  private UsersService usersService;
 
   /**
    * Sets admin user service.
@@ -24,5 +26,6 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
   @Override
   public void onApplicationEvent(ContextRefreshedEvent event) {
     adminUserService.createDefault();
+    usersService.createDefault();
   }
 }

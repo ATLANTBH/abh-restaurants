@@ -17,7 +17,7 @@ public interface ReservationRepository extends BaseCrudRepository<Reservation, L
    * @param restaurantId Restaurant id.
    * @return Number of reservations today.
    */
-  @Query("SELECT count(r.id) FROM Reservation r WHERE r.table.restaurant.id = :restaurantId")
+  @Query("SELECT count(r.id) FROM Reservation r WHERE r.table.restaurant.id = :restaurantId and r.canceled = false")
   long numberOfReservationsToday(@Param("restaurantId") Long restaurantId);
 
   /**
@@ -31,7 +31,8 @@ public interface ReservationRepository extends BaseCrudRepository<Reservation, L
   @Query(
       "SELECT reservation FROM Reservation reservation WHERE reservation.table IN :tables AND "
           + "reservation.startTime >= :minTime AND "
-          + "reservation.startTime <= :maxTime")
+          + "reservation.startTime <= :maxTime AND "
+          + "reservation.canceled = false")
   List<Reservation> findTableReservations(
       @Param("tables") List<RestaurantTable> tables,
       @Param("minTime") Date minTime,
@@ -62,7 +63,8 @@ public interface ReservationRepository extends BaseCrudRepository<Reservation, L
           + "restaurant.id = :restaurantId AND "
           + "reservation.confirmed = TRUE AND "
           + "reservation.startTime >= :minTime AND "
-          + "reservation.startTime <= :maxTime")
+          + "reservation.startTime <= :maxTime AND "
+          + "reservation.canceled = false")
   List<Reservation> findConfirmedReservations(
       @Param("restaurantId") Long restaurantId,
       @Param("minTime") Date startOfDay,

@@ -265,6 +265,29 @@ public class ReservationService extends BaseCrudService<Reservation, Long, Reser
     return mapReservationToReservationInfo(reservation);
   }
 
+  /**
+   * Cancels a reservation.
+   *
+   * @param reservationId Reservation id.
+   * @param userDetails Current user details.
+   * @throws EntityNotFoundServiceException If no reservation can be found.
+   */
+  public void cancelReservation(Long reservationId, UserDetails userDetails)
+      throws EntityNotFoundServiceException {
+    Reservation reservation = get(reservationId);
+
+    final User currentUser = usersService.get(userDetails);
+
+    if (!currentUser.getId().equals(reservation.getUser().getId())) {
+      throw new EntityNotFoundServiceException();
+    }
+
+    reservation.setCanceled(true);
+    reservation.setCanceledAt(new Date());
+
+    repository.save(reservation);
+  }
+
   private List<ReservationInfo> mapReservationToReservationInfo(List<Reservation> reservations)
       throws EntityNotFoundServiceException {
     List<ReservationInfo> result = new ArrayList<>(reservations.size());

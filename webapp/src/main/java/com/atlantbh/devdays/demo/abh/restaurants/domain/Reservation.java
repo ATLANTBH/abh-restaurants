@@ -32,6 +32,12 @@ public class Reservation {
   @Column(name = "is_confirmed")
   private Boolean confirmed = false;
 
+  @Column(name = "canceled")
+  private boolean canceled;
+
+  @Column(name = "canceled_at")
+  private Date canceledAt;
+
   @Column(name = "created_at", updatable = false, insertable = false)
   private Date createdAt;
 
@@ -165,5 +171,17 @@ public class Reservation {
    */
   public Date getUpdatedAt() {
     return updatedAt;
+  }
+
+  public boolean isCanceled() {
+    return canceled;
+  }
+
+  public void setCanceled(boolean canceled) {
+    this.canceled = canceled;
+  }
+
+  public void setCanceledAt(Date canceledAt) {
+    this.canceledAt = canceledAt;
   }
 }
