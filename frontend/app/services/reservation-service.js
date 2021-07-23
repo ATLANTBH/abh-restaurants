@@ -7,5 +7,9 @@ export default BaseService.extend({
 
   confirmReservation(id) {
     return this.put(`/api/v1/reservation/${id}/confirm`);
+  },
+
+  cancelReservation(id) {
+    return this.put(`/api/v1/reservation/${id}/cancel`);
   }
 });
