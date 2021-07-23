@@ -23,6 +23,11 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
     this.adminUserService = adminUserService;
   }
 
+  @Autowired
+  public void setUsersService(UsersService usersService) {
+    this.usersService = usersService;
+  }
+
   @Override
   public void onApplicationEvent(ContextRefreshedEvent event) {
     adminUserService.createDefault();
