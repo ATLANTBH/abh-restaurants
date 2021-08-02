@@ -95,7 +95,7 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
   public Page<Restaurant> find(RestaurantFilter filter) {
     final Pageable pageRequest = RestaurantSpecification.createPage(filter);
     final Page<Restaurant> restaurants =
-        repository.findAll(new RestaurantSpecification(filter), pageRequest);
+        repository.findAll(new RestaurantSpecification(filter, cuisineService), pageRequest);
     return transformPage(restaurants, pageRequest);
   }
 
