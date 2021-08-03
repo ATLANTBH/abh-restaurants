@@ -53,6 +53,7 @@ public class ReservationController {
 
   @Transactional
   @PutMapping("/{id}/cancel")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
   public void cancelReservation(
       @PathVariable("id") Long id, @AuthenticationPrincipal UserDetails userDetails)
       throws EntityNotFoundServiceException {

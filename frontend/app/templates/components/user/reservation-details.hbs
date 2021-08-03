@@ -25,9 +25,13 @@
   </div>
   <div class="col-xs-12 col-sm-3">
   <span></span>
-  <button class="form-button form-button-extra-small cancel-reservation">
-    CANCEL RESERVATION
-  </button>
+  {{#if reservation.canceled}}
+    CANCELED
+  {{else}}
+    <button class="form-button form-button-extra-small cancel-reservation" onclick={{action "onCancelReservation" reservation.id}}>
+      CANCEL RESERVATION
+    </button>
+  {{/if}}
   </div>
 
 </div>
