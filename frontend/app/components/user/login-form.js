@@ -1,4 +1,5 @@
 import Component from "@ember/component";
+import { isSafariBrowser } from '../../helpers/browser-detect';
 
 export default Component.extend({
   useLinks: true,
@@ -13,6 +14,7 @@ export default Component.extend({
 
   actions: {
     onLogin() {
+      if (isSafariBrowser()) return;
       const promiseResult = this.get("onLogin")(
         this.get("email"),
         this.get("password")
