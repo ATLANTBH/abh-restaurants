@@ -237,13 +237,6 @@ export default Controller.extend({
         return alert("Please add a closing time");
       }
 
-      const openTimeDate = new Date(this.get("model.restaurant.openTime"));
-      const closeTimeDate = new Date(this.get("model.restaurant.closeTime"));
-
-      if(lessThanOneHour(openTimeDate, closeTimeDate)) {
-        return alert("The restaurant must be open for at least 1 hour");
-      }
-
       this.set(
         "model.restaurant.menu",
         JSON.stringify(this.get("model.restaurant.menu")) || "{}"
