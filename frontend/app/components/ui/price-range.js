@@ -1,5 +1,6 @@
 import Component from "@ember/component";
 import { computed } from "@ember/object";
+import { isChromeBrowser } from "../../helpers/browser-detect";
 
 export default Component.extend({
   isEditable: false,
@@ -40,7 +41,7 @@ export default Component.extend({
 
   actions: {
     onPriceRange(price) {
-      if (this.get("isEditable")) {
+      if (this.get("isEditable") && !isChromeBrowser()) {
         this.get("onPriceChange")(price);
       }
     }

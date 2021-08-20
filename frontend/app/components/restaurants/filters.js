@@ -1,6 +1,7 @@
 import Component from "@ember/component";
 import { inject as service } from "@ember/service";
 import { computed } from "@ember/object";
+import { isChromeBrowser } from "../../helpers/browser-detect";
 
 export default Component.extend({
   name: null,
@@ -72,7 +73,9 @@ export default Component.extend({
     },
 
     onPriceChange(price) {
-      this.set("price", price);
+      if (!isChromeBrowser()) {
+        this.set("price", price);
+      }
     },
 
     onRatingChange(rating) {
