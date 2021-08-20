@@ -11,3 +11,7 @@ export const isSafariBrowser = () => {
   }
   return false;
 }
+
+export const isChromeBrowser = () => {
+  return is_chrome;
+}
