@@ -17,7 +17,8 @@ public interface ReservationRepository extends BaseCrudRepository<Reservation, L
    * @param restaurantId Restaurant id.
    * @return Number of reservations today.
    */
-  @Query("SELECT count(r.id) FROM Reservation r WHERE r.table.restaurant.id = :restaurantId and r.canceled = false")
+  @Query(
+      "SELECT count(r.id) FROM Reservation r WHERE r.table.restaurant.id = :restaurantId and r.canceled = false")
   long numberOfReservationsToday(@Param("restaurantId") Long restaurantId);
 
   /**
