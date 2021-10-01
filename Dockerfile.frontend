@@ -1,0 +1,16 @@
+FROM danlynn/ember-cli
+
+WORKDIR /abhrestaurants
+
+# Add necessary files
+ADD frontend /abhrestaurants/frontend
+ADD pom.frontend.xml /abhrestaurants/pom.xml
+
+# build packages
+RUN npm --prefix ./frontend install
+
+WORKDIR /abhrestaurants/frontend
+
+# It is assumed that backend is on the separate container which means, in dockercompose, name of the service is name of the containers DNS.
+# For any other implementation, just pass the correct public ip address/dns and port of the backend service
+ENTRYPOINT ["ember", "s", "--proxy", "http://webapp:8080"]

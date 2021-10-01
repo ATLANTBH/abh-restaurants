@@ -1,0 +1,14 @@
+FROM maven:3.8.2-jdk-8
+
+WORKDIR /abhrestaurants
+
+# Add necessary files
+RUN mkdir /abhrestaurants/webapp
+ADD webapp/src /abhrestaurants/webapp/src
+ADD webapp/pom.xml /abhrestaurants/webapp/
+ADD pom.webapp.xml /abhrestaurants/pom.xml
+
+# build packages
+RUN mvn package --projects webapp
+
+ENTRYPOINT ["mvn", "spring-boot:run", "-f", "webapp/pom.xml"]

@@ -149,3 +149,23 @@ ember s --proxy http://localhost:8080
 ```
 
 Open http://localhost:4200 in browser. You can login as admin by using following credentials: `admin@example.com:admin`.
+
+## Deployment of all services using Docker compose
+The most simplest way to deploy all services as containers is by using Docker compose solution. On the root level of the project, you can find `docker-compose.yml` file which will be used for that purpose.
+To deploy all services, simply use command:
+```
+docker-compose up -d
+```
+
+To check that all services are running, use following command and you should get similar output:
+```
+docker ps -a
+...
+$ docker ps -a
+CONTAINER ID   IMAGE                      COMMAND                  CREATED       STATUS       PORTS                                                           NAMES
+155bd1fa91d1   abh-restaurants_frontend   "ember s --proxy htt…"   3 hours ago   Up 3 hours   7020/tcp, 0.0.0.0:4200->4200/tcp, :::4200->4200/tcp, 7357/tcp   abh-restaurants_frontend_1
+189ea445a8d7   abh-restaurants_postgres   "docker-entrypoint.s…"   3 hours ago   Up 3 hours   0.0.0.0:5432->5432/tcp, :::5432->5432/tcp                       abh-restaurants_postgres_1
+90da2a2f9232   abh-restaurants_webapp     "mvn spring-boot:run…"   3 hours ago   Up 3 hours   0.0.0.0:8080->8080/tcp, :::8080->8080/tcp                       abh-restaurants_webapp_1
+```
+
+To check that application is running correctly, open http://localhost:4200 in browser. You can login as admin by using following credentials: `admin@example.com:admin` or create your own account.

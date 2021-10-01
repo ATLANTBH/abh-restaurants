@@ -3,8 +3,6 @@ services:
   postgres:
     build:
       context: ./postgres
-    volumes:
-      - ./postgres/docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/
     ports:
       - "5432:5432"
     environment:
