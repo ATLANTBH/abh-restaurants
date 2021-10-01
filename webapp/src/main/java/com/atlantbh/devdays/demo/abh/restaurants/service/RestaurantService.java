@@ -74,8 +74,7 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
   public Restaurant create(RestaurantRequest request) throws EntityNotFoundServiceException {
     Restaurant restaurant = new Restaurant();
     updateRestaurant(restaurant, request);
-//    return repository.save(restaurant);
-    return restaurant;
+    return repository.save(restaurant);
   }
 
   /**
@@ -90,8 +89,7 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
       throws EntityNotFoundServiceException {
     Restaurant restaurant = get(id);
     updateRestaurant(restaurant, request);
-//    return repository.save(restaurant);
-    return get(id);
+    return repository.save(restaurant);
   }
 
   public Page<Restaurant> find(RestaurantFilter filter) {
@@ -194,19 +192,19 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
             throws EntityNotFoundServiceException {
 
         cityService.get(request.getCityId());
-//        restaurant.setName(request.getName());
-//        restaurant.setDescription(request.getDescription());
-//        restaurant.setAddress(request.getAddress());
-//        restaurant.setCity(cityService.get(request.getCityId()));
-//        restaurant.setCoverImagePath(request.getCoverImagePath());
-//        restaurant.setLatitude(request.getLatitude());
-//        restaurant.setLongitude(request.getLongitude());
-//        restaurant.setMenu(request.getMenu());
-//        restaurant.setPhone(request.getPhone());
-//        restaurant.setPriceRange(request.getPriceRange());
-//        restaurant.setProfileImagePath(request.getProfileImagePath());
-//        restaurant.setCloseTime(request.getCloseTime());
-//        restaurant.setOpenTime(request.getOpenTime());
+        restaurant.setName(request.getName());
+        restaurant.setDescription(request.getDescription());
+        restaurant.setAddress(request.getAddress());
+        restaurant.setCity(cityService.get(request.getCityId()));
+        restaurant.setCoverImagePath(request.getCoverImagePath());
+        restaurant.setLatitude(request.getLatitude());
+        restaurant.setLongitude(request.getLongitude());
+        restaurant.setMenu(request.getMenu());
+        restaurant.setPhone(request.getPhone());
+        restaurant.setPriceRange(request.getPriceRange());
+        restaurant.setProfileImagePath(request.getProfileImagePath());
+        restaurant.setCloseTime(request.getCloseTime());
+        restaurant.setOpenTime(request.getOpenTime());
 
         final List<Cuisine> ourCuisines = new ArrayList<>();
         final List<Cuisine> cuisines = request.getCuisines();
@@ -216,32 +214,32 @@ public class RestaurantService extends BaseCrudService<Restaurant, Long, Restaur
                 ourCuisines.add(ourCuisine);
             }
         }
-//        restaurant.setCuisines(ourCuisines);
+        restaurant.setCuisines(ourCuisines);
 
         final List<RestaurantTable> ourTables = new ArrayList<>();
         final List<RestaurantTable> tables = request.getTables();
         if (CollectionUtils.isNotEmpty(tables)) {
             for (RestaurantTable table : tables) {
                 if (table.getId() == null) {
-//                    table.setRestaurant(restaurant);
-//                    final RestaurantTable ourTable = restaurantTableRepository.save(table);
-//                    ourTables.add(ourTable);
+                    table.setRestaurant(restaurant);
+                    final RestaurantTable ourTable = restaurantTableRepository.save(table);
+                    ourTables.add(ourTable);
                 } else {
                     final Optional<RestaurantTable> ourTableOptional =
                             restaurantTableRepository.findById(table.getId());
                     if (ourTableOptional.isPresent()) {
                         final RestaurantTable ourTable = ourTableOptional.get();
 
-//                        ourTable.setRestaurant(restaurant);
-//                        ourTable.setNumberOfChairs(table.getNumberOfChairs());
-//                        restaurantTableRepository.save(ourTable);
+                        ourTable.setRestaurant(restaurant);
+                        ourTable.setNumberOfChairs(table.getNumberOfChairs());
+                        restaurantTableRepository.save(ourTable);
 
-//                        ourTables.add(ourTable);
+                        ourTables.add(ourTable);
                     }
                 }
             }
         }
-//        restaurant.setTables(ourTables);
+        restaurant.setTables(ourTables);
     }
 
   /**
