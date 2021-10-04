@@ -155,7 +155,19 @@ The most simplest way to deploy all services as containers is by using Docker co
 - Docker 
 - Docker Compose
 
-On the root level of the project, you can find `docker-compose.yml` file which will be used for that purpose.
+### For linux users
+On the root level of the project, you can find `docker-compose.yml` file which will be used for deployment purpose.
+To deploy all services, simply use command:
+```
+docker-compose up -d
+```
+
+### For windows users
+On the root level of the project, you can find `docker-compose.yml` file which will be used for deployment purpose.
+Before running docker-compose, please do following command after you cloned the repo:
+```
+git config core.autocrlf input
+```
 To deploy all services, simply use command:
 ```
 docker-compose up -d
