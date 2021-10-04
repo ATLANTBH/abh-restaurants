@@ -1,4 +1,4 @@
-FROM danlynn/ember-cli
+FROM node:14-alpine3.12
 
 WORKDIR /abhrestaurants
 
@@ -6,6 +6,7 @@ WORKDIR /abhrestaurants
 ADD frontend /abhrestaurants/frontend
 ADD pom.frontend.xml /abhrestaurants/pom.xml
 
+RUN npm install -g ember-cli
 # build packages
 RUN npm --prefix ./frontend install
 

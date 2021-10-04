@@ -151,7 +151,11 @@ ember s --proxy http://localhost:8080
 Open http://localhost:4200 in browser. You can login as admin by using following credentials: `admin@example.com:admin`.
 
 ## Deployment of all services using Docker compose
-The most simplest way to deploy all services as containers is by using Docker compose solution. On the root level of the project, you can find `docker-compose.yml` file which will be used for that purpose.
+The most simplest way to deploy all services as containers is by using Docker compose solution. To use Docker Compose, you need to install following tools:
+- Docker 
+- Docker Compose
+
+On the root level of the project, you can find `docker-compose.yml` file which will be used for that purpose.
 To deploy all services, simply use command:
 ```
 docker-compose up -d
