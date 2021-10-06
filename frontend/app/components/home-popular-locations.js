@@ -17,6 +17,8 @@ export default Component.extend({
   fetchPopularLocations() {
     this.get("restaurantService")
       .fetchPopularLocations()
-      .then(result => this.set("locations", result));
+      .then(result => {
+        this.set("locations", result.filter(res => res.city.name == 'Sarajevo'))
+      });
   }
 });
