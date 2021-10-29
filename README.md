@@ -163,11 +163,11 @@ docker-compose up -d
 ```
 
 ### For windows users
-On the root level of the project, you can find `docker-compose.yml` file which will be used for deployment purpose.
-Before running docker-compose, please do following command after you cloned the repo:
+Before clonning the repo, please do following command:
 ```
-git config core.autocrlf input
+git config --global core.autocrlf input
 ```
+When you clone the repo, on the root level of the project, you can find `docker-compose.yml` file which will be used for deployment purpose.
 To deploy all services, simply use command:
 ```
 docker-compose up -d
